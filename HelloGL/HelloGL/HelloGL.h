@@ -13,5 +13,13 @@ public:
 
 	void Display();
 	void DrawPolygon();
+	void DrawScalene();
+	void DrawIsosceles();
+	void DrawEquilateral();
+	void DrawAcute();
+	void DrawRight();
+	void DrawObtuse();
+	void DrawPentagon();
+	void DrawHexagon();
 };
 
