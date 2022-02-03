@@ -2,6 +2,6 @@
 
 int main(int argc, char* argv[])
 {
-	HelloGL* game = new HelloGL(); //create instance of game
+	HelloGL* game = new HelloGL(argc, argv); //create instance of game
 	return 0;
 }
