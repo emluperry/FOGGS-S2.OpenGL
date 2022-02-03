@@ -12,5 +12,6 @@ public:
 	~HelloGL(void); //destructor
 
 	void Display();
+	void DrawPolygon();
 };
 
