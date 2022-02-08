@@ -9,6 +9,8 @@
 
 class HelloGL
 {
+private:
+	float rotation;
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor

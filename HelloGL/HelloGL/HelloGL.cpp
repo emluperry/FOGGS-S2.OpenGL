@@ -2,6 +2,8 @@
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
+	rotation = 0.0f;
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 800);
@@ -14,6 +16,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+
 	DrawPolygon();
 	DrawRight();
 	DrawAcute();
@@ -23,16 +26,22 @@ void HelloGL::Display()
 	DrawEquilateral();
 	DrawPentagon();
 	DrawHexagon();
+
 	glFlush();
 }
 
 void HelloGL::Update()
 {
+	rotation += 0.5f;
+	if (rotation >= 360.0f)
+		rotation = 0.0f;
 	glutPostRedisplay();
 }
 
 void HelloGL::DrawPolygon()
 {
+	glPushMatrix();
+	glRotatef(rotation, 0.0f, 0.0f, -1.0f);
 	glBegin(GL_POLYGON);
 	{
 		glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
@@ -43,6 +52,7 @@ void HelloGL::DrawPolygon()
 		glVertex2f(-0.75, -0.5);
 		glEnd();
 	}
+	glPopMatrix();
 }
 
 void HelloGL::DrawScalene()
