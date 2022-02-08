@@ -18,6 +18,7 @@ public:
 	~HelloGL(void); //destructor
 
 	void Update();
+	void Keyboard(unsigned char key, int x, int y);
 
 	void Display();
 	void DrawPolygon();

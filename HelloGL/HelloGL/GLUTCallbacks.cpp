@@ -22,9 +22,16 @@ namespace GLUTCallbacks
 		}
 	}
 
+	void Keyboard(unsigned char key, int x, int y)
+	{
+		helloGL->Keyboard(key, x, y);
+	}
+
 	void Timer(int preferredRefresh)
 	{
+		int updateTime = glutGet(GLUT_ELAPSED_TIME);
 		helloGL->Update();
-		glutTimerFunc(preferredRefresh, GLUTCallbacks::Timer, preferredRefresh);
+		updateTime = glutGet(GLUT_ELAPSED_TIME) - updateTime;
+		glutTimerFunc(preferredRefresh - updateTime, GLUTCallbacks::Timer, preferredRefresh);
 	}
 }
