@@ -11,6 +11,8 @@ public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
 
+	void Update();
+
 	void Display();
 	void DrawPolygon();
 	void DrawScalene();

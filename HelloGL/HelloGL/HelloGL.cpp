@@ -25,6 +25,11 @@ void HelloGL::Display()
 	glFlush();
 }
 
+void HelloGL::Update()
+{
+	glutPostRedisplay();
+}
+
 void HelloGL::DrawPolygon()
 {
 	glBegin(GL_POLYGON);
