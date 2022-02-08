@@ -7,6 +7,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("Simple OpenGL Program");
 	glutDisplayFunc(GLUTCallbacks::Display);
+	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 	glutMainLoop();
 }
 

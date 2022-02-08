@@ -5,6 +5,8 @@
 #include "GL\freeglut.h" //freeglut lib
 #include "GLUTCallbacks.h"
 
+#define REFRESHRATE 16
+
 class HelloGL
 {
 public:
