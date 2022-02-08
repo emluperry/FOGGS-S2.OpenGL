@@ -2,31 +2,55 @@
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
+	rotationRect = 0.0f;
+	rotationSquare = 0.0f;
+	rotationTriangle = 0.0f;
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("Simple OpenGL Program");
 	glutDisplayFunc(GLUTCallbacks::Display);
+	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 	glutMainLoop();
 }
 
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
+
 	DrawPolygon();
-	DrawRight();
-	DrawAcute();
-	DrawIsosceles();
-	DrawObtuse();
+	//DrawRight();
+	//DrawAcute();
+	//DrawIsosceles();
+	//DrawObtuse();
 	DrawScalene();
-	DrawEquilateral();
-	DrawPentagon();
-	DrawHexagon();
+	//DrawEquilateral();
+	//DrawPentagon();
+	//DrawHexagon();
+	DrawSquare();
+
 	glFlush();
+}
+
+void HelloGL::Update()
+{
+	rotationRect += 0.5f;
+	if (rotationRect >= 360.0f)
+		rotationRect = 0.0f;
+	rotationSquare += 1.0f;
+	if (rotationSquare >= 360.0f)
+		rotationSquare = 0.0f;
+	rotationTriangle += 0.5f;
+	if (rotationTriangle >= 360.0f)
+		rotationTriangle = 0.0f;
+	glutPostRedisplay();
 }
 
 void HelloGL::DrawPolygon()
 {
+	glPushMatrix();
+	glRotatef(rotationRect, 0.0f, 0.0f, -1.0f);
 	glBegin(GL_POLYGON);
 	{
 		glColor4f(1.0f, 0.0f, 0.0f, 0.0f);
@@ -37,10 +61,29 @@ void HelloGL::DrawPolygon()
 		glVertex2f(-0.75, -0.5);
 		glEnd();
 	}
+	glPopMatrix();
+}
+
+void HelloGL::DrawSquare()
+{
+	glPushMatrix();
+	glRotatef(rotationSquare, 0.0f, 0.0f, -1.0f);
+	glBegin(GL_POLYGON);
+	{
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glVertex2f(-0.2, 0.2);
+		glVertex2f(0.2, 0.2);
+		glVertex2f(0.2, -0.2);
+		glVertex2f(-0.2, -0.2);
+		glEnd();
+	}
+	glPopMatrix();
 }
 
 void HelloGL::DrawScalene()
 {
+	glPushMatrix();
+	glRotatef(rotationTriangle, 0.0f, 0.0f, +1.0f);
 	glBegin(GL_POLYGON);
 	{
 		glColor3f(0.0f, 0.1f, 0.2f);
@@ -49,6 +92,7 @@ void HelloGL::DrawScalene()
 		glVertex2f(-0.20, -0.5f);
 		glEnd();
 	}
+	glPopMatrix();
 }
 
 void HelloGL::DrawIsosceles()
