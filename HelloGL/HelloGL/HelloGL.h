@@ -10,7 +10,9 @@
 class HelloGL
 {
 private:
-	float rotation;
+	float rotationRect;
+	float rotationSquare;
+	float rotationTriangle;
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
@@ -19,6 +21,7 @@ public:
 
 	void Display();
 	void DrawPolygon();
+	void DrawSquare();
 	void DrawScalene();
 	void DrawIsosceles();
 	void DrawEquilateral();
