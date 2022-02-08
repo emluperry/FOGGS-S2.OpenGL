@@ -23,6 +23,7 @@ public:
 	void Display();
 	void DrawPolygon();
 	void DrawSquare();
+	void DrawCube();
 	void DrawScalene();
 	void DrawIsosceles();
 	void DrawEquilateral();

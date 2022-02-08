@@ -31,7 +31,8 @@ void HelloGL::Display()
 	//DrawEquilateral();
 	//DrawPentagon();
 	//DrawHexagon();
-	DrawSquare();
+	//DrawSquare();
+	DrawCube();
 
 	glFlush();
 	glutSwapBuffers();
@@ -92,6 +93,28 @@ void HelloGL::DrawSquare()
 		glVertex2f(0.2, 0.2);
 		glVertex2f(0.2, -0.2);
 		glVertex2f(-0.2, -0.2);
+		glEnd();
+	}
+	glPopMatrix();
+}
+
+void HelloGL::DrawCube()
+{
+	glPushMatrix();
+	glRotatef(rotationSquare, 1.0f, 0.0f, -1.0f);
+	glBegin(GL_POLYGON);
+	{
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glVertex3f(-0.2, 0.2, -0.2f);
+		glVertex3f(0.2, 0.2, -0.2f);
+		glVertex3f(0.2, -0.2, -0.2f);
+		glVertex3f(-0.2, -0.2, -0.2f);
+		glColor4f(1.0f, 0.5f, 0.0f, 0.0f);
+		glVertex3f(-0.2, -0.2, 0.2f);
+		glVertex3f(-0.2, 0.2, 0.2f);
+		glVertex3f(0.2, 0.2, 0.2f);
+		glVertex3f(0.2, 0.2, -0.2f);
+		glVertex3f(0.2, 0.2, 0.2f);
 		glEnd();
 	}
 	glPopMatrix();
