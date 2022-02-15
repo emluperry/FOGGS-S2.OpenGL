@@ -15,6 +15,16 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	//set viewport to entire window
+	glViewport(0, 0, 800, 800);
+	gluPerspective(45, 1, 0, 1000);
+
+	glMatrixMode(GL_MODELVIEW);
+
 	glutMainLoop();
 }
 
@@ -39,6 +49,8 @@ void HelloGL::Display()
 
 void HelloGL::Update()
 {
+	glLoadIdentity();
+
 	rotationSquare += 1.0f;
 	if (rotationSquare >= 360.0f)
 		rotationSquare = 0.0f;
@@ -67,6 +79,7 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 void HelloGL::DrawPolygon()
 {
 	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -5.0f);
 	glRotatef(rotationRect, 0.0f, 0.0f, -1.0f);
 	glBegin(GL_POLYGON);
 	{
@@ -84,7 +97,8 @@ void HelloGL::DrawPolygon()
 void HelloGL::DrawSquare()
 {
 	glPushMatrix();
-	glRotatef(rotationSquare, 0.0f, 0.0f, -1.0f);
+	glTranslatef(0.0f, 0.0f, -2.0f);
+	glRotatef(rotationSquare, -1.0f, 0.0f, 0.0f);
 	glBegin(GL_POLYGON);
 	{
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -100,6 +114,7 @@ void HelloGL::DrawSquare()
 void HelloGL::DrawScalene()
 {
 	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, -4.0f);
 	glRotatef(rotationTriangle, 0.0f, 0.0f, +1.0f);
 	glBegin(GL_POLYGON);
 	{
