@@ -1,5 +1,44 @@
 #include "HelloGL.h"
-//#include <iostream>
+
+Vertex HelloGL::vertices[] = {
+	1,1,1, -1,1,1, -1,-1,1,
+	-1,-1,1, 1,-1,1, 1,1,1,
+
+	1,1,1, 1,-1,1, 1,-1,-1,
+	1,-1,-1, 1,1,-1, 1,1,1,
+
+	1,1,1, 1,1,-1, -1,1,-1,
+	-1,1,-1, -1,1,1, 1,1,1,
+
+	-1,1,1, -1,1,-1, -1,-1,-1,
+	-1,-1,-1, -1,-1,1, -1,1,1,
+
+	-1,-1,-1, 1,-1,-1, 1,-1,1,
+	1,-1,1, -1,-1,1, -1,-1,-1,
+
+	1,-1,-1, -1,-1,-1, -1,1,-1,
+	-1,1,-1, 1,1,-1, 1,-1,-1
+};
+
+Color HelloGL::colors[] = {
+	1,1,1, 1,1,0, 1,0,0,
+	1,0,0, 1,0,1, 1,1,1,
+
+	1,1,1, 1,0,1, 0,0,1,
+	0,0,1, 0,1,1, 1,1,1,
+
+	1,1,1, 0,1,1, 0,1,0,
+	0,1,0, 1,1,0, 1,1,1,
+
+	1,1,0, 0,1,0, 0,0,0,
+	0,0,0, 1,0,0, 1,1,0,
+
+	0,0,0, 0,0,1, 1,0,1,
+	1,0,1, 1,0,0, 0,0,0,
+
+	0,0,1, 0,0,0, 0,1,0,
+	0,1,0, 0,1,1, 0,0,1
+};
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
@@ -50,18 +89,8 @@ void HelloGL::Display()
 	//glutWireTeapot(0.2);
 	//glPopMatrix();
 
-	DrawCube();
-
-	//DrawPolygon();
-	//DrawRight();
-	//DrawAcute();
-	//DrawIsosceles();
-	//DrawObtuse();
-	//DrawScalene();
-	//DrawEquilateral();
-	//DrawPentagon();
-	//DrawHexagon();
-	//DrawSquare();
+	//DrawCube();
+	DrawCubeArray();
 
 	glFlush();
 	glutSwapBuffers();
@@ -71,9 +100,6 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
-	//std::cout << "EYE POS: " << camera->eye.x << ", " << camera->eye.y << ", " << camera->eye.z << std::endl;
-	//std::cout << "CENTER POS: " << camera->center.x << ", " << camera->center.y << ", " << camera->center.z << std::endl;
-	//std::cout << "UP POS: " << camera->up.x << ", " << camera->up.y << ", " << camera->up.z << std::endl;
 
 	rotationSquare += 1.0f;
 	if (rotationSquare >= 360.0f)
@@ -89,16 +115,10 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	if (key == 'd')
 	{
 		camera->eye.x += 0.1;
-		//rotationRect += 0.5f;
-		//if (rotationRect >= 360.0f)
-		//	rotationRect = 0.0f;
 	}
 	if (key == 'a')
 	{
 		camera->eye.x -= 0.1;
-		//rotationRect -= 0.5f;
-		//if (rotationRect <= 0.0f)
-		//	rotationRect = 360.0f;
 	}
 	if (key == 'q')
 	{
@@ -116,6 +136,23 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	{
 		camera->eye.y -= 0.1;
 	}
+}
+
+void HelloGL::DrawCubeArray()
+{
+	glPushMatrix();
+
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 36; i++)
+	{
+		//glColor3f(colors[i].r, colors[i].g, colors[i].b);
+		//glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+		glColor3fv(&colors[i].r);
+		glVertex3fv(&vertices[i].x);
+	}
+	glEnd();
+
+	glPopMatrix();
 }
 
 void HelloGL::DrawCube()
