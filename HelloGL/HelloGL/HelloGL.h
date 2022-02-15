@@ -46,5 +46,7 @@ public:
 	void DrawObtuse();
 	void DrawPentagon();
 	void DrawHexagon();
+
+	void DrawCube();
 };
 

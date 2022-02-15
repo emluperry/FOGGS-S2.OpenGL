@@ -7,9 +7,9 @@ HelloGL::HelloGL(int argc, char* argv[])
 	rotationSquare = 0.0f;
 	rotationTriangle = 0.0f;
 	camera = new Camera();
-	camera->eye.x = 0.0f;
-	camera->eye.y = 0.0f;
-	camera->eye.z = 1.0f;
+	camera->eye.x = 5.0f;
+	camera->eye.y = 5.0f;
+	camera->eye.z = -5.0f;
 	camera->center.x = 0.0f;
 	camera->center.y = 0.0f;
 	camera->center.z = 0.0f;
@@ -35,6 +35,8 @@ HelloGL::HelloGL(int argc, char* argv[])
 	gluPerspective(45, 1, 0, 1000);
 
 	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
 	glutMainLoop();
 }
@@ -42,10 +44,14 @@ HelloGL::HelloGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glPushMatrix();
+
+	//glPushMatrix();
 	//glRotatef(rotationSquare, 1.0f, 0.0f, 0.0f);
-	glutWireTeapot(0.2);
-	glPopMatrix();
+	//glutWireTeapot(0.2);
+	//glPopMatrix();
+
+	DrawCube();
+
 	//DrawPolygon();
 	//DrawRight();
 	//DrawAcute();
@@ -110,6 +116,96 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	{
 		camera->eye.y -= 0.1;
 	}
+}
+
+void HelloGL::DrawCube()
+{
+	glBegin(GL_TRIANGLES);
+	//face v0-v1-v2
+	glColor3f(1, 1, 1);
+	glVertex3f(1, 1, 1);
+	glColor3f(1, 1, 0);
+	glVertex3f(-1, 1, 1);
+	glColor3f(1, 0, 0);
+	glVertex3f(-1, -1, 1);
+	//face v2-v3-v0
+	glColor3f(1, 0, 0);
+	glVertex3f(-1, -1, 1);
+	glColor3f(1, 0, 1);
+	glVertex3f(1, -1, 1);
+	glColor3f(1, 1, 1);
+	glVertex3f(1, 1, 1);
+	//face v0-v3-v4
+	glColor3f(1, 1, 1);
+	glVertex3f(1, 1, 1);
+	glColor3f(1, 0, 1);
+	glVertex3f(1, -1, 1);
+	glColor3f(0, 0, 1);
+	glVertex3f(1, -1, -1);
+	//face v4-v5-v0
+	glColor3f(0, 0, 1);
+	glVertex3f(1, -1, -1);
+	glColor3f(0, 1, 1);
+	glVertex3f(1, 1, -1);
+	glColor3f(1, 1, 1);
+	glVertex3f(1, 1, 1);
+	//face v0-v5-v6
+	glColor3f(1, 1, 1);
+	glVertex3f(1, 1, 1);
+	glColor3f(0, 1, 1);
+	glVertex3f(1, 1, -1);
+	glColor3f(0, 1, 0);
+	glVertex3f(-1, 1, -1);
+	//face v6-v1-v0
+	glColor3f(0, 1, 0);
+	glVertex3f(-1, 1, -1);
+	glColor3f(1, 1, 0);
+	glVertex3f(-1, 1, 1);
+	glColor3f(1, 1, 1);
+	glVertex3f(1, 1, 1);
+	//face v1-v6-v7
+	glColor3f(1, 1, 0);
+	glVertex3f(-1, 1, 1);
+	glColor3f(0, 1, 0);
+	glVertex3f(-1, 1, -1);
+	glColor3f(0, 0, 0);
+	glVertex3f(-1, -1, -1);
+	//face v7-v2-v1
+	glColor3f(0, 0, 0);
+	glVertex3f(-1, -1, -1);
+	glColor3f(1, 0, 0);
+	glVertex3f(-1, -1, 1);
+	glColor3f(1, 1, 0);
+	glVertex3f(-1, 1, 1);
+	//face v7-v4-v3
+	glColor3f(0, 0, 0);
+	glVertex3f(-1, -1, -1);
+	glColor3f(0, 0, 1);
+	glVertex3f(1, -1, -1);
+	glColor3f(1, 0, 1);
+	glVertex3f(1, -1, 1);
+	//face v3-v2-v7
+	glColor3f(1, 0, 1);
+	glVertex3f(1, -1, 1);
+	glColor3f(1, 0, 0);
+	glVertex3f(-1, -1, 1);
+	glColor3f(0, 0, 0);
+	glVertex3f(-1, -1, -1);
+	//face v4-v7-v6
+	glColor3f(0, 0, 1);
+	glVertex3f(1, -1, -1);
+	glColor3f(0, 0, 0);
+	glVertex3f(-1, -1, -1);
+	glColor3f(0, 1, 0);
+	glVertex3f(-1, 1, -1);
+	//face v6-v5-v4
+	glColor3f(0, 1, 0);
+	glVertex3f(-1, 1, -1);
+	glColor3f(0, 1, 1);
+	glVertex3f(1, 1, -1);
+	glColor3f(0, 0, 1);
+	glVertex3f(1, -1, -1);
+	glEnd();
 }
 
 void HelloGL::DrawPolygon()
