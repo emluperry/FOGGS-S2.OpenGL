@@ -1,4 +1,5 @@
 #include "HelloGL.h"
+//#include <iostream>
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
@@ -41,17 +42,20 @@ HelloGL::HelloGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	DrawPolygon();
+	glPushMatrix();
+	//glRotatef(rotationSquare, 1.0f, 0.0f, 0.0f);
+	glutWireTeapot(0.2);
+	glPopMatrix();
+	//DrawPolygon();
 	//DrawRight();
 	//DrawAcute();
 	//DrawIsosceles();
 	//DrawObtuse();
-	DrawScalene();
+	//DrawScalene();
 	//DrawEquilateral();
 	//DrawPentagon();
 	//DrawHexagon();
-	DrawSquare();
+	//DrawSquare();
 
 	glFlush();
 	glutSwapBuffers();
@@ -61,6 +65,9 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
+	//std::cout << "EYE POS: " << camera->eye.x << ", " << camera->eye.y << ", " << camera->eye.z << std::endl;
+	//std::cout << "CENTER POS: " << camera->center.x << ", " << camera->center.y << ", " << camera->center.z << std::endl;
+	//std::cout << "UP POS: " << camera->up.x << ", " << camera->up.y << ", " << camera->up.z << std::endl;
 
 	rotationSquare += 1.0f;
 	if (rotationSquare >= 360.0f)
@@ -75,15 +82,33 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'd')
 	{
-		rotationRect += 0.5f;
-		if (rotationRect >= 360.0f)
-			rotationRect = 0.0f;
+		camera->eye.x += 0.1;
+		//rotationRect += 0.5f;
+		//if (rotationRect >= 360.0f)
+		//	rotationRect = 0.0f;
 	}
 	if (key == 'a')
 	{
-		rotationRect -= 0.5f;
-		if (rotationRect <= 0.0f)
-			rotationRect = 360.0f;
+		camera->eye.x -= 0.1;
+		//rotationRect -= 0.5f;
+		//if (rotationRect <= 0.0f)
+		//	rotationRect = 360.0f;
+	}
+	if (key == 'q')
+	{
+		camera->eye.z -= 0.1;
+	}
+	if (key == 'e')
+	{
+		camera->eye.z += 0.1;
+	}
+	if (key == 'w')
+	{
+		camera->eye.y += 0.1;
+	}
+	if (key == 's')
+	{
+		camera->eye.y -= 0.1;
 	}
 }
 
