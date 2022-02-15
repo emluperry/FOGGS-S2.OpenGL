@@ -40,6 +40,29 @@ Color HelloGL::colors[] = {
 	0,1,0, 0,1,1, 0,0,1
 };
 
+Vertex HelloGL::indexedVertices[] = {
+	1,1,1, -1,1,1,
+	-1,-1,1, 1,-1,1,
+	1,-1,-1, 1,1,-1,
+	-1,1,-1, -1,-1,-1
+};
+
+Color HelloGL::indexedColors[] = {
+	1,1,1, 1,1,0,
+	1,0,0, 1,0,1,
+	0,0,1, 0,1,1,
+	0,1,0, 0,0,0
+};
+
+GLushort HelloGL::indices[] = {
+	0,1,2, 2,3,0,
+	0,3,4, 4,5,0,
+	0,5,6, 6,1,0,
+	1,6,7, 7,2,1,
+	7,4,3, 3,2,7,
+	4,7,6, 6,5,4
+};
+
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotationRect = 0.0f;
@@ -90,8 +113,8 @@ void HelloGL::Display()
 	//glPopMatrix();
 
 	//DrawCube();
-	DrawCubeArray();
-
+	//DrawCubeArray();
+	DrawIndexedCube();
 	glFlush();
 	glutSwapBuffers();
 }
@@ -136,6 +159,19 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	{
 		camera->eye.y -= 0.1;
 	}
+}
+
+void HelloGL::DrawIndexedCube()
+{
+	glPushMatrix();
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 36; i++)
+	{
+		glColor3f(indexedColors[indices[i]].r, indexedColors[indices[i]].g, indexedColors[indices[i]].b);
+		glVertex3f(indexedVertices[indices[i]].x, indexedVertices[indices[i]].y, indexedVertices[indices[i]].z);
+	}
+	glEnd();
+	glPopMatrix();
 }
 
 void HelloGL::DrawCubeArray()
