@@ -5,6 +5,16 @@ HelloGL::HelloGL(int argc, char* argv[])
 	rotationRect = 0.0f;
 	rotationSquare = 0.0f;
 	rotationTriangle = 0.0f;
+	camera = new Camera();
+	camera->eye.x = 0.0f;
+	camera->eye.y = 0.0f;
+	camera->eye.z = 1.0f;
+	camera->center.x = 0.0f;
+	camera->center.y = 0.0f;
+	camera->center.z = 0.0f;
+	camera->up.x = 0.0f;
+	camera->up.y = 1.0f;
+	camera->up.z = 0.0f;
 
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
@@ -50,6 +60,7 @@ void HelloGL::Display()
 void HelloGL::Update()
 {
 	glLoadIdentity();
+	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 
 	rotationSquare += 1.0f;
 	if (rotationSquare >= 360.0f)
@@ -218,5 +229,5 @@ void HelloGL::DrawHexagon()
 
 HelloGL::~HelloGL(void)
 {
-
+	delete camera;
 }
