@@ -64,5 +64,8 @@ public:
 	void DrawCube();
 	void DrawCubeArray();
 	void DrawIndexedCube();
+
+	void DrawCubeArrayAlt();
+	void DrawIndexedCubeAlt();
 };
 

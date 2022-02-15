@@ -114,7 +114,10 @@ void HelloGL::Display()
 
 	//DrawCube();
 	//DrawCubeArray();
-	DrawIndexedCube();
+	//DrawIndexedCube();
+	//DrawCubeArrayAlt();
+	DrawIndexedCubeAlt();
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -159,6 +162,36 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	{
 		camera->eye.y -= 0.1;
 	}
+}
+
+void HelloGL::DrawCubeArrayAlt()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glColorPointer(3, GL_FLOAT, 0, colors);
+
+	glPushMatrix();
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glPopMatrix();
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void HelloGL::DrawIndexedCubeAlt()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, indexedVertices);
+	glColorPointer(3, GL_FLOAT, 0, indexedColors);
+
+	glPushMatrix();
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, indices);
+	glPopMatrix();
+
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 void HelloGL::DrawIndexedCube()
