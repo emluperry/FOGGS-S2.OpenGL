@@ -1,5 +1,6 @@
 #include "HelloGL.h"
 
+//CUBE
 Vertex HelloGL::vertices[] = {
 	1,1,1, -1,1,1, -1,-1,1,
 	-1,-1,1, 1,-1,1, 1,1,1,
@@ -63,6 +64,22 @@ GLushort HelloGL::indices[] = {
 	4,7,6, 6,5,4
 };
 
+//PYRAMID
+Vertex HelloGL::pyVertices[] = {
+	1,1,1, -1,1,1, -1,-1,1,
+	-1,-1,1, 1,-1,1, 1,1,1,
+
+	1,1,1, 0,0,-1, -1,1,1,
+	-1,1,1, 0,0,-1, -1,-1,1,
+
+	-1,-1,1, 0,0,-1, 1,-1,1,
+	1,-1,1, 0,0,-1, 1,1,1
+};
+
+//triangular prism
+Vertex HelloGL::triPrVertices[] = {
+};
+
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotationRect = 0.0f;
@@ -116,7 +133,9 @@ void HelloGL::Display()
 	//DrawCubeArray();
 	//DrawIndexedCube();
 	//DrawCubeArrayAlt();
-	DrawIndexedCubeAlt();
+	//DrawIndexedCubeAlt();
+
+	DrawPyramid();
 
 	glFlush();
 	glutSwapBuffers();
@@ -162,6 +181,36 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	{
 		camera->eye.y -= 0.1;
 	}
+}
+
+void HelloGL::DrawPyramid()
+{
+	glPushMatrix();
+
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 18; i++)
+	{
+		glColor3fv(&colors[i].r);
+		glVertex3fv(&pyVertices[i].x);
+	}
+	glEnd();
+
+	glPopMatrix();
+}
+
+void HelloGL::DrawTriangularPrism()
+{
+	glPushMatrix();
+
+	glBegin(GL_TRIANGLES);
+	for (int i = 0; i < 18; i++)
+	{
+		glColor3fv(&colors[i].r);
+		glVertex3fv(&triPrVertices[i].x);
+	}
+	glEnd();
+
+	glPopMatrix();
 }
 
 void HelloGL::DrawCubeArrayAlt()

@@ -37,11 +37,16 @@ private:
 	float rotationSquare;
 	float rotationTriangle;
 	Camera* camera;
+	//cube
 	static Vertex vertices[];
 	static Color colors[];
 	static Vertex indexedVertices[];
 	static Color indexedColors[];
 	static GLushort indices[];
+	//pyramid
+	static Vertex pyVertices[];
+	//triangular prism
+	static Vertex triPrVertices[];
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
@@ -64,6 +69,9 @@ public:
 	void DrawCube();
 	void DrawCubeArray();
 	void DrawIndexedCube();
+
+	void DrawPyramid();
+	void DrawTriangularPrism();
 
 	void DrawCubeArrayAlt();
 	void DrawIndexedCubeAlt();
