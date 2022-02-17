@@ -47,6 +47,10 @@ private:
 	static Vertex pyVertices[];
 	//triangular prism
 	static Vertex triPrVertices[];
+	//hexagonal prism
+	static Vertex hexPrVertices[];
+	//Dodedahedron
+	static Vertex dodecaVertices[];
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
@@ -72,6 +76,8 @@ public:
 
 	void DrawPyramid();
 	void DrawTriangularPrism();
+	void DrawHexagonalPrism();
+	void DrawDodecahedron();
 
 	void DrawCubeArrayAlt();
 	void DrawIndexedCubeAlt();
