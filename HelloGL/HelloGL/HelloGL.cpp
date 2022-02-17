@@ -141,6 +141,11 @@ Vertex HelloGL::hexPrVertices[] = {
 	-0.5,1,-1, -0.5,-1,-1, -1,0,-1
 };
 
+//dodecahedron
+Vertex HelloGL::dodecaVertices[] = {
+
+};
+
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	rotationRect = 0.0f;
@@ -279,7 +284,7 @@ void HelloGL::DrawTriangularPrism()
 void HelloGL::DrawHexagonalPrism()
 {
 	glPushMatrix();
-
+	glTranslatef(0.0f, 0.0f, -5.0f);
 	glBegin(GL_TRIANGLES);
 	for (int i = 0; i < 60; i++)
 	{
