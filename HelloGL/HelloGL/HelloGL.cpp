@@ -13,6 +13,8 @@ HelloGL::HelloGL(int argc, char* argv[])
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
+	cube = new Cube();
+
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE);
@@ -40,7 +42,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-
+	cube->Draw();
 	glFlush();
 	glutSwapBuffers();
 }
@@ -49,6 +51,7 @@ void HelloGL::Update()
 {
 	glLoadIdentity();
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
+	cube->Update();
 	glutPostRedisplay();
 }
 

@@ -25,7 +25,7 @@ GLushort Cube::indices[] = {
 
 Cube::Cube()
 {
-
+	_rotation = 0;
 }
 
 Cube::~Cube()
