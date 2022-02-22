@@ -1,11 +1,13 @@
 #include "HelloGL.h"
+#include <iostream>
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
+	srand(time(NULL));
 	camera = new Camera();
-	camera->eye.x = 5.0f;
-	camera->eye.y = 5.0f;
-	camera->eye.z = -5.0f;
+	camera->eye.x = 0.0f;
+	camera->eye.y = 0.0f;
+	camera->eye.z = 1.0f;
 	camera->center.x = 0.0f;
 	camera->center.y = 0.0f;
 	camera->center.z = 0.0f;
@@ -13,7 +15,13 @@ HelloGL::HelloGL(int argc, char* argv[])
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	cube = new Cube();
+	for (int i = 0; i < 10; i++)
+	{
+		float x = ((rand() % 400) / 10.0f) - 20.0f;
+		float y = ((rand() % 200) / 10.0f) - 10.0f;
+		float z = -(rand() % 1000) / 10.0f;
+		cubes[i] = new Cube(x, y, z);
+	}
 
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
@@ -30,7 +38,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	//set viewport to entire window
 	glViewport(0, 0, 800, 800);
-	gluPerspective(45, 1, 1, 1000);
+	gluPerspective(45, 1, 1, 10000);
 
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
@@ -43,7 +51,10 @@ HelloGL::HelloGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	cube->Draw();
+	for (int i = 0; i < 10; i++)
+	{
+		cubes[i]->Draw();
+	}
 	glFlush();
 	glutSwapBuffers();
 }
@@ -51,8 +62,11 @@ void HelloGL::Display()
 void HelloGL::Update()
 {
 	glLoadIdentity();
+	for (int i = 0; i < 10; i++)
+	{
+		cubes[i]->Update();
+	}
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
-	cube->Update();
 	glutPostRedisplay();
 }
 

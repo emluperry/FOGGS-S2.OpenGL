@@ -13,7 +13,7 @@ class HelloGL
 {
 private:
 	Camera* camera;
-	Cube* cube;
+	Cube* cubes[10];
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor

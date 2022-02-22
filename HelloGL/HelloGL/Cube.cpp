@@ -1,4 +1,5 @@
 #include "Cube.h"
+#include <iostream>
 
 Vertex Cube::indexedVertices[] = {
 	1,1,1, -1,1,1,
@@ -23,9 +24,12 @@ GLushort Cube::indices[] = {
 	4,7,6, 6,5,4
 };
 
-Cube::Cube()
+Cube::Cube(float x, float y, float z)
 {
 	_rotation = 0;
+	_position.x = x;
+	_position.y = y;
+	_position.z = z;
 }
 
 Cube::~Cube()
@@ -40,6 +44,7 @@ void Cube::Draw()
 	glColorPointer(3, GL_FLOAT, 0, indexedColors);
 
 	glPushMatrix();
+	glTranslatef(_position.x, _position.y, _position.z);
 	glRotatef(_rotation, 1.0f, 0.0f, 0.0f);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, indices);
 	glPopMatrix();
