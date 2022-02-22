@@ -17,10 +17,17 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	for (int i = 0; i < 10; i++)
 	{
-		float x = ((rand() % 400) / 10.0f) - 20.0f;
-		float y = ((rand() % 200) / 10.0f) - 10.0f;
-		float z = -(rand() % 1000) / 10.0f;
-		cubes[i] = new Cube(x, y, z);
+		cubes[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		int direction = rand() % 2;
+		if (direction == 0)
+		{
+			direction = 1;
+		}
+		else
+		{
+			direction = -1;
+		}
+		cubes[i]->SetRotation(((rand() % 10) / 10.0f)*direction);
 	}
 
 	GLUTCallbacks::Init(this);

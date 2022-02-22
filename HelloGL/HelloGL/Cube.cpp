@@ -27,6 +27,7 @@ GLushort Cube::indices[] = {
 Cube::Cube(float x, float y, float z)
 {
 	_rotation = 0;
+	speed = 1;
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
@@ -55,5 +56,15 @@ void Cube::Draw()
 
 void Cube::Update()
 {
-	_rotation += 0.1f;
+	_rotation += angle;
+	_position.z += speed;
+	if (_position.z > 1)
+	{
+		_position.z = -(rand() % 1000) / 10.0f + 20;
+	}
+}
+
+void Cube::SetRotation(GLfloat rot)
+{
+	angle = rot;
 }
