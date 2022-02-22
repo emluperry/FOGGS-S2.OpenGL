@@ -12,6 +12,8 @@ private:
 	static Color indexedColors[];
 	static GLushort indices[];
 
+	GLfloat _rotation;
+
 public:
 	Cube();
 	~Cube();

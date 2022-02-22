@@ -1,4 +1,5 @@
 #pragma once
+
 struct Vector3
 {
 	float x;
@@ -17,6 +18,7 @@ struct Color
 {
 	GLfloat r, g, b;
 };
+
 struct Vertex
 {
 	GLfloat x, y, z;

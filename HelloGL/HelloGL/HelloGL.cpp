@@ -2,9 +2,6 @@
 
 HelloGL::HelloGL(int argc, char* argv[])
 {
-	rotationRect = 0.0f;
-	rotationSquare = 0.0f;
-	rotationTriangle = 0.0f;
 	camera = new Camera();
 	camera->eye.x = 5.0f;
 	camera->eye.y = 5.0f;

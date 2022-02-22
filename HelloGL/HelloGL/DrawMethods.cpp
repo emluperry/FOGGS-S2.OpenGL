@@ -2,7 +2,7 @@
 //DRAW METHODS
 
 //2D
-void DrawPolygon()
+void DrawMethods::DrawPolygon()
 {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -5.0f);
@@ -20,7 +20,7 @@ void DrawPolygon()
 	glPopMatrix();
 }
 
-void DrawSquare()
+void DrawMethods::DrawSquare()
 {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -2.0f);
@@ -37,7 +37,7 @@ void DrawSquare()
 	glPopMatrix();
 }
 
-void DrawScalene()
+void DrawMethods::DrawScalene()
 {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -4.0f);
@@ -53,7 +53,7 @@ void DrawScalene()
 	glPopMatrix();
 }
 
-void DrawIsosceles()
+void DrawMethods::DrawIsosceles()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -65,7 +65,7 @@ void DrawIsosceles()
 	}
 }
 
-void DrawEquilateral()
+void DrawMethods::DrawEquilateral()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -77,7 +77,7 @@ void DrawEquilateral()
 	}
 }
 
-void DrawAcute()
+void DrawMethods::DrawAcute()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -89,7 +89,7 @@ void DrawAcute()
 	}
 }
 
-void DrawRight()
+void DrawMethods::DrawRight()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -101,7 +101,7 @@ void DrawRight()
 	}
 }
 
-void DrawObtuse()
+void DrawMethods::DrawObtuse()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -113,7 +113,7 @@ void DrawObtuse()
 	}
 }
 
-void DrawPentagon()
+void DrawMethods::DrawPentagon()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -127,7 +127,7 @@ void DrawPentagon()
 	}
 }
 
-void DrawHexagon()
+void DrawMethods::DrawHexagon()
 {
 	glBegin(GL_POLYGON);
 	{
@@ -144,7 +144,7 @@ void DrawHexagon()
 
 //3D
 
-Color colors[] = {
+Color DrawMethods::colors[] = {
 	1,1,1, 1,1,0, 1,0,0,
 	1,0,0, 1,0,1, 1,1,1,
 
@@ -183,7 +183,7 @@ Color colors[] = {
 };
 
 //PYRAMID
-Vertex pyVertices[] = {
+Vertex DrawMethods::pyVertices[] = {
 	1,1,1, -1,1,1, -1,-1,1,
 	-1,-1,1, 1,-1,1, 1,1,1,
 
@@ -195,7 +195,7 @@ Vertex pyVertices[] = {
 };
 
 //triangular prism
-Vertex triPrVertices[] = {
+Vertex DrawMethods::triPrVertices[] = {
 	-1,-1,1, 1,-1,1, 0,1,1,
 
 	0,1,1, 0,1,-1, -1,-1,-1,
@@ -211,7 +211,7 @@ Vertex triPrVertices[] = {
 };
 
 //hexagonal prism
-Vertex hexPrVertices[] = {
+Vertex DrawMethods::hexPrVertices[] = {
 	0.5,1,1, 0.5,-1,1, 1,0,1,
 	0.5,1,1, -0.5,1,1, 0.5,-1,1,
 	0.5,-1,1, -0.5,1,1, -0.5,-1,1,
@@ -242,11 +242,11 @@ Vertex hexPrVertices[] = {
 };
 
 //dodecahedron
-Vertex dodecaVertices[10] = {
+Vertex DrawMethods::dodecaVertices[10] = {
 
 };
 
-void DrawPyramid()
+void DrawMethods::DrawPyramid()
 {
 	glPushMatrix();
 	glTranslatef(0.0f, -5.0f, 0.0f);
@@ -261,7 +261,7 @@ void DrawPyramid()
 	glPopMatrix();
 }
 
-void DrawTriangularPrism()
+void DrawMethods::DrawTriangularPrism()
 {
 	glPushMatrix();
 	glTranslatef(0.0f, 5.0f, 0.0f);
@@ -276,7 +276,7 @@ void DrawTriangularPrism()
 	glPopMatrix();
 }
 
-void DrawHexagonalPrism()
+void DrawMethods::DrawHexagonalPrism()
 {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, -5.0f);
