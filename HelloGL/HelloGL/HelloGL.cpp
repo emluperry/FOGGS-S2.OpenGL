@@ -17,7 +17,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Simple OpenGL Program");
@@ -30,8 +30,9 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 	//set viewport to entire window
 	glViewport(0, 0, 800, 800);
-	gluPerspective(45, 1, 0, 1000);
+	gluPerspective(45, 1, 1, 1000);
 
+	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -41,7 +42,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 
 void HelloGL::Display()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	cube->Draw();
 	glFlush();
 	glutSwapBuffers();
