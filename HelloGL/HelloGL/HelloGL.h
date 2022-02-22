@@ -21,6 +21,15 @@ struct Camera
 	Vector3 up;
 };
 
+struct Color
+{
+	GLfloat r, g, b;
+};
+struct Vertex
+{
+	GLfloat x, y, z;
+};
+
 class HelloGL
 {
 private:
@@ -28,6 +37,20 @@ private:
 	float rotationSquare;
 	float rotationTriangle;
 	Camera* camera;
+	//cube
+	static Vertex vertices[];
+	static Color colors[];
+	static Vertex indexedVertices[];
+	static Color indexedColors[];
+	static GLushort indices[];
+	//pyramid
+	static Vertex pyVertices[];
+	//triangular prism
+	static Vertex triPrVertices[];
+	//hexagonal prism
+	static Vertex hexPrVertices[];
+	//Dodedahedron
+	static Vertex dodecaVertices[];
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
@@ -46,5 +69,17 @@ public:
 	void DrawObtuse();
 	void DrawPentagon();
 	void DrawHexagon();
+
+	void DrawCube();
+	void DrawCubeArray();
+	void DrawIndexedCube();
+
+	void DrawPyramid();
+	void DrawTriangularPrism();
+	void DrawHexagonalPrism();
+	void DrawDodecahedron();
+
+	void DrawCubeArrayAlt();
+	void DrawIndexedCubeAlt();
 };
 
