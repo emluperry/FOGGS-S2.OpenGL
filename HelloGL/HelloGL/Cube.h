@@ -4,6 +4,7 @@
 #include <gl/GLU.h>
 #include "GL\freeglut.h"
 #include "Structures.h"
+#include <fstream>
 
 class Cube
 {
@@ -21,6 +22,7 @@ private:
 public:
 	Cube(float x, float y, float z);
 	~Cube();
+	static bool Load(char* path);
 	void Draw();
 	void Update();
 	void SetRotation(GLfloat rot);

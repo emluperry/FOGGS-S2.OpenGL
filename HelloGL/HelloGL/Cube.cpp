@@ -24,6 +24,43 @@ Cube::~Cube()
 {
 
 }
+
+bool Cube::Load(char* path)
+{
+	std::ifstream inFile;
+	inFile.open(path);
+	if (!inFile.good())
+	{
+		std::cerr << "Can't open text file " << path << std::endl;
+		return false;
+	}
+	inFile >> numVertices;
+	indexedVertices = new Vertex[numVertices];
+	for (int i = 0; i < numVertices; i++)
+	{
+		inFile >> indexedVertices[i].x;
+		inFile >> indexedVertices[i].y;
+		inFile >> indexedVertices[i].z;
+	}
+	inFile >> numColors;
+	indexedColors = new Color[numColors];
+	for (int i = 0; i < numColors; i++)
+	{
+		inFile >> indexedColors[i].r;
+		inFile >> indexedColors[i].g;
+		inFile >> indexedColors[i].b;
+	}
+	inFile >> numIndices;
+	indices = new GLushort[numIndices];
+	for (int i = 0; i < numIndices; i++)
+	{
+		inFile >> indices[i];
+	}
+	//REPEAT FOR COLOR AND INDICES INFO
+	inFile.close();
+	return true;
+}
+
 void Cube::Draw()
 {
 	if (indexedVertices != nullptr && indexedColors != nullptr && indices != nullptr)
