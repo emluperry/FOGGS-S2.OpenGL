@@ -139,18 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Cube.h" />
-    <ClInclude Include="DrawMethods.h" />
+    <ClInclude Include="FlyingObject.h" />
     <ClInclude Include="GLUTCallbacks.h" />
     <ClInclude Include="HelloGL.h" />
+    <ClInclude Include="MeshLoader.h" />
+    <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="StaticObject.h" />
     <ClInclude Include="Structures.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="FlyingObject.cpp" />
     <ClCompile Include="GLUTCallbacks.cpp" />
     <ClCompile Include="HelloGL.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="DrawMethods.cpp" />
+    <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="SceneObject.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

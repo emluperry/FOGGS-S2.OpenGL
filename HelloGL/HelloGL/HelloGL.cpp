@@ -4,6 +4,13 @@
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	srand(time(NULL));
+	InitGL(argc, argv);
+	InitObjects();
+	glutMainLoop();
+}
+
+void HelloGL::InitObjects()
+{
 	camera = new Camera();
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -15,11 +22,11 @@ HelloGL::HelloGL(int argc, char* argv[])
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	Cube::Load((char*)"cube.txt");
+	Mesh* cubeMesh = MeshLoader::Load((char*)"cube.txt");
+	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
 
 	for (int i = 0; i < 10; i++)
 	{
-		cubes[i] = new Cube(((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 		int direction = rand() % 2;
 		if (direction == 0)
 		{
@@ -29,9 +36,16 @@ HelloGL::HelloGL(int argc, char* argv[])
 		{
 			direction = -1;
 		}
-		cubes[i]->SetRotation(((rand() % 10) / 10.0f)*direction);
+		objects[i] = new FlyingObject(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
 	}
+	for (int i = 10; i < 20; i++)
+	{
+		objects[i] = new StaticObject(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+	}
+}
 
+void HelloGL::InitGL(int argc, char* argv[])
+{
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
@@ -53,16 +67,14 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-
-	glutMainLoop();
 }
 
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
-		cubes[i]->Draw();
+		objects[i]->Draw();
 	}
 	glFlush();
 	glutSwapBuffers();
@@ -71,9 +83,9 @@ void HelloGL::Display()
 void HelloGL::Update()
 {
 	glLoadIdentity();
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
-		cubes[i]->Update();
+		objects[i]->Update();
 	}
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
