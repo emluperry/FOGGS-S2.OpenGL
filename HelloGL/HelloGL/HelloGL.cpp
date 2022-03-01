@@ -22,11 +22,11 @@ void HelloGL::InitObjects()
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	Mesh* cubeMesh = MeshLoader::Load((char*)"pyramid.txt");
+	Mesh* cubeMesh = MeshLoader::Load((char*)"cube.txt");
+	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
 
 	for (int i = 0; i < 10; i++)
 	{
-		objects[i] = new FlyingObject(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 		int direction = rand() % 2;
 		if (direction == 0)
 		{
@@ -36,7 +36,11 @@ void HelloGL::InitObjects()
 		{
 			direction = -1;
 		}
-		//objects[i]->SetRotation(((rand() % 10) / 10.0f) * direction);
+		objects[i] = new FlyingObject(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
+	}
+	for (int i = 10; i < 20; i++)
+	{
+		objects[i] = new StaticObject(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 	}
 }
 
@@ -68,7 +72,7 @@ void HelloGL::InitGL(int argc, char* argv[])
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		objects[i]->Draw();
 	}
@@ -79,7 +83,7 @@ void HelloGL::Display()
 void HelloGL::Update()
 {
 	glLoadIdentity();
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		objects[i]->Update();
 	}

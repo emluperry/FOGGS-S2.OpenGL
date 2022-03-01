@@ -144,6 +144,7 @@
     <ClInclude Include="HelloGL.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="StaticObject.h" />
     <ClInclude Include="Structures.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="SceneObject.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

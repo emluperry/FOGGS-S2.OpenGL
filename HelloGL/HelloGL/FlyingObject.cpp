@@ -1,9 +1,9 @@
 #include "FlyingObject.h"
 #include <iostream>
 
-FlyingObject::FlyingObject(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
+FlyingObject::FlyingObject(Mesh* mesh, float x, float y, float z, int rotation) : SceneObject(mesh)
 {
-	_rotation = 0;
+	_rotation = rotation;
 	speed = 1;
 	_position.x = x;
 	_position.y = y;

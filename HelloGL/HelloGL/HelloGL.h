@@ -8,6 +8,7 @@
 #include "MeshLoader.h"
 #include "SceneObject.h"
 #include "FlyingObject.h"
+#include "StaticObject.h"
 
 #define REFRESHRATE 16
 
@@ -15,7 +16,7 @@ class HelloGL
 {
 private:
 	Camera* camera;
-	SceneObject* objects[10];
+	SceneObject* objects[20];
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor

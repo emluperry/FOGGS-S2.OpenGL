@@ -1,6 +1,5 @@
 #pragma once
 #include "SceneObject.h"
-#include <fstream>
 
 class FlyingObject : public SceneObject
 {
@@ -11,7 +10,7 @@ private:
 	float speed;
 
 public:
-	FlyingObject(Mesh* mesh, float x, float y, float z);
+	FlyingObject(Mesh* mesh, float x, float y, float z, int rotation);
 	~FlyingObject() override;
 	void Draw() override;
 	void Update() override;
