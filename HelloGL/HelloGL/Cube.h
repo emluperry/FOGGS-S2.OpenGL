@@ -9,10 +9,7 @@
 class Cube
 {
 private:
-	static Vertex* indexedVertices;
-	static Color* indexedColors;
-	static GLushort* indices;
-	static int numVertices, numColors, numIndices;
+	Mesh* _mesh;
 
 	GLfloat _rotation;
 	float angle;
@@ -20,9 +17,8 @@ private:
 	float speed;
 
 public:
-	Cube(float x, float y, float z);
+	Cube(Mesh* mesh, float x, float y, float z);
 	~Cube();
-	static bool Load(char* path);
 	void Draw();
 	void Update();
 	void SetRotation(GLfloat rot);
