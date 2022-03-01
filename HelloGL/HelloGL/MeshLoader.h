@@ -10,5 +10,6 @@
 namespace MeshLoader
 {
 	Mesh* Load(char* path);
+	TexturedMesh* LoadTextured(char* path);
 };
 

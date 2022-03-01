@@ -31,3 +31,15 @@ struct Mesh
 	GLushort* indices;
 	int vertexCount, colorCount, indexCount;
 };
+
+struct TexCoord
+{
+	GLfloat u, v;
+};
+
+struct TexturedMesh
+{
+	Mesh* mesh;
+	TexCoord* texCoords;
+	int texCoordCount;
+};
