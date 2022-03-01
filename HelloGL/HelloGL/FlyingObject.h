@@ -1,16 +1,10 @@
 #pragma once
-#include <Windows.h>
-#include <gl/GL.h>
-#include <gl/GLU.h>
-#include "GL\freeglut.h"
-#include "Structures.h"
+#include "SceneObject.h"
 #include <fstream>
 
-class FlyingObject
+class FlyingObject : public SceneObject
 {
 private:
-	Mesh* _mesh;
-
 	GLfloat _rotation;
 	float angle;
 	Vector3 _position;
@@ -18,9 +12,9 @@ private:
 
 public:
 	FlyingObject(Mesh* mesh, float x, float y, float z);
-	~FlyingObject();
-	void Draw();
-	void Update();
+	~FlyingObject() override;
+	void Draw() override;
+	void Update() override;
 	void SetRotation(GLfloat rot);
 };
 

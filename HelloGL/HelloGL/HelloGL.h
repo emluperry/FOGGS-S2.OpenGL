@@ -6,6 +6,7 @@
 #include "GLUTCallbacks.h"
 #include "Structures.h"
 #include "MeshLoader.h"
+#include "SceneObject.h"
 #include "FlyingObject.h"
 
 #define REFRESHRATE 16
@@ -14,7 +15,7 @@ class HelloGL
 {
 private:
 	Camera* camera;
-	FlyingObject* cubes[10];
+	SceneObject* objects[10];
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor

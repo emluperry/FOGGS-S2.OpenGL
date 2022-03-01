@@ -26,7 +26,7 @@ void HelloGL::InitObjects()
 
 	for (int i = 0; i < 10; i++)
 	{
-		cubes[i] = new FlyingObject(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		objects[i] = new FlyingObject(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 		int direction = rand() % 2;
 		if (direction == 0)
 		{
@@ -36,7 +36,7 @@ void HelloGL::InitObjects()
 		{
 			direction = -1;
 		}
-		cubes[i]->SetRotation(((rand() % 10) / 10.0f) * direction);
+		//objects[i]->SetRotation(((rand() % 10) / 10.0f) * direction);
 	}
 }
 
@@ -70,7 +70,7 @@ void HelloGL::Display()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (int i = 0; i < 10; i++)
 	{
-		cubes[i]->Draw();
+		objects[i]->Draw();
 	}
 	glFlush();
 	glutSwapBuffers();
@@ -81,7 +81,7 @@ void HelloGL::Update()
 	glLoadIdentity();
 	for (int i = 0; i < 10; i++)
 	{
-		cubes[i]->Update();
+		objects[i]->Update();
 	}
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
