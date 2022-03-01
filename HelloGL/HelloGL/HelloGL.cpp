@@ -4,6 +4,13 @@
 HelloGL::HelloGL(int argc, char* argv[])
 {
 	srand(time(NULL));
+	InitGL(argc, argv);
+	InitObjects();
+	glutMainLoop();
+}
+
+void HelloGL::InitObjects()
+{
 	camera = new Camera();
 	camera->eye.x = 0.0f;
 	camera->eye.y = 0.0f;
@@ -29,9 +36,12 @@ HelloGL::HelloGL(int argc, char* argv[])
 		{
 			direction = -1;
 		}
-		cubes[i]->SetRotation(((rand() % 10) / 10.0f)*direction);
+		cubes[i]->SetRotation(((rand() % 10) / 10.0f) * direction);
 	}
+}
 
+void HelloGL::InitGL(int argc, char* argv[])
+{
 	GLUTCallbacks::Init(this);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
@@ -53,8 +63,6 @@ HelloGL::HelloGL(int argc, char* argv[])
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-
-	glutMainLoop();
 }
 
 void HelloGL::Display()

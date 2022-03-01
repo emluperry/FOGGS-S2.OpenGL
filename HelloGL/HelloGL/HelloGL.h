@@ -18,6 +18,9 @@ public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
 
+	void InitObjects();
+	void InitGL(int argc, char* argv[]);
+
 	void Update();
 	void Keyboard(unsigned char key, int x, int y);
 
