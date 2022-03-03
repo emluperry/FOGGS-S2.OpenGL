@@ -22,8 +22,11 @@ void HelloGL::InitObjects()
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	Mesh* cubeMesh = MeshLoader::Load((char*)"cube.txt");
+	TexturedMesh* cubeMesh = MeshLoader::LoadTextured((char*)"cube.txt");
 	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
+
+	Texture2D* cubeTexture = new Texture2D();
+	cubeTexture->Load((char*)"Images/stars.raw", 512, 512);
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -36,7 +39,10 @@ void HelloGL::InitObjects()
 		{
 			direction = -1;
 		}
-		objects[i] = new FlyingObject(cubeMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
+		FlyingObject* object = new FlyingObject(cubeMesh, cubeTexture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
+		object->SetRotation((rand() % 10) / 10);
+		objects[i] = object;
+
 	}
 	for (int i = 10; i < 20; i++)
 	{
@@ -63,8 +69,9 @@ void HelloGL::InitGL(int argc, char* argv[])
 	glViewport(0, 0, 800, 800);
 	gluPerspective(45, 1, 1, 10000);
 
-	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 }
