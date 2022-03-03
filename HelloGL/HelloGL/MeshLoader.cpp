@@ -113,7 +113,7 @@ namespace MeshLoader
 
 		LoadVertices(inFile, *(mesh->mesh));
 		LoadColours(inFile, *(mesh->mesh));
-		LoadTexCoords(inFile, mesh);
+		LoadTexCoords(inFile, *mesh);
 		LoadIndices(inFile, *(mesh->mesh));
 
 		return mesh;
