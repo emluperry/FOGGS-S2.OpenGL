@@ -23,13 +23,13 @@ void StaticObject::Draw()
 {
 	if (_mesh->vertices != nullptr && _mesh->colors != nullptr && _mesh->indices != nullptr)
 	{
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
 		if (_texMesh != nullptr)
 		{
 			glBindTexture(GL_TEXTURE_2D, _texture->GetId());
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
 		glVertexPointer(3, GL_FLOAT, 0, _mesh->vertices);
 		glColorPointer(3, GL_FLOAT, 0, _mesh->colors);
 
@@ -43,12 +43,12 @@ void StaticObject::Draw()
 		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
 		glPopMatrix();
 
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
 		if (_texMesh != nullptr)
 		{
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 }
 
