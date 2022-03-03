@@ -40,7 +40,7 @@ void HelloGL::InitObjects()
 			direction = -1;
 		}
 		FlyingObject* object = new FlyingObject(cubeMesh, cubeTexture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
-		object->SetRotation((rand() % 10) / 10);
+		object->SetRotation(((rand() % 10) / 10) -5);
 		objects[i] = object;
 
 	}
