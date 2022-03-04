@@ -43,11 +43,9 @@ delete[] tempTextureData;
 return true;
 }
 
-bool Texture2D::LoadBmp(char* path, int width, int height)
+bool Texture2D::LoadBmp(char* path)
 {
 	std::ifstream inFile;
-	_width = width;
-	_height = height;
 	inFile.open(path, std::ios::binary);
 
 	if (!inFile.good())
@@ -55,13 +53,14 @@ bool Texture2D::LoadBmp(char* path, int width, int height)
 		std::cerr << "Can't open texture file " << path << std::endl;
 	}
 
-	bmpFile_type type;
-	bmpFile_header header;
-	bmp_infoheader infoh;
-	inFile.read((char*)&type, sizeof(bmpFile_type));
-	inFile.read((char*)&header, sizeof(bmpFile_header));
-	inFile.read((char*)&infoh, sizeof(bmp_infoheader));
-	if (infoh.width != infoh.height)
+	char header[14];
+	char infoh[40];
+	inFile.read((char*)header, 14);
+	inFile.read((char*)&infoh, 40);
+
+	_width = ((unsigned char)infoh[4] << 24u) + (unsigned char)infoh[5] + (unsigned char)infoh[6] + (unsigned char)infoh[7];
+	_height = ((unsigned char)infoh[8] << 24u) + (unsigned char)infoh[9] + (unsigned char)infoh[10] + (unsigned char)infoh[11];
+	if (_width != _height)
 	{
 		std::cerr << "Bitmap is not square." << std::endl;
 		return false;
@@ -73,10 +72,10 @@ bool Texture2D::LoadBmp(char* path, int width, int height)
 	std::stringstream stream;
 
 	int index = 0;
-	for (int row = 0; row < infoh.height; row++)
+	for (int row = 0; row < _height; row++)
 	{
 		inFile.read((char*)imageBuffer, sizeof(bmp_color));
-		for (int col = 0; col < infoh.width; col++)
+		for (int col = 0; col < _width; col++)
 		{
 			stream << imageBuffer->r << imageBuffer->g << imageBuffer->b;
 		}
@@ -96,7 +95,7 @@ bool Texture2D::LoadBmp(char* path, int width, int height)
 	glGenTextures(1, &_ID); //get next texture ID
 	glBindTexture(GL_TEXTURE_2D, _ID); //bind texture to ID
 	//glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData); //specify details of texture image
-	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, _width, _height, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData);
 
 	return true;
 }
@@ -140,7 +139,7 @@ bool Texture2D::LoadTga(char* path)
 	}
 	if (type == 2)
 	{
-		std::cout << path << "Loaded." << std::endl;
+		std::cout << path << " loaded." << std::endl;
 
 		glGenTextures(1, &_ID); //get next texture ID
 		glBindTexture(GL_TEXTURE_2D, _ID); //bind texture to ID
