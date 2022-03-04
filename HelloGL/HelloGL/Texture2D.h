@@ -8,11 +8,6 @@
 #include <iostream>
 #include <sstream>
 
-struct bmp_color
-{
-	unsigned char b, g, r;
-};
-
 class Texture2D
 {
 private:

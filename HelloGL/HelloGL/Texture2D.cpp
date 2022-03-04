@@ -58,45 +58,36 @@ bool Texture2D::LoadBmp(char* path)
 	inFile.read((char*)header, 14);
 	inFile.read((char*)&infoh, 40);
 
-	_width = ((unsigned char)infoh[4] << 24u) + (unsigned char)infoh[5] + (unsigned char)infoh[6] + (unsigned char)infoh[7];
-	_height = ((unsigned char)infoh[8] << 24u) + (unsigned char)infoh[9] + (unsigned char)infoh[10] + (unsigned char)infoh[11];
+	_width = (int)((unsigned char)infoh[7] << 24u) + ((unsigned char)infoh[6] << 16u) + ((unsigned char)infoh[5] << 8u) + (unsigned char)infoh[4];
+	_height = (int)((unsigned char)infoh[11] << 24u) + ((unsigned char)infoh[10] << 16u) + ((unsigned char)infoh[9] << 8u) + (unsigned char)infoh[8];
 	if (_width != _height)
 	{
 		std::cerr << "Bitmap is not square." << std::endl;
 		return false;
 	}
 
-	//create buffer to hold each line as it is read in
-	bmp_color* imageBuffer = new bmp_color;
+	int startPos = (int)((unsigned char)header[13] << 24u) + ((unsigned char)header[12] << 16u) + ((unsigned char)header[11] << 8u) + (unsigned char)header[10];
+	inFile.seekg(startPos);
 
-	std::stringstream stream;
-
-	int index = 0;
-	for (int row = 0; row < _height; row++)
-	{
-		inFile.read((char*)imageBuffer, sizeof(bmp_color));
-		for (int col = 0; col < _width; col++)
-		{
-			stream << imageBuffer->r << imageBuffer->g << imageBuffer->b;
-		}
-	}
+	int mode = ((int)((unsigned char)infoh[15] << 8u) + (unsigned char)infoh[14]) / 8; //bits per pixel
+	int fileSize = _height * _width * mode;
+	std::cout << fileSize << std::endl;
+	std::cout << _height << std::endl;
+	std::cout << _width << std::endl;
+	std::cout << mode << std::endl;
+	char* tempTextureData = new char[fileSize];
+	inFile.read(tempTextureData, fileSize);
 
 	inFile.close();
-	delete imageBuffer;
-
-	stream.seekg(0, std::ios::end);
-	int fileSize = (int)stream.tellg();
-	char* tempTextureData = new char[fileSize];
-	stream.seekg(0, std::ios::beg);
-	stream.read(tempTextureData, fileSize);
-
 	std::cout << path << " loaded." << std::endl;
 
 	glGenTextures(1, &_ID); //get next texture ID
 	glBindTexture(GL_TEXTURE_2D, _ID); //bind texture to ID
-	//glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData); //specify details of texture image
-	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, _width, _height, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData);
 
+	if (mode == 4)
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, _width, _height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+	else
+		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, _width, _height, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
 	return true;
 }
 
