@@ -52,6 +52,7 @@ public:
 
 	bool Load(char* path, int width, int height);
 	bool LoadBmp(char* path, int width, int height);
+	bool LoadTga(char* path);
 
 	GLuint GetId() const { return _ID; }
 	int GetWidth() const { return _width; }
