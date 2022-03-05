@@ -37,6 +37,7 @@ bool Texture2D::Load(char* path, int width, int height)
 	glGenTextures(1, &_ID); //get next texture ID
 	glBindTexture(GL_TEXTURE_2D, _ID); //bind texture to ID
 	//glTexImage2D(GL_TEXTURE_2D, 0, 3, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData); //specify details of texture image
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); //required by glteximage2d
 	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData);
 
 delete[] tempTextureData;
@@ -51,6 +52,7 @@ bool Texture2D::LoadBmp(char* path)
 	if (!inFile.good())
 	{
 		std::cerr << "Can't open texture file " << path << std::endl;
+		return false;
 	}
 
 	char header[14];
@@ -69,12 +71,13 @@ bool Texture2D::LoadBmp(char* path)
 	int startPos = (int)((unsigned char)header[13] << 24u) + ((unsigned char)header[12] << 16u) + ((unsigned char)header[11] << 8u) + (unsigned char)header[10];
 	inFile.seekg(startPos);
 
-	int mode = ((int)((unsigned char)infoh[15] << 8u) + (unsigned char)infoh[14]) / 8; //bits per pixel
-	int fileSize = _height * _width * mode;
-	std::cout << fileSize << std::endl;
-	std::cout << _height << std::endl;
-	std::cout << _width << std::endl;
-	std::cout << mode << std::endl;
+	int bytesPerPixel = ((int)((unsigned char)infoh[15] << 8u) + (unsigned char)infoh[14]) / 8; //bits per pixel
+	if (bytesPerPixel != 3)
+	{
+		std::cerr << "Code only supports 24bit bmp files." << std::endl;
+		return false;
+	}
+	int fileSize = _height * _width * bytesPerPixel;
 	char* tempTextureData = new char[fileSize];
 	inFile.read(tempTextureData, fileSize);
 
@@ -83,11 +86,9 @@ bool Texture2D::LoadBmp(char* path)
 
 	glGenTextures(1, &_ID); //get next texture ID
 	glBindTexture(GL_TEXTURE_2D, _ID); //bind texture to ID
-
-	if (mode == 4)
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, _width, _height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, tempTextureData);
-	else
-		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, _width, _height, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, _width, _height, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+		
+	delete[] tempTextureData;
 	return true;
 }
 

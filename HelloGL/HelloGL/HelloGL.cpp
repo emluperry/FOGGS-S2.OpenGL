@@ -26,7 +26,7 @@ void HelloGL::InitObjects()
 	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
 
 	Texture2D* cubeTexture = new Texture2D();
-	cubeTexture->LoadBmp((char*)"Images/test.bmp");
+	cubeTexture->Load((char*)"Images/test.raw", 512, 512);
 
 	for (int i = 0; i < 10; i++)
 	{
