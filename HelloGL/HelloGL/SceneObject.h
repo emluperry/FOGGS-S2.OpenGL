@@ -12,6 +12,10 @@ protected:
 	Mesh* _mesh;
 	TexturedMesh* _texMesh;
 	Texture2D* _texture;
+	Material* _material;
+
+	void SetupDraw();
+	void UndoDraw();
 public:
 	SceneObject(Mesh* mesh);
 	SceneObject(TexturedMesh* mesh, Texture2D* texture);

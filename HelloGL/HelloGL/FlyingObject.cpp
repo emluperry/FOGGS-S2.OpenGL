@@ -17,6 +17,24 @@ FlyingObject::FlyingObject(TexturedMesh* mesh, Texture2D* texture, float x, floa
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
+
+	_material = new Material();
+	_material->ambient.x = 0.8;
+	_material->ambient.y = 0.05;
+	_material->ambient.z = 0.05;
+	_material->ambient.w = 1.0;
+
+	_material->diffuse.x = 0.8;
+	_material->diffuse.y = 0.05;
+	_material->diffuse.z = 0.05;
+	_material->diffuse.w = 1.0;
+
+	_material->specular.x = 1.0;
+	_material->specular.y = 1.0;
+	_material->specular.z = 1.0;
+	_material->specular.w = 1.0;
+
+	_material->shininess = 100.0f;
 }
 
 FlyingObject::~FlyingObject()
@@ -28,34 +46,7 @@ void FlyingObject::Draw()
 {
 	if (_mesh->vertices != nullptr && _mesh->indices != nullptr)
 	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		if (_mesh->colors != nullptr)
-		{
-			glEnableClientState(GL_COLOR_ARRAY);
-		}
-		if (_texMesh != nullptr)
-		{
-			glBindTexture(GL_TEXTURE_2D, _texture->GetId());
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-		if (_mesh->normals != nullptr)
-		{
-			glEnableClientState(GL_NORMAL_ARRAY);
-		}
-
-		glVertexPointer(3, GL_FLOAT, 0, _mesh->vertices);
-		if (_mesh->colors != nullptr)
-		{
-			glColorPointer(3, GL_FLOAT, 0, _mesh->colors);
-		}
-		if (_mesh->normals != nullptr)
-		{
-			glNormalPointer(GL_FLOAT, 0, _mesh->normals);
-		}
-		if (_texMesh != nullptr)
-		{
-			glTexCoordPointer(2, GL_FLOAT, 0, _texMesh->texCoords);
-		}
+		SetupDraw();
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
@@ -63,19 +54,7 @@ void FlyingObject::Draw()
 		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
 		glPopMatrix();
 
-		if (_mesh->normals != nullptr)
-		{
-			glDisableClientState(GL_NORMAL_ARRAY);
-		}
-		if (_texMesh != nullptr)
-		{
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-		if (_mesh->colors != nullptr)
-		{
-			glDisableClientState(GL_COLOR_ARRAY);
-		}
-		glDisableClientState(GL_VERTEX_ARRAY);
+		UndoDraw();
 	}
 }
 
