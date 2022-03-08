@@ -1,13 +1,13 @@
 #include "StaticObject.h"
 
-StaticObject::StaticObject(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
+StaticObject::StaticObject(Mesh* mesh, Material* material, float x, float y, float z) : SceneObject(mesh, material)
 {
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
 }
 
-StaticObject::StaticObject(TexturedMesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObject(mesh, texture)
+StaticObject::StaticObject(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z) : SceneObject(mesh, texture, material)
 {
 	_position.x = x;
 	_position.y = y;

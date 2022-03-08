@@ -1,19 +1,19 @@
 #include "SceneObject.h"
 
-SceneObject::SceneObject(Mesh* mesh)
+SceneObject::SceneObject(Mesh* mesh, Material* material)
 {
 	_mesh = mesh;
 	_texMesh = nullptr;
 	_texture = nullptr;
-	_material = nullptr;
+	_material = material;
 }
 
-SceneObject::SceneObject(TexturedMesh* mesh, Texture2D* texture)
+SceneObject::SceneObject(TexturedMesh* mesh, Texture2D* texture, Material* material)
 {
 	_texMesh = mesh;
 	_mesh = mesh->mesh;
 	_texture = texture;
-	_material = nullptr;
+	_material = material;
 }
 
 SceneObject::~SceneObject()

@@ -17,8 +17,8 @@ protected:
 	void SetupDraw();
 	void UndoDraw();
 public:
-	SceneObject(Mesh* mesh);
-	SceneObject(TexturedMesh* mesh, Texture2D* texture);
+	SceneObject(Mesh* mesh, Material* material);
+	SceneObject(TexturedMesh* mesh, Texture2D* texture, Material* material);
 	virtual ~SceneObject();
 
 	virtual void Update();

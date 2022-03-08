@@ -29,6 +29,25 @@ void HelloGL::InitObjects()
 	Texture2D* cubeTexture = new Texture2D();
 	cubeTexture->Load((char*)"Images/Penguins.raw", 512, 512);
 
+	Material* cubeMaterial = new Material();
+	cubeMaterial = new Material();
+	cubeMaterial->ambient.x = 0.05;
+	cubeMaterial->ambient.y = 0.8;
+	cubeMaterial->ambient.z = 0.05;
+	cubeMaterial->ambient.w = 1.0;
+
+	cubeMaterial->diffuse.x = 0.3;
+	cubeMaterial->diffuse.y = 0.05;
+	cubeMaterial->diffuse.z = 0.05;
+	cubeMaterial->diffuse.w = 1.0;
+
+	cubeMaterial->specular.x = 1.0;
+	cubeMaterial->specular.y = 1.0;
+	cubeMaterial->specular.z = 1.0;
+	cubeMaterial->specular.w = 1.0;
+
+	cubeMaterial->shininess = 100.0f;
+
 	for (int i = 0; i < 10; i++)
 	{
 		int direction = rand() % 2;
@@ -40,14 +59,14 @@ void HelloGL::InitObjects()
 		{
 			direction = -1;
 		}
-		FlyingObject* object = new FlyingObject(cubeMesh, cubeTexture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
+		FlyingObject* object = new FlyingObject(cubeMesh, cubeTexture, cubeMaterial, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
 		object->SetRotation(((rand() % 10) / 10) -5);
 		objects[i] = object;
 
 	}
 	for (int i = 10; i < 20; i++)
 	{
-		objects[i] = new StaticObject(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		objects[i] = new StaticObject(pyramidMesh, nullptr, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 	}
 }
 
