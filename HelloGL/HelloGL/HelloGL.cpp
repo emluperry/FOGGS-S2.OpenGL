@@ -6,6 +6,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 	srand(time(NULL));
 	InitGL(argc, argv);
 	InitObjects();
+	InitLighting();
 	glutMainLoop();
 }
 
@@ -71,9 +72,36 @@ void HelloGL::InitGL(int argc, char* argv[])
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+}
+
+void HelloGL::InitLighting()
+{
+	_lightPosition = new Vector4();
+	_lightPosition->x = 0.0;
+	_lightPosition->y = 0.0;
+	_lightPosition->z = 1.0;
+	_lightPosition->w = 0.0;
+
+	_lightData = new Lighting();
+	_lightData->ambient.x = 0.2;
+	_lightData->ambient.y = 0.2;
+	_lightData->ambient.z = 0.2;
+	_lightData->ambient.w = 1.0;
+
+	_lightData->diffuse.x = 0.8;
+	_lightData->diffuse.y = 0.8;
+	_lightData->diffuse.z = 0.8;
+	_lightData->diffuse.w = 1.0;
+
+	_lightData->specular.x = 0.2;
+	_lightData->specular.y = 0.2;
+	_lightData->specular.z = 0.2;
+	_lightData->specular.w = 1.0;
 }
 
 void HelloGL::Display()
@@ -94,6 +122,10 @@ void HelloGL::Update()
 	{
 		objects[i]->Update();
 	}
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
+	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
 }

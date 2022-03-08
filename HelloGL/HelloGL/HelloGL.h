@@ -17,11 +17,15 @@ class HelloGL
 private:
 	Camera* camera;
 	SceneObject* objects[20];
+
+	Vector4* _lightPosition;
+	Lighting* _lightData;
 public:
 	HelloGL(int argc, char* argv[]); //constructor
 	~HelloGL(void); //destructor
 
 	void InitObjects();
+	void InitLighting();
 	void InitGL(int argc, char* argv[]);
 
 	void Update();
