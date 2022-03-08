@@ -21,7 +21,7 @@ StaticObject::~StaticObject()
 
 void StaticObject::Draw()
 {
-	if (_mesh->vertices != nullptr && _mesh->colors != nullptr && _mesh->indices != nullptr)
+	if (_mesh->vertices != nullptr && _mesh->indices != nullptr)
 	{
 		SetupDraw();
 
@@ -37,4 +37,24 @@ void StaticObject::Draw()
 void StaticObject::Update()
 {
 
+}
+
+void StaticObject::MoveUp(float speed)
+{
+	_position.z -= speed;
+}
+
+void StaticObject::MoveDown(float speed)
+{
+	_position.z += speed;
+}
+
+void StaticObject::MoveLeft(float speed)
+{
+	_position.x -= speed;
+}
+
+void StaticObject::MoveRight(float speed)
+{
+	_position.x += speed;
 }

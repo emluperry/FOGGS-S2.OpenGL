@@ -17,6 +17,7 @@ class HelloGL
 private:
 	Camera* camera;
 	SceneObject* objects[20];
+	StaticObject* player;
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;
@@ -30,6 +31,7 @@ public:
 
 	void Update();
 	void Keyboard(unsigned char key, int x, int y);
+	void SpecialInput(int key, int x, int y);
 
 	void Display();
 };

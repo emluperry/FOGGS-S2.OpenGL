@@ -12,5 +12,10 @@ public:
 	~StaticObject() override;
 	void Draw() override;
 	void Update() override;
+
+	void MoveUp(float speed);
+	void MoveDown(float speed);
+	void MoveLeft(float speed);
+	void MoveRight(float speed);
 };
 
