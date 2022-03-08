@@ -7,6 +7,11 @@ struct Vector3
 	float z;
 };
 
+struct Vector4
+{
+	float x, y, z, w;
+};
+
 struct Camera
 {
 	Vector3 eye;
@@ -42,4 +47,19 @@ struct TexturedMesh
 	Mesh* mesh;
 	TexCoord* texCoords;
 	int texCoordCount;
+};
+
+struct Lighting
+{
+	Vector4 ambient;
+	Vector4 diffuse;
+	Vector4 specular;
+};
+
+struct Material
+{
+	Vector4 ambient;
+	Vector4 diffuse;
+	Vector4 specular;
+	GLfloat shininess;
 };
