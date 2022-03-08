@@ -22,8 +22,8 @@ void HelloGL::InitObjects()
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	TexturedMesh* cubeMesh = MeshLoader::LoadTextured((char*)"cube.txt");
-	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
+	TexturedMesh* cubeMesh = MeshLoader::LoadTextured((char*)"cube.txt", true);
+	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt", false);
 
 	Texture2D* cubeTexture = new Texture2D();
 	cubeTexture->Load((char*)"Images/test.raw", 512, 512);
