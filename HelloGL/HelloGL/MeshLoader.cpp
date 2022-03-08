@@ -10,6 +10,7 @@ namespace MeshLoader
 	void LoadVertices(ifstream& inFile, Mesh& mesh);
 	void LoadColours(ifstream& inFile, Mesh& mesh);
 	void LoadIndices(ifstream& inFile, Mesh& mesh);
+	void LoadTexCoords(ifstream& inFile, TexturedMesh& mesh);
 
 	void LoadVertices(ifstream& inFile, Mesh& mesh)
 	{
@@ -40,6 +41,22 @@ namespace MeshLoader
 				inFile >> mesh.colors[i].r;
 				inFile >> mesh.colors[i].g;
 				inFile >> mesh.colors[i].b;
+			}
+		}
+	}
+
+	void LoadTexCoords(ifstream& inFile, TexturedMesh& mesh)
+	{
+		inFile >> mesh.texCoordCount;
+
+		if (mesh.texCoordCount > 0)
+		{
+			mesh.texCoords = new TexCoord[mesh.texCoordCount];
+
+			for (int i = 0; i < mesh.texCoordCount; i++)
+			{
+				inFile >> mesh.texCoords[i].u;
+				inFile >> mesh.texCoords[i].v;
 			}
 		}
 	}
@@ -75,6 +92,29 @@ namespace MeshLoader
 		LoadVertices(inFile, *mesh);
 		LoadColours(inFile, *mesh);
 		LoadIndices(inFile, *mesh);
+
+		return mesh;
+	}
+
+	TexturedMesh* MeshLoader::LoadTextured(char* path)
+	{
+		TexturedMesh* mesh = new TexturedMesh();
+		mesh->mesh = new Mesh();
+
+		ifstream inFile;
+
+		inFile.open(path);
+
+		if (!inFile.good())
+		{
+			cerr << "Can't open texture file " << path << endl;
+			return nullptr;
+		}
+
+		LoadVertices(inFile, *(mesh->mesh));
+		LoadColours(inFile, *(mesh->mesh));
+		LoadTexCoords(inFile, *mesh);
+		LoadIndices(inFile, *(mesh->mesh));
 
 		return mesh;
 	}
