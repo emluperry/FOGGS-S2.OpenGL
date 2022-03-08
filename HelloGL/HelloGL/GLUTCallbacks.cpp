@@ -27,6 +27,11 @@ namespace GLUTCallbacks
 		helloGL->Keyboard(key, x, y);
 	}
 
+	void SpecialInput(int key, int x, int y)
+	{
+		helloGL->SpecialInput(key, x, y);
+	}
+
 	void Timer(int preferredRefresh)
 	{
 		int updateTime = glutGet(GLUT_ELAPSED_TIME);

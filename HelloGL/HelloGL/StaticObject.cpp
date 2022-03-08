@@ -1,13 +1,13 @@
 #include "StaticObject.h"
 
-StaticObject::StaticObject(Mesh* mesh, float x, float y, float z) : SceneObject(mesh)
+StaticObject::StaticObject(Mesh* mesh, Material* material, float x, float y, float z) : SceneObject(mesh, material)
 {
 	_position.x = x;
 	_position.y = y;
 	_position.z = z;
 }
 
-StaticObject::StaticObject(TexturedMesh* mesh, Texture2D* texture, float x, float y, float z) : SceneObject(mesh, texture)
+StaticObject::StaticObject(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z) : SceneObject(mesh, texture, material)
 {
 	_position.x = x;
 	_position.y = y;
@@ -21,38 +21,40 @@ StaticObject::~StaticObject()
 
 void StaticObject::Draw()
 {
-	if (_mesh->vertices != nullptr && _mesh->colors != nullptr && _mesh->indices != nullptr)
+	if (_mesh->vertices != nullptr && _mesh->indices != nullptr)
 	{
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-		if (_texMesh != nullptr)
-		{
-			glBindTexture(GL_TEXTURE_2D, _texture->GetId());
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-		glVertexPointer(3, GL_FLOAT, 0, _mesh->vertices);
-		glColorPointer(3, GL_FLOAT, 0, _mesh->colors);
-
-		if (_texMesh != nullptr)
-		{
-			glTexCoordPointer(2, GL_FLOAT, 0, _texMesh->texCoords);
-		}
+		SetupDraw();
 
 		glPushMatrix();
 		glTranslatef(_position.x, _position.y, _position.z);
 		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
 		glPopMatrix();
 
-		if (_texMesh != nullptr)
-		{
-			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		}
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
+		UndoDraw();
 	}
 }
 
 void StaticObject::Update()
 {
 
+}
+
+void StaticObject::MoveUp(float speed)
+{
+	_position.z -= speed;
+}
+
+void StaticObject::MoveDown(float speed)
+{
+	_position.z += speed;
+}
+
+void StaticObject::MoveLeft(float speed)
+{
+	_position.x -= speed;
+}
+
+void StaticObject::MoveRight(float speed)
+{
+	_position.x += speed;
 }

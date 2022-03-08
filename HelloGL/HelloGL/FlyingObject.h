@@ -10,8 +10,8 @@ private:
 	float speed;
 
 public:
-	FlyingObject(Mesh* mesh, float x, float y, float z, int rotation);
-	FlyingObject(TexturedMesh* mesh, Texture2D* texture, float x, float y, float z, int rotation);
+	FlyingObject(Mesh* mesh, Material* material, float x, float y, float z, int rotation);
+	FlyingObject(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z, int rotation);
 	~FlyingObject() override;
 	void Draw() override;
 	void Update() override;

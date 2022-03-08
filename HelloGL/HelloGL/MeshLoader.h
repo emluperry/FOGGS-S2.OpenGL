@@ -9,7 +9,7 @@
 
 namespace MeshLoader
 {
-	Mesh* Load(char* path);
-	TexturedMesh* LoadTextured(char* path);
+	Mesh* Load(char* path, bool hasNormals);
+	TexturedMesh* LoadTextured(char* path, bool hasNormals);
 };
 

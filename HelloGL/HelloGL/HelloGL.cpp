@@ -6,6 +6,7 @@ HelloGL::HelloGL(int argc, char* argv[])
 	srand(time(NULL));
 	InitGL(argc, argv);
 	InitObjects();
+	InitLighting();
 	glutMainLoop();
 }
 
@@ -22,11 +23,49 @@ void HelloGL::InitObjects()
 	camera->up.y = 1.0f;
 	camera->up.z = 0.0f;
 
-	TexturedMesh* cubeMesh = MeshLoader::LoadTextured((char*)"cube.txt");
-	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt");
+	TexturedMesh* cubeMesh = MeshLoader::LoadTextured((char*)"cube.txt", true);
+	Mesh* pyramidMesh = MeshLoader::Load((char*)"pyramid.txt", false);
 
 	Texture2D* cubeTexture = new Texture2D();
-	cubeTexture->Load((char*)"Images/test.raw", 512, 512);
+	cubeTexture->Load((char*)"Images/Penguins.raw", 512, 512);
+	Texture2D* playerTexture = new Texture2D();
+	playerTexture->LoadBmp((char*)"Images/test.bmp");
+
+	Material* cubeMaterial = new Material();
+	cubeMaterial->ambient.x = 0.05;
+	cubeMaterial->ambient.y = 0.8;
+	cubeMaterial->ambient.z = 0.05;
+	cubeMaterial->ambient.w = 1.0;
+
+	cubeMaterial->diffuse.x = 0.3;
+	cubeMaterial->diffuse.y = 0.05;
+	cubeMaterial->diffuse.z = 0.05;
+	cubeMaterial->diffuse.w = 1.0;
+
+	cubeMaterial->specular.x = 1.0;
+	cubeMaterial->specular.y = 1.0;
+	cubeMaterial->specular.z = 1.0;
+	cubeMaterial->specular.w = 1.0;
+
+	cubeMaterial->shininess = 100.0f;
+
+	Material* playerMaterial = new Material();
+	playerMaterial->ambient.x = 0.2;
+	playerMaterial->ambient.y = 0.2;
+	playerMaterial->ambient.z = 0.2;
+	playerMaterial->ambient.w = 1.0;
+
+	playerMaterial->diffuse.x = 0.7;
+	playerMaterial->diffuse.y = 0.05;
+	playerMaterial->diffuse.z = 0.3;
+	playerMaterial->diffuse.w = 1.0;
+
+	playerMaterial->specular.x = 1.0;
+	playerMaterial->specular.y = 1.0;
+	playerMaterial->specular.z = 1.0;
+	playerMaterial->specular.w = 1.0;
+
+	playerMaterial->shininess = 50.0f;
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -39,15 +78,17 @@ void HelloGL::InitObjects()
 		{
 			direction = -1;
 		}
-		FlyingObject* object = new FlyingObject(cubeMesh, cubeTexture, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
+		FlyingObject* object = new FlyingObject(cubeMesh, cubeTexture, cubeMaterial, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f, direction);
 		object->SetRotation(((rand() % 10) / 10) -5);
 		objects[i] = object;
 
 	}
 	for (int i = 10; i < 20; i++)
 	{
-		objects[i] = new StaticObject(pyramidMesh, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
+		objects[i] = new StaticObject(pyramidMesh, nullptr, ((rand() % 400) / 10.0f) - 20.0f, ((rand() % 200) / 10.0f) - 10.0f, -(rand() % 1000) / 10.0f);
 	}
+
+	player = new StaticObject(cubeMesh, playerTexture, playerMaterial, 0,-2,-10);
 }
 
 void HelloGL::InitGL(int argc, char* argv[])
@@ -60,6 +101,7 @@ void HelloGL::InitGL(int argc, char* argv[])
 	glutCreateWindow("Simple OpenGL Program");
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutSpecialFunc(GLUTCallbacks::SpecialInput);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 
 	glMatrixMode(GL_PROJECTION);
@@ -71,9 +113,36 @@ void HelloGL::InitGL(int argc, char* argv[])
 
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+}
+
+void HelloGL::InitLighting()
+{
+	_lightPosition = new Vector4();
+	_lightPosition->x = 0.0;
+	_lightPosition->y = 0.0;
+	_lightPosition->z = 1.0;
+	_lightPosition->w = 0.0;
+
+	_lightData = new Lighting();
+	_lightData->ambient.x = 0.2;
+	_lightData->ambient.y = 0.2;
+	_lightData->ambient.z = 0.2;
+	_lightData->ambient.w = 1.0;
+
+	_lightData->diffuse.x = 0.8;
+	_lightData->diffuse.y = 0.8;
+	_lightData->diffuse.z = 0.8;
+	_lightData->diffuse.w = 1.0;
+
+	_lightData->specular.x = 0.2;
+	_lightData->specular.y = 0.2;
+	_lightData->specular.z = 0.2;
+	_lightData->specular.w = 1.0;
 }
 
 void HelloGL::Display()
@@ -83,6 +152,7 @@ void HelloGL::Display()
 	{
 		objects[i]->Draw();
 	}
+	player->Draw();
 	glFlush();
 	glutSwapBuffers();
 }
@@ -94,6 +164,10 @@ void HelloGL::Update()
 	{
 		objects[i]->Update();
 	}
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
+	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
 }
@@ -123,6 +197,27 @@ void HelloGL::Keyboard(unsigned char key, int x, int y)
 	if (key == 's')
 	{
 		camera->eye.y -= 0.1;
+	}
+}
+
+void HelloGL::SpecialInput(int key, int x, int y)
+{
+	float speed = 1.0;
+	if (key == GLUT_KEY_UP)
+	{
+		player->MoveUp(speed);
+	}
+	if (key == GLUT_KEY_DOWN)
+	{
+		player->MoveDown(speed);
+	}
+	if (key == GLUT_KEY_LEFT)
+	{
+		player->MoveLeft(speed);
+	}
+	if (key == GLUT_KEY_RIGHT)
+	{
+		player->MoveRight(speed);
 	}
 }
 
