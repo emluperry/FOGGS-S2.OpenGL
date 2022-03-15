@@ -13,6 +13,9 @@ int main()
     lists->InsertFirst(&head, 23);
     lists->InsertAfter(head->next->next, 34);
     lists->PrintList(head);
+
+    lists->DeleteAfter(head->next);
+    lists->PrintList(head);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
