@@ -58,13 +58,19 @@ void LinkedLists::InsertAfter(ListNode* lastNode, int d)
 
 void LinkedLists::DeleteList(ListNode** node)
 {
-	ListNode* pTemp = *node;
+	/*ListNode* pTemp = *node;
 	ListNode* next;
 	while (pTemp != nullptr)
 	{
 		next = pTemp->next;
 		delete pTemp;
 		pTemp = next;
+	}
+	*node = nullptr;*/
+	if (*node != nullptr)
+	{
+		DeleteList(&(*node)->next);
+		delete *node;
 	}
 	*node = nullptr;
 }

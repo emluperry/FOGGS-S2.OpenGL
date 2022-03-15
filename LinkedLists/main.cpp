@@ -27,6 +27,9 @@ int main()
 
     lists->DeleteNodeAtPos(&head, 1);
     lists->PrintList(head);
+
+    lists->DeleteList(&head);
+    lists->PrintList(head);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
