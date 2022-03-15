@@ -133,3 +133,12 @@ void LinkedLists::PrintList(ListNode* node)
 	}
 	std::cout << std::endl;
 }
+
+void LinkedLists::PrintListBackwards(ListNode* node)
+{
+	if (node != nullptr)
+	{
+		PrintListBackwards(node->next);
+		std::cout << std::setw(5) << "<--| " << node->data << " | ";
+	}
+}

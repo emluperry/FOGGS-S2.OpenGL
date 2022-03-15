@@ -16,9 +16,9 @@ public:
 	void InsertAfter(ListNode* lastNode, int d);
 	void DeleteList(ListNode** node);
 	void DeleteAfter(ListNode* node);
+	void DeleteNodeAtPos(ListNode** node, int pos);
 	ListNode* GetNode(ListNode* node, int pos);
 	ListNode* Find(ListNode* node, int val);
 	void PrintList(ListNode* node);
-
-	void DeleteNodeAtPos(ListNode** node, int pos);
+	void PrintListBackwards(ListNode* node);
 };

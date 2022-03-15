@@ -13,6 +13,8 @@ int main()
     lists->InsertFirst(&head, 23);
     lists->InsertAfter(head->next, 34);
     lists->PrintList(head);
+    lists->PrintListBackwards(head);
+    std::cout << std::endl;
 
     lists->DeleteAfter(head->next);
     lists->PrintList(head);
