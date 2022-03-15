@@ -107,17 +107,23 @@ ListNode* LinkedLists::GetNode(ListNode* node, int pos)
 
 ListNode* LinkedLists::Find(ListNode* node, int val)
 {
-	while (node != nullptr)
+	if (node->data != val)
 	{
-		if (node->data == val)
+		if (node->next != nullptr)
 		{
-			std::cout << "Value " << val << " found." << std::endl;
-			return node;
+			return Find(node->next, val);
 		}
-		node = node->next;
+		else
+		{
+			std::cout << "Value " << val << " not found in list." << std::endl;
+			return nullptr;
+		}
 	}
-	std::cout << val << " was not found in the list." << std::endl;
-	return nullptr;
+	else
+	{
+		std::cout << "Value " << val << " found." << std::endl;
+		return node;
+	}
 }
 
 void LinkedLists::PrintList(ListNode* node)
