@@ -9,6 +9,9 @@ int main()
     ListNode* head = nullptr;
 
     lists->MakeNode(&head, 56);
+    lists->MakeNode(&head, 87);
+    lists->InsertFirst(&head, 23);
+    lists->InsertAfter(head->next->next, 34);
     lists->PrintList(head);
 }
 

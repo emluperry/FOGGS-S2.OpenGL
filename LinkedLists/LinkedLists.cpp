@@ -34,12 +34,26 @@ ListNode* LinkedLists::MakeNode(ListNode** head, int d)
 
 ListNode* LinkedLists::InsertFirst(ListNode** head, int d)
 {
-	return NULL;
+	ListNode* newNode = new ListNode;
+	newNode->data = d;
+	newNode->next = *head;
+	*head = newNode;
+
+	return newNode;
 }
 
 void LinkedLists::InsertAfter(ListNode* lastNode, int d)
 {
+	if (lastNode == nullptr)
+	{
+		std::cout << "Lastnode cannot be null." << std::endl;
+		return;
+	}
 
+	ListNode* newNode = new ListNode;
+	newNode->data = d;
+	newNode->next = lastNode->next;
+	lastNode->next = newNode;
 }
 
 void LinkedLists::DeleteList(ListNode** node)
