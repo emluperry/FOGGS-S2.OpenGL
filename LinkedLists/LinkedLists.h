@@ -19,4 +19,6 @@ public:
 	ListNode* GetNode(ListNode* node, int pos);
 	ListNode* Find(ListNode* node, int val);
 	void PrintList(ListNode* node);
+
+	void DeleteNodeAtPos(ListNode** node, int pos);
 };

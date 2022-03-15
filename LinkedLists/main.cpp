@@ -11,7 +11,7 @@ int main()
     lists->MakeNode(&head, 56);
     lists->MakeNode(&head, 87);
     lists->InsertFirst(&head, 23);
-    lists->InsertAfter(head->next->next, 34);
+    lists->InsertAfter(head->next, 34);
     lists->PrintList(head);
 
     lists->DeleteAfter(head->next);
@@ -22,6 +22,9 @@ int main()
 
     lists->Find(head, 56);
     lists->Find(head, 10);
+
+    lists->DeleteNodeAtPos(&head, 1);
+    lists->PrintList(head);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

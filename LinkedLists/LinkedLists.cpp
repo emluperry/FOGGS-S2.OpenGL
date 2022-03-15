@@ -81,6 +81,13 @@ void LinkedLists::DeleteAfter(ListNode* node)
 	}
 }
 
+void LinkedLists::DeleteNodeAtPos(ListNode** node, int pos)
+{
+	ListNode* pTemp = GetNode(*node, pos-1);
+	DeleteAfter(pTemp);
+
+}
+
 ListNode* LinkedLists::GetNode(ListNode* node, int pos)
 {
 	int count = 0;
