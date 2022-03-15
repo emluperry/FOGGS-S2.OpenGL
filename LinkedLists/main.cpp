@@ -16,6 +16,12 @@ int main()
 
     lists->DeleteAfter(head->next);
     lists->PrintList(head);
+
+    lists->GetNode(head, 2);
+    lists->GetNode(head, 4);
+
+    lists->Find(head, 56);
+    lists->Find(head, 10);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
