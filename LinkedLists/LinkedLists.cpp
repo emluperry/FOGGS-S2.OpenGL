@@ -58,15 +58,6 @@ void LinkedLists::InsertAfter(ListNode* lastNode, int d)
 
 void LinkedLists::DeleteList(ListNode** node)
 {
-	/*ListNode* pTemp = *node;
-	ListNode* next;
-	while (pTemp != nullptr)
-	{
-		next = pTemp->next;
-		delete pTemp;
-		pTemp = next;
-	}
-	*node = nullptr;*/
 	if (*node != nullptr)
 	{
 		DeleteList(&(*node)->next);
@@ -134,16 +125,15 @@ ListNode* LinkedLists::Find(ListNode* node, int val)
 
 void LinkedLists::PrintList(ListNode* node)
 {
-	while (node != nullptr)
+	if (node != nullptr)
 	{
 		std::cout << std::setw(5) << "| " << node->data << " |-->";
-		node = node->next;
+		PrintList(node->next);
 	}
-	if (node == nullptr)
+	else
 	{
-		std::cout << "| NULL |" << std::endl;
+		std::cout << "| NULL |" << std::endl << std::endl;
 	}
-	std::cout << std::endl;
 }
 
 void LinkedLists::PrintListBackwards(ListNode* node)
