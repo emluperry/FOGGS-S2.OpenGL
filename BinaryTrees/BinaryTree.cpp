@@ -7,7 +7,6 @@ BinaryTree::BinaryTree()
 
 BinaryTree::~BinaryTree()
 {
-	DeleteTree();
 }
 
 void BinaryTree::MakeNode(int d, TreeNode** r)
@@ -53,13 +52,12 @@ void BinaryTree::MakeNode(int d, TreeNode** r)
 
 void BinaryTree::PrintPreOrder(TreeNode* r)
 {
-	//print r
-	//check left node
-		//print left node
-		//check ITS left node etc
-	//check right node
-		//print right node
-		//check ITS left node etc
+	if (r == nullptr)
+	{
+		std::cout << " NULL ";
+		return;
+	}
+
 	std::cout << " " << r->data << " ";
 	if (r->leftNode != nullptr)
 	{
@@ -73,6 +71,12 @@ void BinaryTree::PrintPreOrder(TreeNode* r)
 
 void BinaryTree::PrintInOrder(TreeNode* r)
 {
+	if (r == nullptr)
+	{
+		std::cout << " NULL ";
+		return;
+	}
+
 	if (r->leftNode != nullptr)
 	{
 		PrintInOrder(r->leftNode);
@@ -86,18 +90,35 @@ void BinaryTree::PrintInOrder(TreeNode* r)
 
 void BinaryTree::PrintPostOrder(TreeNode* r)
 {
+	if (r == nullptr)
+	{
+		std::cout << " NULL ";
+		return;
+	}
+
 	if (r->leftNode != nullptr)
 	{
-		PrintInOrder(r->leftNode);
+		PrintPostOrder(r->leftNode);
 	}
 	if (r->rightNode != nullptr)
 	{
-		PrintInOrder(r->rightNode);
+		PrintPostOrder(r->rightNode);
 	}
 	std::cout << " " << r->data << " ";
 }
 
-void BinaryTree::DeleteTree()
+void BinaryTree::DeleteTree(TreeNode** r)
 {
-
+	if ((*r)->leftNode != nullptr)
+	{
+		DeleteTree(&(*r)->leftNode);
+		(*r)->leftNode = nullptr;
+	}
+	if ((*r)->rightNode != nullptr)
+	{
+		DeleteTree(&(*r)->rightNode);
+		(*r)->rightNode = nullptr;
+	}
+	delete *r;
+	*r = nullptr;
 }

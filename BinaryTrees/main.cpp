@@ -20,4 +20,7 @@ int main()
 	std::cout << std::endl;
 	tree->PrintPostOrder(root);
 	std::cout << std::endl;
+
+	tree->DeleteTree(&root);
+	tree->PrintInOrder(root);
 }

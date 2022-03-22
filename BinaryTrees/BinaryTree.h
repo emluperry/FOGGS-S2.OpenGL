@@ -16,6 +16,6 @@ public:
 	void PrintInOrder(TreeNode* r);
 	void PrintPostOrder(TreeNode* r);
 
-	void DeleteTree();
+	void DeleteTree(TreeNode** r);
 };
 
