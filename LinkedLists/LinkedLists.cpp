@@ -1,0 +1,146 @@
+#include "LinkedLists.h"
+
+LinkedLists::LinkedLists()
+{
+
+}
+
+LinkedLists::~LinkedLists()
+{
+
+}
+
+ListNode* LinkedLists::MakeNode(ListNode** head, int d)
+{
+	ListNode* newNode = new ListNode;
+	ListNode* last = *head;
+
+	newNode->data = d;
+	newNode->next = nullptr;
+
+	if (*head == nullptr)
+	{
+		*head = newNode;
+		return newNode;
+	}
+
+	while (last->next != nullptr)
+	{
+		last = last->next;
+	}
+	last->next = newNode;
+	return newNode;
+}
+
+ListNode* LinkedLists::InsertFirst(ListNode** head, int d)
+{
+	ListNode* newNode = new ListNode;
+	newNode->data = d;
+	newNode->next = *head;
+	*head = newNode;
+
+	return newNode;
+}
+
+void LinkedLists::InsertAfter(ListNode* lastNode, int d)
+{
+	if (lastNode == nullptr)
+	{
+		std::cout << "Lastnode cannot be null." << std::endl;
+		return;
+	}
+
+	ListNode* newNode = new ListNode;
+	newNode->data = d;
+	newNode->next = lastNode->next;
+	lastNode->next = newNode;
+}
+
+void LinkedLists::DeleteList(ListNode** node)
+{
+	if (*node != nullptr)
+	{
+		DeleteList(&(*node)->next);
+		delete *node;
+	}
+	*node = nullptr;
+}
+
+void LinkedLists::DeleteAfter(ListNode* node)
+{
+	ListNode* pTemp;
+	if (node != nullptr && node->next != nullptr)
+	{
+		pTemp = node->next;
+		node->next = pTemp->next;
+
+		delete pTemp;
+	}
+}
+
+void LinkedLists::DeleteNodeAtPos(ListNode** node, int pos)
+{
+	ListNode* pTemp = GetNode(*node, pos-1);
+	DeleteAfter(pTemp);
+
+}
+
+ListNode* LinkedLists::GetNode(ListNode* node, int pos)
+{
+	int count = 0;
+	while (node != nullptr)
+	{
+		if (count == pos)
+		{
+			std::cout << "Data stored at position " << pos << " is: " << node->data << std::endl;
+			return node;
+		}
+		count++;
+		node = node->next;
+	}
+	std::cout << pos << " was not a valid position." << std::endl;
+	return nullptr;
+}
+
+ListNode* LinkedLists::Find(ListNode* node, int val)
+{
+	if (node->data != val)
+	{
+		if (node->next != nullptr)
+		{
+			return Find(node->next, val);
+		}
+		else
+		{
+			std::cout << "Value " << val << " not found in list." << std::endl;
+			return nullptr;
+		}
+	}
+	else
+	{
+		std::cout << "Value " << val << " found." << std::endl;
+		return node;
+	}
+}
+
+void LinkedLists::PrintList(ListNode* node)
+{
+	if (node != nullptr)
+	{
+		std::cout << std::setw(5) << "| " << node->data << " |-->";
+		PrintList(node->next);
+	}
+	else
+	{
+		std::cout << "| NULL |" << std::endl << std::endl;
+	}
+}
+
+void LinkedLists::PrintListBackwards(ListNode* node)
+{
+	if (node != nullptr)
+	{
+		PrintListBackwards(node->next);
+		std::cout << std::setw(5) << "<--| " << node->data << " | ";
+	}
+}
