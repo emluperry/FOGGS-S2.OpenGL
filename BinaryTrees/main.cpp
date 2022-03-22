@@ -15,4 +15,9 @@ int main()
 	tree->MakeNode(15, &root);
 
 	tree->PrintPreOrder(root);
+	std::cout << std::endl;
+	tree->PrintInOrder(root);
+	std::cout << std::endl;
+	tree->PrintPostOrder(root);
+	std::cout << std::endl;
 }

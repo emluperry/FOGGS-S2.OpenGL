@@ -13,8 +13,8 @@ public:
 	void MakeNode(int d, TreeNode** r);
 
 	void PrintPreOrder(TreeNode* r);
-	void PrintInOrder();
-	void PrintPostOrder();
+	void PrintInOrder(TreeNode* r);
+	void PrintPostOrder(TreeNode* r);
 
 	void DeleteTree();
 };

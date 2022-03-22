@@ -71,14 +71,30 @@ void BinaryTree::PrintPreOrder(TreeNode* r)
 	}
 }
 
-void BinaryTree::PrintInOrder()
+void BinaryTree::PrintInOrder(TreeNode* r)
 {
-
+	if (r->leftNode != nullptr)
+	{
+		PrintInOrder(r->leftNode);
+	}
+	std::cout << " " << r->data << " ";
+	if (r->rightNode != nullptr)
+	{
+		PrintInOrder(r->rightNode);
+	}
 }
 
-void BinaryTree::PrintPostOrder()
+void BinaryTree::PrintPostOrder(TreeNode* r)
 {
-
+	if (r->leftNode != nullptr)
+	{
+		PrintInOrder(r->leftNode);
+	}
+	if (r->rightNode != nullptr)
+	{
+		PrintInOrder(r->rightNode);
+	}
+	std::cout << " " << r->data << " ";
 }
 
 void BinaryTree::DeleteTree()
