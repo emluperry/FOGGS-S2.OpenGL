@@ -3,6 +3,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "GL/freeglut.h"
+#include "GLUTCallbacks.h"
 
 class SpaceShooterGame
 {
