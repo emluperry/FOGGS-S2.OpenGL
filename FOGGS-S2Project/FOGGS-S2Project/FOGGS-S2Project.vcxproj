@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FOGGS-S2Project.cpp" />
+    <ClCompile Include="GLUTCallbacks.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SpaceShooterGame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GLUTCallbacks.h" />
+    <ClInclude Include="SpaceShooterGame.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
