@@ -5,6 +5,11 @@
 #include "GL/freeglut.h"
 #include "GLUTCallbacks.h"
 
+#include "Structures.h"
+
+#include "Texture2D.h"
+#include "MeshLoader.h"
+
 #define REFRESHRATE 16
 
 class SpaceShooterGame
