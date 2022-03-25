@@ -5,6 +5,8 @@
 #include "GL/freeglut.h"
 #include "GLUTCallbacks.h"
 
+#define REFRESHRATE 16
+
 class SpaceShooterGame
 {
 private:
