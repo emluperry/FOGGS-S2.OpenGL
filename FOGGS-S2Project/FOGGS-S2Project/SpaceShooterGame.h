@@ -19,5 +19,10 @@ private:
 public:
 	SpaceShooterGame(int argc, char* argv[]);
 	~SpaceShooterGame(void);
+
+	void Update();
+	void Keyboard(unsigned char key, int x, int y);
+	void SpecialInput(int key, int x, int y);
+	void Display();
 };
 

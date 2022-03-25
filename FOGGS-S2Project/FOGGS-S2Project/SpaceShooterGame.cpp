@@ -23,8 +23,8 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glutCreateWindow("3D Space Shooter");
 
 	glutDisplayFunc(GLUTCallbacks::Display);
-	//glutKeyboardFunc(GLUTCallbacks::Keyboard);
-	//glutSpecialFunc(GLUTCallbacks::SpecialInput);
+	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutSpecialFunc(GLUTCallbacks::SpecialInput);
 	glutTimerFunc(REFRESHRATE, GLUTCallbacks::Timer, REFRESHRATE);
 
 	glMatrixMode(GL_PROJECTION);
@@ -40,4 +40,31 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+}
+
+void SpaceShooterGame::Display()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//draw objects
+	glFlush();
+	glutSwapBuffers();
+}
+
+void SpaceShooterGame::Update()
+{
+	glLoadIdentity();
+	//update objects
+	//update light
+	//change camera pos
+	glutPostRedisplay();
+}
+
+void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
+{
+	//keyboard inputs and what they do go here
+}
+
+void SpaceShooterGame::SpecialInput(int key, int x, int y)
+{
+	//special keyboard inputs and what they do go here
 }

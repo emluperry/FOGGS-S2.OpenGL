@@ -17,18 +17,25 @@ namespace GLUTCallbacks
 	{
 		if (game != nullptr)
 		{
-			//game->Display();
+			game->Display();
 		}
 	}
 
 	void Timer(int preferredRefresh)
 	{
 		int updateTime = glutGet(GLUT_ELAPSED_TIME);
-		//game->Update();
+		game->Update();
 		updateTime = glutGet(GLUT_ELAPSED_TIME) - updateTime;
 		glutTimerFunc(preferredRefresh - updateTime, GLUTCallbacks::Timer, preferredRefresh);
 	}
 
-	//void Keyboard(unsigned char key, int x, int y);
-	//void SpecialInput(int key, int x, int y);
+	void Keyboard(unsigned char key, int x, int y)
+	{
+		game->Keyboard(key, x, y);
+	}
+
+	void SpecialInput(int key, int x, int y)
+	{
+		game->SpecialInput(key, x, y);
+	}
 }
