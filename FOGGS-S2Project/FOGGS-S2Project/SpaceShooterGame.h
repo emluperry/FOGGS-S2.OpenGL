@@ -10,12 +10,21 @@
 #include "Texture2D.h"
 #include "MeshLoader.h"
 
+#include "SceneObject.h"
+#include "Player.h"
+
 #define REFRESHRATE 16
 
 class SpaceShooterGame
 {
 private:
+	Camera* camera;
+	Player* player;
+
+	SceneObject* objects[2];
+
 	void InitGL(int argc, char* argv[]);
+	void InitObjects();
 public:
 	SpaceShooterGame(int argc, char* argv[]);
 	~SpaceShooterGame(void);
