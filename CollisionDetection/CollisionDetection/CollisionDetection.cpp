@@ -26,7 +26,9 @@ void initSpheres();
 void keyboard(unsigned char key, int x, int y);
 void reshape(int w, int h);
 void display(void);
-void drawSpheres();
+void drawSpheres(float distance, bool distanceSquared);
+
+float calculateDistanceSquared(Sphere s1, Sphere s2);
 
 int main(int argc, char **argv)
 {
@@ -98,18 +100,27 @@ void display(void) {
 	gluLookAt(0.0, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	glPointSize(5);
 
-	drawSpheres();
+	float distance = calculateDistanceSquared(sphere1, sphere2);
+	drawSpheres(distance, true);
 
 	glutSwapBuffers();
 }
 
-void drawSpheres()
+void drawSpheres(float distance, bool distanceSquared)
 {
-	
+	float radiusDistance;
+	if (distanceSquared)
+		radiusDistance = pow(sphere1.radius + sphere2.radius, 2);
+	else
+		radiusDistance = sphere1.radius + sphere2.radius;
 
 	//Draw Sphere 1
 	glPushMatrix();
 	
+	if (distance <= radiusDistance)
+		glColor3f(1, 0, 0);
+	else
+		glColor3f(0, 0, 1);
 
 	glTranslatef(sphere1.position.x, sphere1.position.y, sphere1.position.z);
 	glBegin(GL_POINTS);
@@ -127,4 +138,9 @@ void drawSpheres()
 	glEnd();
 	glutWireSphere(sphere2.radius, 20, 20);
 	glPopMatrix();
+}
+
+float calculateDistanceSquared(Sphere s1, Sphere s2)
+{
+	return ((s1.position.x - s2.position.x) * (s1.position.x - s2.position.x)) + ((s1.position.y - s2.position.y) * (s1.position.y - s2.position.y)) + ((s1.position.z - s2.position.z) * (s1.position.z - s2.position.z));
 }
