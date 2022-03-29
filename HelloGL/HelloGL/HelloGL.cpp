@@ -148,13 +148,33 @@ void HelloGL::InitLighting()
 void HelloGL::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	Vector3 v = { -1.4f, 0.7f, -1.0f };
+	Color c = { 1.0f, 0.0f, 0.0f };
+
+	DrawString("Test string!", &v, &c);
+
 	for (int i = 0; i < 20; i++)
 	{
 		objects[i]->Draw();
 	}
 	player->Draw();
+
 	glFlush();
 	glutSwapBuffers();
+}
+
+void HelloGL::DrawString(const char* text, Vector3* position, Color* color)
+{
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+
+	glTranslatef(position->x, position->y, position->z);
+	glRasterPos2f(0.0f, 0.0f);
+	glColor3f(color->r, color->g, color->b);
+	glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)text);
+
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
 }
 
 void HelloGL::Update()
