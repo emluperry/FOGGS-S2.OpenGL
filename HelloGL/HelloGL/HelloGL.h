@@ -34,5 +34,6 @@ public:
 	void SpecialInput(int key, int x, int y);
 
 	void Display();
+	void DrawString(const char* text, Vector3* position, Color* color);
 };
 
