@@ -51,12 +51,12 @@ void SpaceShooterGame::InitObjects()
 	camera->center = { 0, 0, 0 };
 	camera->up = { 0, 1.0 ,0 };
 
-	TexturedMesh* cubeMesh = MeshLoader::LoadTextured((char*)"Models/cube.txt", true);
+	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/cube.obj");
 	Texture2D* playerTexture = new Texture2D();
-	playerTexture->LoadBmp((char*)"Models/test.bmp");
+	playerTexture->LoadBmp((char*)"Models/test2.bmp");
 	Material* playerMaterial = new Material();
-	playerMaterial->ambient = { 0.2, 0.2, 0.2, 1.0 };
-	playerMaterial->diffuse = { 0.7, 0.05, 0.3, 1.0 };
+	playerMaterial->ambient = { 1, 1, 1, 1.0 };
+	playerMaterial->diffuse = { 1, 1, 1, 1.0 };
 	playerMaterial->specular = { 1.0, 1.0, 1.0, 1.0 };
 	playerMaterial->shininess = 50.0f;
 
