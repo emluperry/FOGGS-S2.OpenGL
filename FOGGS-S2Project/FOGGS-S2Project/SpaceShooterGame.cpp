@@ -79,7 +79,6 @@ void SpaceShooterGame::Update()
 	//update objects
 	//update light
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, camera->up.x, camera->up.y, camera->up.z);
-	std::cout << camera->eye << std::endl;
 	glutPostRedisplay();
 }
 
