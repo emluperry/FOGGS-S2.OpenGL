@@ -13,6 +13,7 @@ namespace MeshLoader
 {
 	Mesh* Load(char* path, bool hasNormals);
 	TexturedMesh* LoadTextured(char* path, bool hasNormals);
+
 	TexturedMesh* LoadObj(char* path);
 };
 

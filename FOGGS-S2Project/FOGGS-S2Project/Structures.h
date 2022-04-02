@@ -2,9 +2,7 @@
 
 struct Vector3
 {
-	float x;
-	float y;
-	float z;
+	float x, y, z;
 };
 
 struct Vector4
@@ -27,6 +25,11 @@ struct Color
 struct Vertex
 {
 	GLfloat x, y, z;
+};
+
+struct IndexGroup
+{
+	GLushort v, t, n;
 };
 
 struct Mesh
