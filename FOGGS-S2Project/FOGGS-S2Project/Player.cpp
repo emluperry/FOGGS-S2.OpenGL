@@ -33,3 +33,8 @@ void Player::Draw()
 		SetdownDraw();
 	}
 }
+
+void Player::Update()
+{
+	_material->shininess += 100;
+}
