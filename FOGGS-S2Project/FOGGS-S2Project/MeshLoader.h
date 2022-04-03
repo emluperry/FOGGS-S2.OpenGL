@@ -15,5 +15,6 @@ namespace MeshLoader
 	TexturedMesh* LoadTextured(char* path, bool hasNormals);
 
 	TexturedMesh* LoadObj(char* path);
+	Material* LoadMaterial(char* path);
 };
 

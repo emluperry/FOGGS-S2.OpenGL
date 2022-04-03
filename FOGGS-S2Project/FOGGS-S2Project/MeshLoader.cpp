@@ -296,39 +296,76 @@ namespace MeshLoader
 		mesh->mesh->vertexCount = outVertices.size();
 		mesh->mesh->vertices = new Vertex[mesh->mesh->vertexCount];
 		for (int i = 0; i < mesh->mesh->vertexCount; i++)
-		{
 			mesh->mesh->vertices[i] = outVertices[i];
-			cout << outVertices[i].x << " " << outVertices[i].y << " " << outVertices[i].z << endl;
-		}
-		cout << endl;
 
 		mesh->texCoordCount = outTexCoords.size();
 		mesh->texCoords = new TexCoord[mesh->texCoordCount];
 		for (int i = 0; i < mesh->texCoordCount; i++)
-		{
 			mesh->texCoords[i] = outTexCoords[i];
-			cout << outTexCoords[i].u << " " << outTexCoords[i].v << endl;
-		}
-		cout << endl;
 
 		mesh->mesh->normalCount = outNormals.size();
 		mesh->mesh->normals = new Vector3[mesh->mesh->normalCount];
 		for (int i = 0; i < mesh->mesh->normalCount; i++)
-		{
 			mesh->mesh->normals[i] = outNormals[i];
-			cout << outNormals[i].x << " " << outNormals[i].y << " " << outNormals[i].z << endl;
-		}
-		cout << endl;
 
 		mesh->mesh->indexCount = indices.size();
 		mesh->mesh->indices = new GLushort[mesh->mesh->indexCount];
 		for (int i = 0; i < mesh->mesh->indexCount; i++)
-		{
 			mesh->mesh->indices[i] = indices[i];
-			cout << indices[i] << endl;
-		}
-		cout << endl;
 
 		return mesh;
 	}
+
+	void LoadVector4(ifstream& inFile, Vector4& element)
+	{
+		string vec;
+		getline(inFile, vec);
+
+		int values = 0;
+		for (int i = 0; i < vec.length(); i++)
+		{
+			if (vec[i] == ' ')
+			{
+				values++;
+			}
+		}
+
+		stringstream ss(vec);
+		ss >> element.x;
+		ss >> element.y;
+		ss >> element.z;
+		if (values == 4)
+			ss >> element.w;
+		else
+			element.w = 1;
+	}
+
+	Material* MeshLoader::LoadMaterial(char* path)
+	{
+		ifstream inFile;
+		inFile.open(path);
+
+		Material* material = new Material();
+
+		while (!inFile.eof())
+		{
+			string type = "";
+			inFile >> type;
+			if (type == "Ns")
+				inFile >> material->shininess;
+			else if (type == "Ka")
+				LoadVector4(inFile, material->ambient);
+			else if (type == "Kd")
+				LoadVector4(inFile, material->diffuse);
+			else if (type == "Ks")
+				LoadVector4(inFile, material->specular);
+			else
+				inFile.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
+
+		inFile.close();
+
+		return material;
+	}
+
 }

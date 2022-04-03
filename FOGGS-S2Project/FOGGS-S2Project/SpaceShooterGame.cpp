@@ -55,10 +55,11 @@ void SpaceShooterGame::InitObjects()
 	Texture2D* playerTexture = new Texture2D();
 	playerTexture->LoadBmp((char*)"Models/test2.bmp");
 	Material* playerMaterial = new Material();
-	playerMaterial->ambient = { 1, 1, 1, 1.0 };
-	playerMaterial->diffuse = { 1, 1, 1, 1.0 };
-	playerMaterial->specular = { 1.0, 1.0, 1.0, 1.0 };
-	playerMaterial->shininess = 50.0f;
+	//playerMaterial->ambient = { 1, 1, 1, 1.0 };
+	//playerMaterial->diffuse = { 1, 1, 1, 1.0 };
+	//playerMaterial->specular = { 1.0, 1.0, 1.0, 1.0 };
+	//playerMaterial->shininess = 50.0f;
+	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/testshape2.mtl");
 
 	player = new Player(cubeMesh, playerTexture, playerMaterial, 1, 1, 1);
 	objects[0] = player;
