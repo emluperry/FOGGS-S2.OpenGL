@@ -9,7 +9,7 @@ public:
 	Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z);
 	~Player() override;
 	void Draw() override;
-	//void Update() override;
+	void Update() override;
 
 	Vector3 GetPosition() { return _position; }
 };

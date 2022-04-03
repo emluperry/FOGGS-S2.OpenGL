@@ -5,6 +5,7 @@ SpaceShooterGame::SpaceShooterGame(int argc, char* argv[])
 {
 	InitGL(argc, argv);
 	InitObjects();
+	InitLighting();
 	glutMainLoop();
 }
 
@@ -44,6 +45,22 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glCullFace(GL_BACK);
 }
 
+void SpaceShooterGame::InitLighting()
+{
+	_lightPosition = new Vector4();
+	_lightPosition->x = 0.0;
+	_lightPosition->y = 0.0;
+	_lightPosition->z = 1.0;
+	_lightPosition->w = 1.0;
+
+	_lightData = new Lighting();
+	_lightData->ambient = { 0.2, 0.2, 0.2, 1.0 };
+
+	_lightData->diffuse = { 0.8, 0.8, 0.8, 1.0 };
+
+	_lightData->specular = { 0.2, 0.2, 0.2, 1.0 };
+}
+
 void SpaceShooterGame::InitObjects()
 {
 	camera = new Camera();
@@ -55,11 +72,7 @@ void SpaceShooterGame::InitObjects()
 	Texture2D* playerTexture = new Texture2D();
 	playerTexture->LoadBmp((char*)"Models/test2.bmp");
 	Material* playerMaterial = new Material();
-	//playerMaterial->ambient = { 1, 1, 1, 1.0 };
-	//playerMaterial->diffuse = { 1, 1, 1, 1.0 };
-	//playerMaterial->specular = { 1.0, 1.0, 1.0, 1.0 };
-	//playerMaterial->shininess = 50.0f;
-	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/testshape2.mtl");
+	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/testshape.mtl");
 
 	player = new Player(cubeMesh, playerTexture, playerMaterial, 1, 1, 1);
 	objects[0] = player;
@@ -68,8 +81,10 @@ void SpaceShooterGame::InitObjects()
 void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	player->Draw();
 	glutWireCube(0.1);
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -77,8 +92,15 @@ void SpaceShooterGame::Display()
 void SpaceShooterGame::Update()
 {
 	glLoadIdentity();
+
 	//update objects
-	//update light
+	player->Update();
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
+	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
+	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
+
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
 }

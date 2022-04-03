@@ -23,8 +23,12 @@ private:
 
 	SceneObject* objects[2];
 
+	Vector4* _lightPosition;
+	Lighting* _lightData;
+
 	void InitGL(int argc, char* argv[]);
 	void InitObjects();
+	void InitLighting();
 public:
 	SpaceShooterGame(int argc, char* argv[]);
 	~SpaceShooterGame(void);
