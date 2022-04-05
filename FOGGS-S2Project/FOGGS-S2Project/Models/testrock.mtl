@@ -1,0 +1,13 @@
+# Blender MTL File: 'asteroid.blend'
+# Material Count: 1
+
+newmtl Material.001
+Ns 323.999994
+Ka 1.000000 1.000000 1.000000
+Kd 0.367238 0.173940 0.040057
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\p014084l\\OneDrive - Staffordshire University\\Github\\FOGGS-S2.OpenGL\\FOGGS-S2Project\\FOGGS-S2Project\\Models\\testRockedit.jpg
