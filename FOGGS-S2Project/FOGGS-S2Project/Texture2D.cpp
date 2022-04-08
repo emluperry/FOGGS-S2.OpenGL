@@ -62,11 +62,11 @@ bool Texture2D::LoadBmp(char* path)
 
 	_width = (int)((unsigned char)infoh[7] << 24u) + ((unsigned char)infoh[6] << 16u) + ((unsigned char)infoh[5] << 8u) + (unsigned char)infoh[4];
 	_height = (int)((unsigned char)infoh[11] << 24u) + ((unsigned char)infoh[10] << 16u) + ((unsigned char)infoh[9] << 8u) + (unsigned char)infoh[8];
-	if (_width != _height)
-	{
-		std::cerr << "Bitmap is not square." << std::endl;
-		return false;
-	}
+	//if (_width != _height)
+	//{
+	//	std::cerr << "Bitmap is not square." << std::endl;
+	//	return false;
+	//}
 
 	int startPos = (int)((unsigned char)header[13] << 24u) + ((unsigned char)header[12] << 16u) + ((unsigned char)header[11] << 8u) + (unsigned char)header[10];
 	inFile.seekg(startPos);

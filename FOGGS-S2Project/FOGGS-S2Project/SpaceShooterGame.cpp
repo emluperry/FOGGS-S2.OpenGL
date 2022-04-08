@@ -68,11 +68,11 @@ void SpaceShooterGame::InitObjects()
 	camera->center = { 0, 0, 0 };
 	camera->up = { 0, 1.0 ,0 };
 
-	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/testshape3.obj");
+	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/testrock.obj");
 	Texture2D* playerTexture = new Texture2D();
-	playerTexture->LoadBmp((char*)"Models/test2.bmp");
+	playerTexture->LoadBmp((char*)"Models/asteroid.bmp");
 	Material* playerMaterial = new Material();
-	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/testshape.mtl");
+	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/testrock.mtl");
 
 	player = new Player(cubeMesh, playerTexture, playerMaterial, 1, 1, 1);
 	objects[0] = player;
