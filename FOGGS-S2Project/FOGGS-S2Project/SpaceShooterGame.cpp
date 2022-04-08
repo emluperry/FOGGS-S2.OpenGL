@@ -70,7 +70,7 @@ void SpaceShooterGame::InitObjects()
 
 	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/testrock.obj");
 	Texture2D* playerTexture = new Texture2D();
-	playerTexture->LoadBmp((char*)"Models/testRockedit.bmp");
+	playerTexture->LoadBmp((char*)"Models/asteroid.bmp");
 	Material* playerMaterial = new Material();
 	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/testrock.mtl");
 
