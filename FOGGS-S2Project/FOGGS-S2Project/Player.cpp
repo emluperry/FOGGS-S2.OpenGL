@@ -6,9 +6,9 @@ Player::Player(Mesh* mesh, Material* material, float x, float y, float z) : Scen
 	_direction = { 1, 0, 0 };
 	_rotation = { 0,0,0 };
 
-	_flightSpeed = 0.1;
+	_flightSpeed = 0.05;
 	_turnSpeed = 0.05;
-	_rotateSpeed = 2;
+	_rotateSpeed = 9;
 }
 
 Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z) : SceneObject(mesh, texture, material)
@@ -47,11 +47,16 @@ void Player::Draw()
 
 void Player::Update()
 {
+	_direction.x = cos((_rotation.y * PI) / 180);
+	_direction.z = -sin((_rotation.y * PI) / 180);
 	float squareSumDirection = (_direction.x * _direction.x) + (_direction.y * _direction.y) + (_direction.z * _direction.z);
 	float multiplier = std::sqrt((_flightSpeed * _flightSpeed) / squareSumDirection);
+
 	_position.x += multiplier * _direction.x;
 	_position.y += multiplier * _direction.y;
 	_position.z += multiplier * _direction.z;
+
+	std::cout << _direction.x << " " << _direction.y << " " << _direction.z << std::endl;
 }
 
 void Player::Keyboard(unsigned char key, int x, int y)
@@ -60,11 +65,15 @@ void Player::Keyboard(unsigned char key, int x, int y)
 	{
 		_rotation.x -= _rotateSpeed;
 		_rotation.y += _rotateSpeed;
+		if (_rotation.x < -90)
+			_rotation.x = -90;
 	}
 	if (key == 'd')
 	{
 		_rotation.x += _rotateSpeed;
 		_rotation.y -= _rotateSpeed;
+		if (_rotation.x > 90)
+			_rotation.x = 90;
 	}
 	if (key == 'w')
 	{

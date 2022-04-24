@@ -1,4 +1,6 @@
 #pragma once
+#define PI 3.14159265
+
 #include "SceneObject.h"
 
 #include <math.h>
@@ -20,7 +22,8 @@ public:
 	void Update() override;
 
 	Vector3 GetPosition() { return _position; }
-
+	Vector3 GetRotation() { return _rotation; }
+	Vector3 GetDirection() { return _direction; }
 	void Keyboard(unsigned char key, int x, int y);
 };
 

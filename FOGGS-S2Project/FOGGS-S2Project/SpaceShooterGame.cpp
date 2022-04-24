@@ -99,10 +99,11 @@ void SpaceShooterGame::Update()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
+	//vec3(20*cos(carAngle), 10,20*sin(carAngle))
 	camera->eye = player->GetPosition();
 	camera->eye.x += -40;
 	camera->eye.y += 30;
-	camera->eye.z += 0;
+	camera->eye.z += 40;
 	camera->center = player->GetPosition();
 
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
