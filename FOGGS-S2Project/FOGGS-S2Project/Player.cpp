@@ -48,6 +48,8 @@ void Player::Draw()
 void Player::Update()
 {
 	_direction.x = cos((_rotation.y * PI) / 180);
+	if (fabs(_direction.y) < 1e-7)
+		_direction.y = 0;
 	_direction.z = -sin((_rotation.y * PI) / 180);
 	float squareSumDirection = (_direction.x * _direction.x) + (_direction.y * _direction.y) + (_direction.z * _direction.z);
 	float multiplier = std::sqrt((_flightSpeed * _flightSpeed) / squareSumDirection);
@@ -75,8 +77,8 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		if (_rotation.z > 90)
 			_rotation.z = 90;
 		_direction.y += _turnSpeed;
-		if (_direction.y > 0.5)
-			_direction.y = 0.5;
+		if (_direction.y > 1)
+			_direction.y = 1;
 
 	}
 	if (key == 's')
@@ -85,7 +87,7 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		if (_rotation.z < -90)
 			_rotation.z = -90;
 		_direction.y -= _turnSpeed;
-		if (_direction.y > -0.5)
-			_direction.y = -0.5;
+		if (_direction.y < -1)
+			_direction.y = -1;
 	}
 }
