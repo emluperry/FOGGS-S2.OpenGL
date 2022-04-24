@@ -101,9 +101,9 @@ void SpaceShooterGame::Update()
 
 	//vec3(20*cos(carAngle), 10,20*sin(carAngle))
 	camera->eye = player->GetPosition();
-	camera->eye.x += -40;
+	camera->eye.x += (-40 * player->GetDirection().x);
 	camera->eye.y += 30;
-	camera->eye.z += 40;
+	camera->eye.z += (40 * -player->GetDirection().z);
 	camera->center = player->GetPosition();
 
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);

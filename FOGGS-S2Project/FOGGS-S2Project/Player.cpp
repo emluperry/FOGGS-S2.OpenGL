@@ -63,17 +63,11 @@ void Player::Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'a')
 	{
-		_rotation.x -= _rotateSpeed;
 		_rotation.y += _rotateSpeed;
-		if (_rotation.x < -90)
-			_rotation.x = -90;
 	}
 	if (key == 'd')
 	{
-		_rotation.x += _rotateSpeed;
 		_rotation.y -= _rotateSpeed;
-		if (_rotation.x > 90)
-			_rotation.x = 90;
 	}
 	if (key == 'w')
 	{
