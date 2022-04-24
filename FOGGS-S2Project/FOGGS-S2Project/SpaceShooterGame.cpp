@@ -55,16 +55,14 @@ void SpaceShooterGame::InitLighting()
 
 	_lightData = new Lighting();
 	_lightData->ambient = { 0.2, 0.2, 0.2, 1.0 };
-
 	_lightData->diffuse = { 0.8, 0.8, 0.8, 1.0 };
-
 	_lightData->specular = { 0.2, 0.2, 0.2, 1.0 };
 }
 
 void SpaceShooterGame::InitObjects()
 {
 	camera = new Camera();
-	camera->eye = { -4, 7, -4 };
+	camera->eye = { 0, 20, 0 };
 	camera->center = { 0, 0, 0 };
 	camera->up = { 0, 1.0 ,0 };
 
@@ -74,7 +72,7 @@ void SpaceShooterGame::InitObjects()
 	Material* playerMaterial = new Material();
 	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/spaceship.mtl");
 
-	player = new Player(cubeMesh, playerTexture, playerMaterial, 1, 1, 1);
+	player = new Player(cubeMesh, playerTexture, playerMaterial, 0, 0, 0);
 	objects[0] = player;
 }
 
@@ -101,36 +99,20 @@ void SpaceShooterGame::Update()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
-	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, camera->up.x, camera->up.y, camera->up.z);
+	//vec3(20*cos(carAngle), 10,20*sin(carAngle))
+	camera->eye = player->GetPosition();
+	camera->eye.x += (-40 * player->GetDirection().x);
+	camera->eye.y += 30;
+	camera->eye.z += (40 * -player->GetDirection().z);
+	camera->center = player->GetPosition();
+
+	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
 }
 
 void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 'd')
-	{
-		camera->eye.x += 0.1;
-	}
-	if (key == 'a')
-	{
-		camera->eye.x -= 0.1;
-	}
-	if (key == 'q')
-	{
-		camera->eye.z -= 0.1;
-	}
-	if (key == 'e')
-	{
-		camera->eye.z += 0.1;
-	}
-	if (key == 'w')
-	{
-		camera->eye.y += 0.1;
-	}
-	if (key == 's')
-	{
-		camera->eye.y -= 0.1;
-	}
+	player->Keyboard(key, x, y);
 }
 
 void SpaceShooterGame::SpecialInput(int key, int x, int y)
