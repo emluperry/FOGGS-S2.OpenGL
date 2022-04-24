@@ -112,30 +112,6 @@ void SpaceShooterGame::Update()
 void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 {
 	player->Keyboard(key, x, y);
-	if (key == 'd')
-	{
-		camera->eye.x += 0.1;
-	}
-	if (key == 'a')
-	{
-		camera->eye.x -= 0.1;
-	}
-	if (key == 'q')
-	{
-		camera->eye.z -= 0.1;
-	}
-	if (key == 'e')
-	{
-		camera->eye.z += 0.1;
-	}
-	if (key == 'w')
-	{
-		camera->eye.y += 0.1;
-	}
-	if (key == 's')
-	{
-		camera->eye.y -= 0.1;
-	}
 }
 
 void SpaceShooterGame::SpecialInput(int key, int x, int y)
