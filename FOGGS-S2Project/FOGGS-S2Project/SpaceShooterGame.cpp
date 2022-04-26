@@ -68,7 +68,7 @@ void SpaceShooterGame::InitObjects()
 
 	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/spaceship.obj");
 	Texture2D* playerTexture = new Texture2D();
-	playerTexture->Load("Models/spaceship.bmp");
+	playerTexture->LoadTexture("Models/spaceship.bmp");
 	Material* playerMaterial = new Material();
 	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/spaceship.mtl");
 

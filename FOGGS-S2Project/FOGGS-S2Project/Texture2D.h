@@ -14,14 +14,14 @@ private:
 	GLuint _ID;
 	int _width, _height;
 
-	bool LoadRaw(char* path, int width, int height);
-	bool LoadBmp(char* path);
-	bool LoadTga(char* path);
+	char* LoadRaw(char* path, int width, int height);
+	char* LoadBmp(char* path);
+	char* LoadTga(char* path, char &mode);
 public:
 	Texture2D();
 	~Texture2D();
 
-	bool Load(std::string path, int width = -1, int height = -1);
+	bool LoadTexture(std::string path, int width = -1, int height = -1);
 
 	GLuint GetId() const { return _ID; }
 	int GetWidth() const { return _width; }
