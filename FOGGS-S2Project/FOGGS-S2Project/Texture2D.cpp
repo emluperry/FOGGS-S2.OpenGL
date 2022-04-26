@@ -22,11 +22,10 @@ bool Texture2D::LoadTexture(std::string path, int width, int height)
 	}
 	inFile.close();
 
-	char* tempTextureData;
+	char* tempTextureData = nullptr;
 	char mode = 0;
 
 	std::string extension = path.substr(path.rfind('.') + 1, std::string::npos);
-	std::cout << extension << std::endl;
 	if (extension == "bmp")
 		tempTextureData = LoadBmp(&path[0]);
 	else if (extension == "raw")
@@ -48,7 +47,6 @@ bool Texture2D::LoadTexture(std::string path, int width, int height)
 	else if (extension == "raw")
 	{
 		//glTexImage2D(GL_TEXTURE_2D, 0, 3, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData); //specify details of texture image
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); //required by glteximage2d
 		gluBuild2DMipmaps(GL_TEXTURE_2D, 3, _width, _height, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData);
 	}
 	else if (extension == "tga")
@@ -60,7 +58,65 @@ bool Texture2D::LoadTexture(std::string path, int width, int height)
 			gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, _width, _height, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
 	}
 
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); //required by glteximage2d
+
 	delete[] tempTextureData;
+	return true;
+}
+
+bool Texture2D::LoadSkybox(std::string path, int width, int height)
+{
+	std::ifstream inFile;
+	inFile.open(path, std::ios::binary);
+	if (!inFile.good())
+	{
+		std::cerr << "Can't open texture file " << path << std::endl;
+		inFile.close();
+		return false;
+	}
+	inFile.close();
+
+	char* tempTextureData = nullptr;
+	char mode = 0;
+
+	std::string extension = path.substr(path.rfind('.') + 1, std::string::npos);
+	if (extension == "bmp")
+		tempTextureData = LoadBmp(&path[0]);
+	else if (extension == "raw")
+		tempTextureData = LoadRaw(&path[0], width, height);
+	else if (extension == "tga")
+		tempTextureData = LoadTga(&path[0], mode);
+
+	if (tempTextureData == nullptr)
+	{
+		std::cerr << "Nullptr returned while loading " << path << std::endl;
+		return false;
+	}
+
+	glGenTextures(1, &_ID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, _ID);
+
+	for (unsigned int i = 0; i < 6; i++)
+	{
+		if (extension == "bmp")
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, _width, _height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+		else if (extension == "raw")
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, _width, _height, 0, GL_RGB, GL_UNSIGNED_BYTE, tempTextureData);
+		else if (extension == "tga")
+		{
+			if (mode == 4)
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, _width, _height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+				//gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, _width, _height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+			else
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, _width, _height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+				//gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, _width, _height, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempTextureData);
+		}
+	}
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	return true;
 }
 

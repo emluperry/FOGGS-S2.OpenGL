@@ -3,6 +3,7 @@
 #include <gl/GL.h>
 #include <gl/GLU.h>
 #include "GL\freeglut.h"
+#include "GL\glext.h"
 
 #include <fstream>
 #include <iostream>
@@ -22,6 +23,7 @@ public:
 	~Texture2D();
 
 	bool LoadTexture(std::string path, int width = -1, int height = -1);
+	bool LoadSkybox(std::string path, int width = -1, int height = -1);
 
 	GLuint GetId() const { return _ID; }
 	int GetWidth() const { return _width; }
