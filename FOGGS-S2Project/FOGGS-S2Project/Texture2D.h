@@ -13,13 +13,15 @@ class Texture2D
 private:
 	GLuint _ID;
 	int _width, _height;
+
+	bool LoadRaw(char* path, int width, int height);
+	bool LoadBmp(char* path);
+	bool LoadTga(char* path);
 public:
 	Texture2D();
 	~Texture2D();
 
-	bool Load(char* path, int width, int height);
-	bool LoadBmp(char* path);
-	bool LoadTga(char* path);
+	bool Load(std::string path, int width = -1, int height = -1);
 
 	GLuint GetId() const { return _ID; }
 	int GetWidth() const { return _width; }
