@@ -56,7 +56,16 @@ void SceneObject::SetupDraw()
 
 void SceneObject::Draw()
 {
+	if (_mesh->vertices != nullptr && _mesh->indices != nullptr)
+	{
+		SetupDraw();
 
+		glPushMatrix();
+		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
+		glPopMatrix();
+
+		SetdownDraw();
+	}
 }
 
 void SceneObject::SetdownDraw()

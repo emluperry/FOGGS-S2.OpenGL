@@ -122,6 +122,11 @@ bool Texture2D::LoadSkybox(std::string path, int width, int height)
 
 char* Texture2D::LoadRaw(char* path, int width, int height)
 {
+	if (width <= 0 || height <= 0)
+	{
+		std::cerr << "invalid width/height" << std::endl;
+		return nullptr;
+	}
 	std::ifstream inFile;
 	inFile.open(path, std::ios::binary);
 	int fileSize;

@@ -66,21 +66,30 @@ void SpaceShooterGame::InitObjects()
 	camera->center = { 0, 0, 0 };
 	camera->up = { 0, 1.0 ,0 };
 
-	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/spaceship.obj");
+	TexturedMesh* playerMesh = MeshLoader::LoadObj((char*)"Models/spaceship.obj");
 	Texture2D* playerTexture = new Texture2D();
 	playerTexture->LoadTexture("Models/spaceship.bmp");
 	Material* playerMaterial = new Material();
 	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/spaceship.mtl");
 
-	player = new Player(cubeMesh, playerTexture, playerMaterial, 0, 0, 0);
+	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/cube.obj");
+	Texture2D* skyboxTexture = new Texture2D();
+	skyboxTexture->LoadSkybox("Models/stars.raw", 256, 256);
+
+	player = new Player(playerMesh, playerTexture, playerMaterial, 0, 0, 0);
 	objects[0] = player;
+	SceneObject* skybox = new SceneObject(cubeMesh, skyboxTexture, nullptr);
+	objects[1] = skybox;
 }
 
 void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	player->Draw();
+	for (int i = 0; i < 2; i++)
+	{
+		objects[i]->Draw();
+	}
 	glutWireCube(0.1);
 
 	glFlush();
@@ -92,7 +101,10 @@ void SpaceShooterGame::Update()
 	glLoadIdentity();
 
 	//update objects
-	player->Update();
+	for (int i = 0; i < 2; i++)
+	{
+		objects[i]->Update();
+	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
