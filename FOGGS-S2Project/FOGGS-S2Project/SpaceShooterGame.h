@@ -12,6 +12,7 @@
 
 #include "SceneObject.h"
 #include "Player.h"
+#include "Skybox.h"
 
 #define REFRESHRATE 16
 
@@ -19,6 +20,7 @@ class SpaceShooterGame
 {
 private:
 	Camera* camera;
+	Skybox* skybox;
 	Player* player;
 
 	SceneObject* objects[2];
