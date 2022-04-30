@@ -11,7 +11,6 @@ private:
 	float _turnSpeed;
 	float _rotateSpeed;
 public:
-	Player(Mesh* mesh, Material* material, float x, float y, float z);
 	Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z);
 	~Player() override;
 

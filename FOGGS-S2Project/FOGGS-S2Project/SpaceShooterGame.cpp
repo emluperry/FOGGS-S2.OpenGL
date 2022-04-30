@@ -85,14 +85,27 @@ void SpaceShooterGame::InitObjects()
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
 	objects[0] = skybox;
+
+	TexturedMesh* asteroidMesh = MeshLoader::LoadObj((char*)"Models/testrock.obj");
+	Texture2D* asteroidTexture = new Texture2D();
+	asteroidTexture->LoadTexture("Models/asteroid.bmp");
+	Material* asteroidMaterial = new Material();
+	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/testrock.mtl");
+
+	for (int i = 2; i < 7; i++)
+	{
+		objects[i] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+	}
 }
 
 void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 40; i++)
 	{
+		if (objects[i] == nullptr)
+			break;
 		objects[i]->Draw();
 	}
 	glutWireCube(0.1);
@@ -106,8 +119,10 @@ void SpaceShooterGame::Update()
 	glLoadIdentity();
 
 	//update objects
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 40; i++)
 	{
+		if (objects[i] == nullptr)
+			break;
 		objects[i]->Update();
 	}
 

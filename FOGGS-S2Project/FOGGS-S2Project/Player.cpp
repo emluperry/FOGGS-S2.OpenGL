@@ -1,25 +1,15 @@
 #include "Player.h"
 
-Player::Player(Mesh* mesh, Material* material, float x, float y, float z) : SceneObject(mesh, material)
-{
-	_position = { x, y, z };
-	_direction = { 1, 0, 0 };
-	_rotation = { 0,0,0 };
-
-	_flightSpeed = 0.05;
-	_turnSpeed = 0.05;
-	_rotateSpeed = 9;
-}
-
 Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z) : SceneObject(mesh, texture, material)
 {
 	_position = { x, y, z };
 	_direction = { 1, 0, 0 };
 	_rotation = { 0,0,0 };
+	_scale = { 1,1,1 };
 
-	_flightSpeed = 2;
+	_flightSpeed = 0.2;
 	_turnSpeed = 0.05;
-	_rotateSpeed = 2;
+	_rotateSpeed = 4.5;
 }
 
 Player::~Player()

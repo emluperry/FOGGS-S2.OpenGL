@@ -13,6 +13,7 @@
 #include "SceneObject.h"
 #include "Player.h"
 #include "Skybox.h"
+#include "Asteroid.h"
 
 #define REFRESHRATE 16
 
