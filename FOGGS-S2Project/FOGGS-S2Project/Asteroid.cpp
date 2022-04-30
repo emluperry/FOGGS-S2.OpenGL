@@ -14,7 +14,7 @@ Asteroid::Asteroid(TexturedMesh* mesh, Texture2D* texture, Material* material) :
 	_direction.y = rand() % 2 - 1;
 	_direction.z = rand() % 2 - 1;
 
-	_scale = { 1,1,1 };
+	_scale = { 2, 2, 2 };
 
 	_flightSpeed = 1;
 }
@@ -32,4 +32,37 @@ void Asteroid::Update()
 	_position.x += multiplier * _direction.x;
 	_position.y += multiplier * _direction.y;
 	_position.z += multiplier * _direction.z;
+
+	if (_position.x > 100)
+	{
+		_position.x = 100;
+		_direction.x = -_direction.x;
+	}
+	else if (_position.x < -100)
+	{
+		_position.x = -100;
+		_direction.x = -_direction.x;
+	}
+
+	if (_position.y > 100)
+	{
+		_position.y= 100;
+		_direction.y = -_direction.y;
+	}
+	else if (_position.y < -100)
+	{
+		_position.y = -100;
+		_direction.y = -_direction.y;
+	}
+
+	if (_position.z > 100)
+	{
+		_position.z = 100;
+		_direction.z = -_direction.z;
+	}
+	else if (_position.z < -100)
+	{
+		_position.z = -100;
+		_direction.z = -_direction.z;
+	}
 }

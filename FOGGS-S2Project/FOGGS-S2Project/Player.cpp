@@ -29,6 +29,21 @@ void Player::Update()
 	_position.x += multiplier * _direction.x;
 	_position.y += multiplier * _direction.y;
 	_position.z += multiplier * _direction.z;
+
+	if (_position.x > 100)
+		_position.x = 100;
+	else if (_position.x < -100)
+		_position.x = -100;
+
+	if (_position.y > 100)
+		_position.y = 100;
+	else if (_position.y < -100)
+		_position.y = -100;
+
+	if (_position.z > 100)
+		_position.z = 100;
+	else if (_position.z < -100)
+		_position.z = -100;
 }
 
 void Player::Keyboard(unsigned char key, int x, int y)

@@ -86,11 +86,11 @@ void SpaceShooterGame::InitObjects()
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
 	objects[0] = skybox;
 
-	TexturedMesh* asteroidMesh = MeshLoader::LoadObj((char*)"Models/testrock.obj");
+	TexturedMesh* asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
 	Texture2D* asteroidTexture = new Texture2D();
 	asteroidTexture->LoadTexture("Models/asteroid.bmp");
 	Material* asteroidMaterial = new Material();
-	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/testrock.mtl");
+	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
 
 	for (int i = 2; i < 7; i++)
 	{
