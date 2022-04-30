@@ -17,7 +17,7 @@ Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float
 	_direction = { 1, 0, 0 };
 	_rotation = { 0,0,0 };
 
-	_flightSpeed = 0.1;
+	_flightSpeed = 2;
 	_turnSpeed = 0.05;
 	_rotateSpeed = 2;
 }
@@ -25,24 +25,6 @@ Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float
 Player::~Player()
 {
 
-}
-
-void Player::Draw()
-{
-	if (_mesh->vertices != nullptr && _mesh->indices != nullptr)
-	{
-		SetupDraw();
-
-		glPushMatrix();
-		glTranslatef(_position.x, _position.y, _position.z);
-		glRotatef(_rotation.x, 1.0f, 0.0f, 0.0f);
-		glRotatef(_rotation.y, 0.0f, 1.0f, 0.0f);
-		glRotatef(_rotation.z, 0.0f, 0.0f, 1.0f);
-		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
-		glPopMatrix();
-
-		SetdownDraw();
-	}
 }
 
 void Player::Update()
@@ -57,8 +39,6 @@ void Player::Update()
 	_position.x += multiplier * _direction.x;
 	_position.y += multiplier * _direction.y;
 	_position.z += multiplier * _direction.z;
-
-	std::cout << _direction.x << " " << _direction.y << " " << _direction.z << std::endl;
 }
 
 void Player::Keyboard(unsigned char key, int x, int y)

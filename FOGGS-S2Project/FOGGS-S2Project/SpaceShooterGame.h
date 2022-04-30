@@ -23,7 +23,7 @@ private:
 	Skybox* skybox;
 	Player* player;
 
-	SceneObject* objects[2];
+	SceneObject* objects[40];
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;

@@ -3,6 +3,8 @@
 
 SpaceShooterGame::SpaceShooterGame(int argc, char* argv[])
 {
+	srand(time(NULL));
+
 	InitGL(argc, argv);
 	InitObjects();
 	InitLighting();

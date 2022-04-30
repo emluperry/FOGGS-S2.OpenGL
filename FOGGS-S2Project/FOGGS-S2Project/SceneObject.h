@@ -15,6 +15,12 @@ protected:
 	Texture2D* _texture;
 	Material* _material;
 
+	Vector3 _position;
+	Vector3 _rotation;
+	Vector3 _scale;
+
+	Vector3 _direction;
+
 	void SetupDraw();
 	void SetdownDraw();
 public:
@@ -24,5 +30,9 @@ public:
 
 	virtual void Update();
 	virtual void Draw();
+
+	Vector3 GetPosition() { return _position; }
+	Vector3 GetRotation() { return _rotation; }
+	Vector3 GetDirection() { return _direction; }
 };
 
