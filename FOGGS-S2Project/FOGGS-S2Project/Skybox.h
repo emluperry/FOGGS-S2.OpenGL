@@ -13,6 +13,5 @@ public:
 	~Skybox();
 
 	void Draw() override;
-	void Update() override;
 };
 

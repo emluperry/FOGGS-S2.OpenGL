@@ -72,16 +72,16 @@ void SpaceShooterGame::InitObjects()
 	Material* playerMaterial = new Material();
 	playerMaterial = MeshLoader::LoadMaterial((char*)"Models/spaceship.mtl");
 
-	TexturedMesh* cubeMesh = MeshLoader::LoadObj((char*)"Models/cube.obj");
+	TexturedMesh* skyMesh = MeshLoader::LoadObj((char*)"Models/skybox.obj");
 	Texture2D* skyboxTexture = new Texture2D();
-	skyboxTexture->LoadTexture("Models/stars.raw", 256, 256);
+	skyboxTexture->LoadTexture("Models/stars.bmp");
 	Material* skyboxMaterial = new Material();
 	skyboxMaterial = MeshLoader::LoadMaterial((char*)"Models/cube.mtl");
 
 	player = new Player(playerMesh, playerTexture, playerMaterial, 0, 0, 0);
 	objects[1] = player;
 
-	Skybox* skybox = new Skybox(cubeMesh, skyboxTexture, skyboxMaterial, player);
+	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
 	objects[0] = skybox;
 }
 

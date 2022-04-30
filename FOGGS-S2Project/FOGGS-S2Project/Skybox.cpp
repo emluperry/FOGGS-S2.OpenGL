@@ -3,7 +3,7 @@
 Skybox::Skybox(TexturedMesh* mesh, Texture2D* texture, Material* material, Player* player) : SceneObject(mesh, texture, material)
 {
 	_player = player;
-	_scale = { 40, 40, 40 };
+	_scale = { 10, 10, 10 };
 	_rotation = { 0,0,0 };
 }
 
@@ -24,6 +24,8 @@ void Skybox::Draw()
 		glCullFace(GL_FRONT);
 		glDepthFunc(GL_LEQUAL);
 
+		glDisable(GL_DEPTH_TEST);
+
 		SetupDraw();
 
 		glPushMatrix();
@@ -37,12 +39,9 @@ void Skybox::Draw()
 
 		SetdownDraw();
 
+		glEnable(GL_DEPTH_TEST);
+
 		glCullFace(OldCullFaceMode);
 		glDepthFunc(OldDepthFuncMode);
 	}
-}
-
-void Skybox::Update()
-{
-
 }
