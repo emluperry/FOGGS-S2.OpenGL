@@ -10,6 +10,7 @@ Skybox::Skybox(TexturedMesh* mesh, Texture2D* texture, Material* material, Playe
 Skybox::~Skybox()
 {
 	_player = nullptr;
+	SceneObject::DeleteComponents();
 }
 
 void Skybox::Draw()

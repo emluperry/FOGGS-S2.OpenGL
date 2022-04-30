@@ -97,3 +97,22 @@ void SceneObject::Update()
 {
 
 }
+
+void SceneObject::DeleteComponents()
+{
+	delete _mesh->vertices;
+	delete _mesh->colors;
+	delete _mesh->normals;
+	delete _mesh->indices;
+	delete _mesh;
+	_mesh = nullptr;
+
+	delete _texMesh->texCoords;
+	delete _texMesh;
+	_texMesh = nullptr;
+
+	delete _texture;
+	_texture = nullptr;
+
+	delete _material;
+}

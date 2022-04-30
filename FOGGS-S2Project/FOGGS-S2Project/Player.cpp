@@ -14,7 +14,7 @@ Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float
 
 Player::~Player()
 {
-
+	SceneObject::DeleteComponents();
 }
 
 void Player::Update()

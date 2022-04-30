@@ -24,6 +24,8 @@ protected:
 
 	void SetupDraw();
 	void SetdownDraw();
+
+	void DeleteComponents();
 public:
 	SceneObject(Mesh* mesh, Material* material);
 	SceneObject(TexturedMesh* mesh, Texture2D* texture, Material* material);

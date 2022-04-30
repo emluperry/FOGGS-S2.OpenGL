@@ -24,7 +24,13 @@ private:
 	Skybox* skybox;
 	Player* player;
 
+	TexturedMesh* asteroidMesh;
+	Texture2D* asteroidTexture;
+	Material* asteroidMaterial;
+
 	SceneObject* objects[40];
+	int currentMax = 0;
+	int spawnDelay = 0;
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;

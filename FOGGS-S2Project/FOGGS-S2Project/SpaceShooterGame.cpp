@@ -86,15 +86,15 @@ void SpaceShooterGame::InitObjects()
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
 	objects[0] = skybox;
 
-	TexturedMesh* asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
-	Texture2D* asteroidTexture = new Texture2D();
+	asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
+	asteroidTexture = new Texture2D();
 	asteroidTexture->LoadTexture("Models/asteroid.bmp");
-	Material* asteroidMaterial = new Material();
+	asteroidMaterial = new Material();
 	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
 
-	for (int i = 2; i < 7; i++)
+	for (currentMax = 2; currentMax < 7; currentMax++)
 	{
-		objects[i] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
 	}
 }
 
@@ -117,6 +117,16 @@ void SpaceShooterGame::Display()
 void SpaceShooterGame::Update()
 {
 	glLoadIdentity();
+
+	spawnDelay += REFRESHRATE;
+	std::cout << spawnDelay << std::endl;
+	
+	if (spawnDelay >= 6000 && currentMax < 39)
+	{
+		spawnDelay = 0;
+		currentMax++;
+		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+	}
 
 	//update objects
 	for (int i = 0; i < 40; i++)
