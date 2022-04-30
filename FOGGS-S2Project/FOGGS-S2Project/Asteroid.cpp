@@ -33,36 +33,36 @@ void Asteroid::Update()
 	_position.y += multiplier * _direction.y;
 	_position.z += multiplier * _direction.z;
 
-	if (_position.x > 100)
+	if (_position.x > LEVEL_DIMENSIONS)
 	{
-		_position.x = 100;
+		_position.x = LEVEL_DIMENSIONS;
 		_direction.x = -_direction.x;
 	}
-	else if (_position.x < -100)
+	else if (_position.x < -LEVEL_DIMENSIONS)
 	{
-		_position.x = -100;
+		_position.x = -LEVEL_DIMENSIONS;
 		_direction.x = -_direction.x;
 	}
 
-	if (_position.y > 100)
+	if (_position.y > LEVEL_DIMENSIONS)
 	{
-		_position.y= 100;
+		_position.y = LEVEL_DIMENSIONS;
 		_direction.y = -_direction.y;
 	}
-	else if (_position.y < -100)
+	else if (_position.y < -LEVEL_DIMENSIONS)
 	{
-		_position.y = -100;
+		_position.y = -LEVEL_DIMENSIONS;
 		_direction.y = -_direction.y;
 	}
 
-	if (_position.z > 100)
+	if (_position.z > LEVEL_DIMENSIONS)
 	{
-		_position.z = 100;
+		_position.z = LEVEL_DIMENSIONS;
 		_direction.z = -_direction.z;
 	}
-	else if (_position.z < -100)
+	else if (_position.z < -LEVEL_DIMENSIONS)
 	{
-		_position.z = -100;
+		_position.z = -LEVEL_DIMENSIONS;
 		_direction.z = -_direction.z;
 	}
 }

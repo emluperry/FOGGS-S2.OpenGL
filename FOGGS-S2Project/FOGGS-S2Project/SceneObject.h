@@ -5,6 +5,7 @@
 #include "GL\freeglut.h"
 
 #include "Structures.h"
+#include "constants.h"
 #include "Texture2D.h"
 
 class SceneObject
