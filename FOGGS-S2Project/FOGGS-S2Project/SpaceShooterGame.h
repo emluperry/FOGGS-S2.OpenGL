@@ -13,6 +13,7 @@
 #include "SceneObject.h"
 #include "Player.h"
 #include "Skybox.h"
+#include "Asteroid.h"
 
 #define REFRESHRATE 16
 
@@ -23,7 +24,13 @@ private:
 	Skybox* skybox;
 	Player* player;
 
-	SceneObject* objects[2];
+	TexturedMesh* asteroidMesh;
+	Texture2D* asteroidTexture;
+	Material* asteroidMaterial;
+
+	SceneObject* objects[40];
+	int currentMax = 0;
+	int spawnDelay = 0;
 
 	Vector4* _lightPosition;
 	Lighting* _lightData;

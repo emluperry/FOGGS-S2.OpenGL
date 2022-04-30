@@ -18,7 +18,10 @@ SceneObject::SceneObject(TexturedMesh* mesh, Texture2D* texture, Material* mater
 
 SceneObject::~SceneObject()
 {
-
+	_mesh = nullptr;
+	_texMesh = nullptr;
+	_texture = nullptr;
+	_material = nullptr;
 }
 
 void SceneObject::SetupDraw()
@@ -61,6 +64,11 @@ void SceneObject::Draw()
 		SetupDraw();
 
 		glPushMatrix();
+		glTranslatef(_position.x, _position.y, _position.z);
+		glRotatef(_rotation.x, 1.0f, 0.0f, 0.0f);
+		glRotatef(_rotation.y, 0.0f, 1.0f, 0.0f);
+		glRotatef(_rotation.z, 0.0f, 0.0f, 1.0f);
+		glScalef(_scale.x, _scale.y, _scale.z);
 		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
 		glPopMatrix();
 
@@ -88,4 +96,23 @@ void SceneObject::SetdownDraw()
 void SceneObject::Update()
 {
 
+}
+
+void SceneObject::DeleteComponents()
+{
+	delete _mesh->vertices;
+	delete _mesh->colors;
+	delete _mesh->normals;
+	delete _mesh->indices;
+	delete _mesh;
+	_mesh = nullptr;
+
+	delete _texMesh->texCoords;
+	delete _texMesh;
+	_texMesh = nullptr;
+
+	delete _texture;
+	_texture = nullptr;
+
+	delete _material;
 }

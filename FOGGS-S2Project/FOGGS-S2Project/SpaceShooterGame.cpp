@@ -3,6 +3,8 @@
 
 SpaceShooterGame::SpaceShooterGame(int argc, char* argv[])
 {
+	srand(time(NULL));
+
 	InitGL(argc, argv);
 	InitObjects();
 	InitLighting();
@@ -83,14 +85,27 @@ void SpaceShooterGame::InitObjects()
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
 	objects[0] = skybox;
+
+	asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
+	asteroidTexture = new Texture2D();
+	asteroidTexture->LoadTexture("Models/asteroid.bmp");
+	asteroidMaterial = new Material();
+	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
+
+	for (currentMax = 2; currentMax < 7; currentMax++)
+	{
+		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+	}
 }
 
 void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 40; i++)
 	{
+		if (objects[i] == nullptr)
+			break;
 		objects[i]->Draw();
 	}
 	glutWireCube(0.1);
@@ -103,9 +118,21 @@ void SpaceShooterGame::Update()
 {
 	glLoadIdentity();
 
-	//update objects
-	for (int i = 0; i < 2; i++)
+	spawnDelay += REFRESHRATE;
+	std::cout << spawnDelay << std::endl;
+	
+	if (spawnDelay >= 6000 && currentMax < 39)
 	{
+		spawnDelay = 0;
+		currentMax++;
+		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+	}
+
+	//update objects
+	for (int i = 0; i < 40; i++)
+	{
+		if (objects[i] == nullptr)
+			break;
 		objects[i]->Update();
 	}
 

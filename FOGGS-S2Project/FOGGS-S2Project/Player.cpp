@@ -1,48 +1,20 @@
 #include "Player.h"
 
-Player::Player(Mesh* mesh, Material* material, float x, float y, float z) : SceneObject(mesh, material)
-{
-	_position = { x, y, z };
-	_direction = { 1, 0, 0 };
-	_rotation = { 0,0,0 };
-
-	_flightSpeed = 0.05;
-	_turnSpeed = 0.05;
-	_rotateSpeed = 9;
-}
-
 Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z) : SceneObject(mesh, texture, material)
 {
 	_position = { x, y, z };
 	_direction = { 1, 0, 0 };
 	_rotation = { 0,0,0 };
+	_scale = { 1,1,1 };
 
-	_flightSpeed = 0.1;
+	_flightSpeed = 0.2;
 	_turnSpeed = 0.05;
-	_rotateSpeed = 2;
+	_rotateSpeed = 4.5;
 }
 
 Player::~Player()
 {
-
-}
-
-void Player::Draw()
-{
-	if (_mesh->vertices != nullptr && _mesh->indices != nullptr)
-	{
-		SetupDraw();
-
-		glPushMatrix();
-		glTranslatef(_position.x, _position.y, _position.z);
-		glRotatef(_rotation.x, 1.0f, 0.0f, 0.0f);
-		glRotatef(_rotation.y, 0.0f, 1.0f, 0.0f);
-		glRotatef(_rotation.z, 0.0f, 0.0f, 1.0f);
-		glDrawElements(GL_TRIANGLES, _mesh->indexCount, GL_UNSIGNED_SHORT, _mesh->indices);
-		glPopMatrix();
-
-		SetdownDraw();
-	}
+	SceneObject::DeleteComponents();
 }
 
 void Player::Update()
@@ -58,7 +30,20 @@ void Player::Update()
 	_position.y += multiplier * _direction.y;
 	_position.z += multiplier * _direction.z;
 
-	std::cout << _direction.x << " " << _direction.y << " " << _direction.z << std::endl;
+	if (_position.x > LEVEL_DIMENSIONS)
+		_position.x = LEVEL_DIMENSIONS;
+	else if (_position.x < -LEVEL_DIMENSIONS)
+		_position.x = -LEVEL_DIMENSIONS;
+
+	if (_position.y > LEVEL_DIMENSIONS)
+		_position.y = LEVEL_DIMENSIONS;
+	else if (_position.y < -LEVEL_DIMENSIONS)
+		_position.y = -LEVEL_DIMENSIONS;
+
+	if (_position.z > LEVEL_DIMENSIONS)
+		_position.z = LEVEL_DIMENSIONS;
+	else if (_position.z < -LEVEL_DIMENSIONS)
+		_position.z = -LEVEL_DIMENSIONS;
 }
 
 void Player::Keyboard(unsigned char key, int x, int y)
