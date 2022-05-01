@@ -5,6 +5,7 @@ Bullet::Bullet(TexturedMesh* mesh, Texture2D* texture, Material* material, Vecto
 	_position = position;
 	_direction = direction;
 
+	_radius = 0.9;
 	_flightSpeed = 3;
 
 	_rotationIncrements.x = (180.0 * asin(_direction.z)) / (3 * PI);

@@ -31,8 +31,14 @@ Player::~Player()
 void Player::Update()
 {
 	_direction.x = cos((_rotation.y * PI) / 180) * cos((_rotation.z * PI) / 180);
+	if (fabs(_direction.x) < 1e-7)
+		_direction.x = 0;
 	_direction.y = sin((_rotation.z * PI) / 180);
+	if (fabs(_direction.y) < 1e-7)
+		_direction.y = 0;
 	_direction.z = -sin((_rotation.y * PI) / 180) * cos((_rotation.z * PI) / 180);
+	if (fabs(_direction.z) < 1e-7)
+		_direction.z = 0;
 
 	std::cout << _direction.x << " " << _direction.y << " " << _direction.z << std::endl;
 

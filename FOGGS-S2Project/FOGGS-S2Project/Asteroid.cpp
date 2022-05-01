@@ -17,6 +17,7 @@ Asteroid::Asteroid(TexturedMesh* mesh, Texture2D* texture, Material* material) :
 	_scale = { 2, 2, 2 };
 
 	_flightSpeed = 1;
+	_radius = 2;
 }
 
 Asteroid::~Asteroid()

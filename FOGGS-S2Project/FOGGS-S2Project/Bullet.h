@@ -3,6 +3,7 @@
 class Bullet : public SceneObject
 {
 private:
+	float _radius;
 	float _flightSpeed;
 	Vector3 _movementIncrements;
 	Vector3 _rotationIncrements;
