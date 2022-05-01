@@ -1,8 +1,8 @@
 #pragma once
-#define PI 3.14159265
 
 #include "SceneObject.h"
 #include "MeshLoader.h"
+#include "Bullet.h"
 #include <math.h>
 
 class Player : public SceneObject
@@ -16,7 +16,7 @@ private:
 	Texture2D* bulletTexture;
 	Material* bulletMaterial;
 
-	SceneObject* bullets[3];
+	Bullet* bullets[3];
 
 	void FireBullet();
 

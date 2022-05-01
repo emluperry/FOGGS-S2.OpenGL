@@ -51,6 +51,12 @@ void Player::Update()
 		_position.z = LEVEL_DIMENSIONS;
 	else if (_position.z < -LEVEL_DIMENSIONS)
 		_position.z = -LEVEL_DIMENSIONS;
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (bullets[i])
+			bullets[i]->Update();
+	}
 }
 
 void Player::Draw()
@@ -101,5 +107,5 @@ void Player::Keyboard(unsigned char key, int x, int y)
 
 void Player::FireBullet()
 {
-	bullets[0] = new SceneObject(bulletMesh, bulletTexture, bulletMaterial);
+	bullets[0] = new Bullet(bulletMesh, bulletTexture, bulletMaterial, _position, _direction);
 }
