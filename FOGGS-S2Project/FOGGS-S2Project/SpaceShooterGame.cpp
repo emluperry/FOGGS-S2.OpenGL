@@ -59,6 +59,7 @@ void SpaceShooterGame::InitLighting()
 	_lightData->ambient = { 0.2, 0.2, 0.2, 1.0 };
 	_lightData->diffuse = { 0.8, 0.8, 0.8, 1.0 };
 	_lightData->specular = { 0.2, 0.2, 0.2, 1.0 };
+	_lightData->emissive = { 0.3, 0.0, 0.0, 1.0 };
 }
 
 void SpaceShooterGame::InitObjects()
@@ -96,6 +97,15 @@ void SpaceShooterGame::InitObjects()
 	{
 		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
 	}
+
+	TexturedMesh* bulletMesh = MeshLoader::LoadObj((char*)"Models/bullet.obj");
+	Texture2D* bulletTexture = new Texture2D();
+	bulletTexture->LoadTexture("Models/Bullet.bmp");
+	Material* bulletMaterial = new Material();
+	bulletMaterial = MeshLoader::LoadMaterial((char*)"Models/bullet.mtl");
+
+	objects[7] = new SceneObject(bulletMesh, bulletTexture, bulletMaterial);
+	currentMax = 7;
 }
 
 void SpaceShooterGame::Display()
@@ -139,6 +149,7 @@ void SpaceShooterGame::Update()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
+	glLightfv(GL_LIGHT0, GL_EMISSION, &(_lightData->emissive.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
 	//vec3(20*cos(carAngle), 10,20*sin(carAngle))

@@ -359,6 +359,8 @@ namespace MeshLoader
 				LoadVector4(inFile, material->diffuse);
 			else if (type == "Ks")
 				LoadVector4(inFile, material->specular);
+			else if (type == "Ke")
+				LoadVector4(inFile, material->emissive);
 			else
 				inFile.ignore(numeric_limits<streamsize>::max(), '\n');
 		}

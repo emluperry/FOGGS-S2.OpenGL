@@ -14,6 +14,11 @@ SceneObject::SceneObject(TexturedMesh* mesh, Texture2D* texture, Material* mater
 	_mesh = mesh->mesh;
 	_texture = texture;
 	_material = material;
+
+	_position = { 0,0,0 };
+	_scale = { 1,1,1 };
+	_rotation = { 0,0,0 };
+	_direction = { 0,0,0 };
 }
 
 SceneObject::~SceneObject()
@@ -53,6 +58,7 @@ void SceneObject::SetupDraw()
 		glMaterialfv(GL_FRONT, GL_AMBIENT, &(_material->ambient.x));
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, &(_material->diffuse.x));
 		glMaterialfv(GL_FRONT, GL_SPECULAR, &(_material->specular.x));
+		glMaterialfv(GL_FRONT, GL_EMISSION, &(_material->emissive.x));
 		glMaterialf(GL_FRONT, GL_SHININESS, _material->shininess);
 	}
 }
