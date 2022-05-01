@@ -30,9 +30,12 @@ Player::~Player()
 
 void Player::Update()
 {
-	_direction.x = cos((_rotation.y * PI) / 180);
+	_direction.x = cos((_rotation.y * PI) / 180) * cos((_rotation.z * PI) / 180);
 	_direction.y = sin((_rotation.z * PI) / 180);
-	_direction.z = -sin((_rotation.y * PI) / 180);
+	_direction.z = -sin((_rotation.y * PI) / 180) * cos((_rotation.z * PI) / 180);
+
+	std::cout << _direction.x << " " << _direction.y << " " << _direction.z << std::endl;
+
 	float squareSumDirection = (_direction.x * _direction.x) + (_direction.y * _direction.y) + (_direction.z * _direction.z);
 	float multiplier = std::sqrt((_flightSpeed * _flightSpeed) / squareSumDirection);
 
