@@ -10,6 +10,12 @@ Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float
 	_flightSpeed = 0.2;
 	_turnSpeed = 0.05;
 	_rotateSpeed = 4.5;
+
+	bulletMesh = MeshLoader::LoadObj((char*)"Models/bullet.obj");
+	bulletTexture = new Texture2D();
+	bulletTexture->LoadTexture("Models/Bullet.bmp");
+	bulletMaterial = new Material();
+	bulletMaterial = MeshLoader::LoadMaterial((char*)"Models/bullet.mtl");
 }
 
 Player::~Player()
@@ -47,6 +53,17 @@ void Player::Update()
 		_position.z = -LEVEL_DIMENSIONS;
 }
 
+void Player::Draw()
+{
+	SceneObject::Draw();
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (bullets[i])
+			bullets[i]->Draw();
+	}
+}
+
 void Player::Keyboard(unsigned char key, int x, int y)
 {
 	if (key == 'a')
@@ -76,4 +93,13 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		//if (_direction.y < -1)
 		//	_direction.y = -1;
 	}
+	if (key == ' ')
+	{
+		FireBullet();
+	}
+}
+
+void Player::FireBullet()
+{
+	bullets[0] = new SceneObject(bulletMesh, bulletTexture, bulletMaterial);
 }
