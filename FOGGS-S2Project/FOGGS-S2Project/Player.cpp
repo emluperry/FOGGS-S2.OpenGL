@@ -21,14 +21,17 @@ Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float
 Player::~Player()
 {
 	SceneObject::DeleteComponents();
+	for (int i = 0; i < 3; i++)
+	{
+		delete bullets[i];
+		bullets[i] = nullptr;
+	}
 }
 
 void Player::Update()
 {
 	_direction.x = cos((_rotation.y * PI) / 180);
 	_direction.y = sin((_rotation.z * PI) / 180);
-	if (fabs(_direction.y) < 1e-7)
-		_direction.y = 0;
 	_direction.z = -sin((_rotation.y * PI) / 180);
 	float squareSumDirection = (_direction.x * _direction.x) + (_direction.y * _direction.y) + (_direction.z * _direction.z);
 	float multiplier = std::sqrt((_flightSpeed * _flightSpeed) / squareSumDirection);
@@ -55,7 +58,14 @@ void Player::Update()
 	for (int i = 0; i < 3; i++)
 	{
 		if (bullets[i])
+		{
 			bullets[i]->Update();
+			if (bullets[i]->GetPosition().x > LEVEL_DIMENSIONS || bullets[i]->GetPosition().x < -LEVEL_DIMENSIONS || bullets[i]->GetPosition().y > LEVEL_DIMENSIONS || bullets[i]->GetPosition().y < -LEVEL_DIMENSIONS || bullets[i]->GetPosition().z > LEVEL_DIMENSIONS || bullets[i]->GetPosition().z < -LEVEL_DIMENSIONS)
+			{
+				delete bullets[i];
+				bullets[i] = nullptr;
+			}
+		}
 	}
 }
 
@@ -85,9 +95,6 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		_rotation.z += _rotateSpeed;
 		if (_rotation.z > 90)
 			_rotation.z = 90;
-		//_direction.y += _turnSpeed;
-		//if (_direction.y > 1)
-		//	_direction.y = 1;
 
 	}
 	if (key == 's')
@@ -95,9 +102,6 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		_rotation.z -= _rotateSpeed;
 		if (_rotation.z < -90)
 			_rotation.z = -90;
-		//_direction.y -= _turnSpeed;
-		//if (_direction.y < -1)
-		//	_direction.y = -1;
 	}
 	if (key == ' ')
 	{
@@ -107,5 +111,12 @@ void Player::Keyboard(unsigned char key, int x, int y)
 
 void Player::FireBullet()
 {
-	bullets[0] = new Bullet(bulletMesh, bulletTexture, bulletMaterial, _position, _direction);
+	for (int i = 0; i < 3; i++)
+	{
+		if (!bullets[i])
+		{
+			bullets[i] = new Bullet(bulletMesh, bulletTexture, bulletMaterial, _position, _direction);
+			break;
+		}
+	}
 }
