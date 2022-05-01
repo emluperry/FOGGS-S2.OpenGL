@@ -30,7 +30,6 @@ void Skybox::Draw()
 		SetupDraw();
 
 		glPushMatrix();
-		glTranslatef(_player->GetPosition().x, _player->GetPosition().y, _player->GetPosition().z);
 		glRotatef(_rotation.x, 1.0f, 0.0f, 0.0f);
 		glRotatef(_rotation.y, 0.0f, 1.0f, 0.0f);
 		glRotatef(_rotation.z, 0.0f, 0.0f, 1.0f);

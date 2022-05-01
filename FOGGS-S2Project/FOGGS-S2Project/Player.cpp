@@ -20,6 +20,7 @@ Player::~Player()
 void Player::Update()
 {
 	_direction.x = cos((_rotation.y * PI) / 180);
+	_direction.y = sin((_rotation.z * PI) / 180);
 	if (fabs(_direction.y) < 1e-7)
 		_direction.y = 0;
 	_direction.z = -sin((_rotation.y * PI) / 180);
@@ -61,9 +62,9 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		_rotation.z += _rotateSpeed;
 		if (_rotation.z > 90)
 			_rotation.z = 90;
-		_direction.y += _turnSpeed;
-		if (_direction.y > 1)
-			_direction.y = 1;
+		//_direction.y += _turnSpeed;
+		//if (_direction.y > 1)
+		//	_direction.y = 1;
 
 	}
 	if (key == 's')
@@ -71,8 +72,8 @@ void Player::Keyboard(unsigned char key, int x, int y)
 		_rotation.z -= _rotateSpeed;
 		if (_rotation.z < -90)
 			_rotation.z = -90;
-		_direction.y -= _turnSpeed;
-		if (_direction.y < -1)
-			_direction.y = -1;
+		//_direction.y -= _turnSpeed;
+		//if (_direction.y < -1)
+		//	_direction.y = -1;
 	}
 }

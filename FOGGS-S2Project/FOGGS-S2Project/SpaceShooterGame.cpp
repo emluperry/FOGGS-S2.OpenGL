@@ -129,8 +129,6 @@ void SpaceShooterGame::Update()
 	glLoadIdentity();
 
 	spawnDelay += REFRESHRATE;
-	std::cout << spawnDelay << std::endl;
-	
 	if (spawnDelay >= 6000 && currentMax < 39)
 	{
 		spawnDelay = 0;
@@ -152,10 +150,9 @@ void SpaceShooterGame::Update()
 	glLightfv(GL_LIGHT0, GL_EMISSION, &(_lightData->emissive.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
-	//vec3(20*cos(carAngle), 10,20*sin(carAngle))
 	camera->eye = player->GetPosition();
 	camera->eye.x += (-40 * player->GetDirection().x);
-	camera->eye.y += 30;
+	camera->eye.y += 30 + (-30 * player->GetDirection().y);
 	camera->eye.z += (40 * -player->GetDirection().z);
 	camera->center = player->GetPosition();
 
