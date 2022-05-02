@@ -146,6 +146,7 @@
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneObject.cpp" />
+    <ClCompile Include="ScoreHandler.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SpaceShooterGame.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneObject.h" />
+    <ClInclude Include="ScoreHandler.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="SpaceShooterGame.h" />
     <ClInclude Include="Structures.h" />

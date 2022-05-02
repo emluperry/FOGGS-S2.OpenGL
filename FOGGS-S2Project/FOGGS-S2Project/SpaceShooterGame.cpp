@@ -23,7 +23,7 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(800, 800);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("3D Space Shooter");
 
@@ -35,7 +35,7 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	gluPerspective(45, 1, 1, 10000);
 
 	glEnable(GL_TEXTURE_2D);
@@ -68,6 +68,8 @@ void SpaceShooterGame::InitObjects()
 	camera->eye = { 0, 20, 0 };
 	camera->center = { 0, 0, 0 };
 	camera->up = { 0, 1.0 ,0 };
+
+	scoreHandler = new ScoreHandler();
 
 	TexturedMesh* playerMesh = MeshLoader::LoadObj((char*)"Models/spaceship.obj");
 	Texture2D* playerTexture = new Texture2D();
@@ -112,6 +114,8 @@ void SpaceShooterGame::Display()
 		asteroids[i]->Draw();
 	}
 	glutWireCube(0.1);
+
+	scoreHandler->Draw(player->GetPosition(), player->GetRotation());
 
 	glFlush();
 	glutSwapBuffers();

@@ -9,6 +9,7 @@
 
 #include "Texture2D.h"
 #include "MeshLoader.h"
+#include "ScoreHandler.h"
 
 #include "SceneObject.h"
 #include "Player.h"
@@ -23,6 +24,7 @@ private:
 	Camera* camera;
 	Skybox* skybox;
 	Player* player;
+	ScoreHandler* scoreHandler;
 
 	TexturedMesh* asteroidMesh;
 	Texture2D* asteroidTexture;
