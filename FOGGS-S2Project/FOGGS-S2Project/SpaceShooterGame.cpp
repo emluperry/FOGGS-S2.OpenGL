@@ -52,13 +52,13 @@ void SpaceShooterGame::InitLighting()
 	_lightPosition = new Vector4();
 	_lightPosition->x = 0.0;
 	_lightPosition->y = 1.0;
-	_lightPosition->z = 0.5;
+	_lightPosition->z = 0.0;
 	_lightPosition->w = 1.0;
 
 	_lightData = new Lighting();
-	_lightData->ambient = { 0.2, 0.2, 0.9, 1.0 };
+	_lightData->ambient = { 0.9, 0.2, 0.7, 1.0 };
 	_lightData->diffuse = { 0.8, 0.8, 0.8, 1.0 };
-	_lightData->specular = { 0.2, 0.2, 0.2, 1.0 };
+	_lightData->specular = { 1.0, 1.0, 1.0, 1.0 };
 	_lightData->emissive = { 0.3, 0.0, 0.0, 1.0 };
 }
 
