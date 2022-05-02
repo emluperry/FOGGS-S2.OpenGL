@@ -115,7 +115,7 @@ void SpaceShooterGame::Display()
 	}
 	glutWireCube(0.1);
 
-	scoreHandler->Draw(player->GetPosition(), player->GetRotation());
+	scoreHandler->Draw(player);
 
 	glFlush();
 	glutSwapBuffers();

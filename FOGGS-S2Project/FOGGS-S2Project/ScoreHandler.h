@@ -5,6 +5,7 @@
 #include "GL/freeglut.h"
 
 #include "Structures.h"
+#include "Player.h"
 #include "constants.h"
 
 #include <string>
@@ -19,6 +20,6 @@ public:
 
 	void AddScore(int score);
 
-	void Draw(Vector3 position, Vector3 rotation);
+	void Draw(Player* player);
 };
 
