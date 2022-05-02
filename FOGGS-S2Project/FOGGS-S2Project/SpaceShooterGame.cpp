@@ -121,14 +121,14 @@ void SpaceShooterGame::Update()
 {
 	glLoadIdentity();
 
-	spawnDelay += REFRESHRATE;
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+	int deltaTime = timeSinceStart - softwareElapsedTime;
+	softwareElapsedTime = timeSinceStart;
+
+	spawnDelay += deltaTime;
 	if (spawnDelay >= 6000 && currentMax < 39)
 	{
-		spawnDelay = 0;
-		currentMax++;
-		if (currentMax > 40)
-			currentMax = 40;
-		asteroids[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+		SpawnAsteroid();
 	}
 
 	//update objects
@@ -165,4 +165,27 @@ void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 void SpaceShooterGame::SpecialInput(int key, int x, int y)
 {
 	//special keyboard inputs and what they do go here
+}
+
+void SpaceShooterGame::SpawnAsteroid()
+{
+	spawnDelay = 0;
+	for (int i = 0; i < currentMax; i++)
+	{
+		if (!asteroids[i])
+		{
+			asteroids[i] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+			return;
+		}
+	}
+	currentMax++;
+	if (currentMax > 40)
+	{
+		currentMax = 40;
+		return;
+	}
+	else
+	{
+		asteroids[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+	}
 }
