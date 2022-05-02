@@ -81,11 +81,11 @@ void SpaceShooterGame::InitObjects()
 	Material* skyboxMaterial = new Material();
 	skyboxMaterial = MeshLoader::LoadMaterial((char*)"Models/cube.mtl");
 
-	player = new Player(playerMesh, playerTexture, playerMaterial, 0, 0, 0);
-	objects[1] = player;
+	player = new Player(playerMesh, playerTexture, playerMaterial, Vector3(0,0,0), &(asteroids)[0], &currentMax);
+	keyObjects[1] = player;
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
-	objects[0] = skybox;
+	keyObjects[0] = skybox;
 
 	asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
 	asteroidTexture = new Texture2D();
@@ -93,9 +93,9 @@ void SpaceShooterGame::InitObjects()
 	asteroidMaterial = new Material();
 	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
 
-	for (currentMax = 2; currentMax < 7; currentMax++)
+	for (currentMax = 0; currentMax < 7; currentMax++)
 	{
-		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+		asteroids[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
 	}
 }
 
@@ -103,11 +103,13 @@ void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	keyObjects[0]->Draw();
+	keyObjects[1]->Draw();
 	for (int i = 0; i < 40; i++)
 	{
-		if (objects[i] == nullptr)
+		if (asteroids[i] == nullptr)
 			break;
-		objects[i]->Draw();
+		asteroids[i]->Draw();
 	}
 	glutWireCube(0.1);
 
@@ -124,15 +126,19 @@ void SpaceShooterGame::Update()
 	{
 		spawnDelay = 0;
 		currentMax++;
-		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+		if (currentMax > 40)
+			currentMax = 40;
+		asteroids[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
 	}
 
 	//update objects
+	keyObjects[0]->Update();
+	keyObjects[1]->Update();
 	for (int i = 0; i < 40; i++)
 	{
-		if (objects[i] == nullptr)
+		if (asteroids[i] == nullptr)
 			break;
-		objects[i]->Update();
+		asteroids[i]->Update();
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
@@ -142,9 +148,9 @@ void SpaceShooterGame::Update()
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
 	camera->eye = player->GetPosition();
-	camera->eye.x += (-40 * player->GetDirection().x);
-	camera->eye.y += 30 + (-30 * player->GetDirection().y);
-	camera->eye.z += (40 * -player->GetDirection().z);
+	camera->eye.x += (-80 * player->GetDirection().x);
+	camera->eye.y += 30 + (-40 * player->GetDirection().y);
+	camera->eye.z += (80 * -player->GetDirection().z);
 	camera->center = player->GetPosition();
 
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);

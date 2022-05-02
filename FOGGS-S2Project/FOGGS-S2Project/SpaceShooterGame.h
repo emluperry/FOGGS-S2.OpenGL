@@ -28,7 +28,8 @@ private:
 	Texture2D* asteroidTexture;
 	Material* asteroidMaterial;
 
-	SceneObject* objects[40];
+	SceneObject* keyObjects[2];
+	Asteroid* asteroids[40];
 	int currentMax = 0;
 	int spawnDelay = 0;
 

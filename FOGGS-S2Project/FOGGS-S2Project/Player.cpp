@@ -1,11 +1,14 @@
 #include "Player.h"
 
-Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, float x, float y, float z) : SceneObject(mesh, texture, material)
+Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, Vector3 position, Asteroid** arr, int* asteroidMax) : SceneObject(mesh, texture, material)
 {
-	_position = { x, y, z };
+	_position = position;
 	_direction = { 1, 0, 0 };
 	_rotation = { 0,0,0 };
 	_scale = { 1,1,1 };
+
+	asteroids = arr;
+	currentAsteroidMax = asteroidMax;
 
 	_flightSpeed = 0.2;
 	_turnSpeed = 0.05;
@@ -66,13 +69,40 @@ void Player::Update()
 
 	for (int i = 0; i < 3; i++)
 	{
-		if (bullets[i])
+		if (bullets[i] != nullptr)
 		{
 			bullets[i]->Update();
 			if (bullets[i]->GetPosition().x > LEVEL_DIMENSIONS || bullets[i]->GetPosition().x < -LEVEL_DIMENSIONS || bullets[i]->GetPosition().y > LEVEL_DIMENSIONS || bullets[i]->GetPosition().y < -LEVEL_DIMENSIONS || bullets[i]->GetPosition().z > LEVEL_DIMENSIONS || bullets[i]->GetPosition().z < -LEVEL_DIMENSIONS)
 			{
 				delete bullets[i];
 				bullets[i] = nullptr;
+				continue;
+			}
+
+			for (int j = 0; j < *currentAsteroidMax; j++)
+			{
+				if (asteroids[j] != nullptr)
+				{
+					//check collision
+					//find dist between objects
+					float a = std::abs(asteroids[j]->GetPosition().x - bullets[i]->GetPosition().x);
+					float b = std::abs(asteroids[j]->GetPosition().y - bullets[i]->GetPosition().y);
+					float c = std::abs(asteroids[j]->GetPosition().z - bullets[i]->GetPosition().z);
+					float squareDist = a * a + b * b + c * c;
+					//find sum of radiuses
+					float radiusSum = asteroids[j]->GetRadius() + bullets[i]->GetRadius();
+					//if dist < radi: destroy both
+					if (squareDist < radiusSum * radiusSum)
+					{
+						//destroy both
+						delete bullets[i];
+						bullets[i] = nullptr;
+
+						delete asteroids[j];
+						asteroids[j] = nullptr;
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -102,15 +132,15 @@ void Player::Keyboard(unsigned char key, int x, int y)
 	if (key == 'w')
 	{
 		_rotation.z += _rotateSpeed;
-		if (_rotation.z > 90)
-			_rotation.z = 90;
+		if (_rotation.z > 85.5)
+			_rotation.z = 85.5;
 
 	}
 	if (key == 's')
 	{
 		_rotation.z -= _rotateSpeed;
-		if (_rotation.z < -90)
-			_rotation.z = -90;
+		if (_rotation.z < -85.5)
+			_rotation.z = -85.5;
 	}
 	if (key == ' ')
 	{

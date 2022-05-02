@@ -10,5 +10,6 @@ public:
 	~Asteroid();
 
 	void Update() override;
+	float GetRadius() { return _radius; }
 };
 

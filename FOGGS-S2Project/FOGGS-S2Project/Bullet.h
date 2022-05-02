@@ -12,5 +12,6 @@ public:
 	~Bullet();
 
 	void Update() override;
+	float GetRadius() { return _radius; }
 };
 

@@ -14,10 +14,10 @@ Asteroid::Asteroid(TexturedMesh* mesh, Texture2D* texture, Material* material) :
 	_direction.y = rand() % 2 - 1;
 	_direction.z = rand() % 2 - 1;
 
-	_scale = { 2, 2, 2 };
+	_scale = { 4, 4, 4 };
 
-	_flightSpeed = 1;
-	_radius = 2;
+	_flightSpeed = 0.5;
+	_radius = 4;
 }
 
 Asteroid::~Asteroid()
