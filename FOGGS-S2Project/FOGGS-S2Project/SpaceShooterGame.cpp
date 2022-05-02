@@ -51,14 +51,15 @@ void SpaceShooterGame::InitLighting()
 {
 	_lightPosition = new Vector4();
 	_lightPosition->x = 0.0;
-	_lightPosition->y = 0.0;
-	_lightPosition->z = 1.0;
+	_lightPosition->y = 1.0;
+	_lightPosition->z = 0.0;
 	_lightPosition->w = 1.0;
 
 	_lightData = new Lighting();
-	_lightData->ambient = { 0.2, 0.2, 0.2, 1.0 };
+	_lightData->ambient = { 0.9, 0.2, 0.7, 1.0 };
 	_lightData->diffuse = { 0.8, 0.8, 0.8, 1.0 };
-	_lightData->specular = { 0.2, 0.2, 0.2, 1.0 };
+	_lightData->specular = { 1.0, 1.0, 1.0, 1.0 };
+	_lightData->emissive = { 0.3, 0.0, 0.0, 1.0 };
 }
 
 void SpaceShooterGame::InitObjects()
@@ -80,11 +81,11 @@ void SpaceShooterGame::InitObjects()
 	Material* skyboxMaterial = new Material();
 	skyboxMaterial = MeshLoader::LoadMaterial((char*)"Models/cube.mtl");
 
-	player = new Player(playerMesh, playerTexture, playerMaterial, 0, 0, 0);
-	objects[1] = player;
+	player = new Player(playerMesh, playerTexture, playerMaterial, Vector3(0,0,0), &(asteroids)[0], &currentMax);
+	keyObjects[1] = player;
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
-	objects[0] = skybox;
+	keyObjects[0] = skybox;
 
 	asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
 	asteroidTexture = new Texture2D();
@@ -92,9 +93,9 @@ void SpaceShooterGame::InitObjects()
 	asteroidMaterial = new Material();
 	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
 
-	for (currentMax = 2; currentMax < 7; currentMax++)
+	for (currentMax = 0; currentMax < 7; currentMax++)
 	{
-		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+		asteroids[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
 	}
 }
 
@@ -102,11 +103,13 @@ void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 40; i++)
+	keyObjects[0]->Draw();
+	keyObjects[1]->Draw();
+	for (int i = 0; i < currentMax; i++)
 	{
-		if (objects[i] == nullptr)
-			break;
-		objects[i]->Draw();
+		if (asteroids[i] == nullptr)
+			continue;
+		asteroids[i]->Draw();
 	}
 	glutWireCube(0.1);
 
@@ -118,34 +121,36 @@ void SpaceShooterGame::Update()
 {
 	glLoadIdentity();
 
-	spawnDelay += REFRESHRATE;
-	std::cout << spawnDelay << std::endl;
-	
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+	int deltaTime = timeSinceStart - softwareElapsedTime;
+	softwareElapsedTime = timeSinceStart;
+
+	spawnDelay += deltaTime;
 	if (spawnDelay >= 6000 && currentMax < 39)
 	{
-		spawnDelay = 0;
-		currentMax++;
-		objects[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+		SpawnAsteroid();
 	}
 
 	//update objects
-	for (int i = 0; i < 40; i++)
+	keyObjects[0]->Update();
+	keyObjects[1]->Update();
+	for (int i = 0; i < currentMax; i++)
 	{
-		if (objects[i] == nullptr)
-			break;
-		objects[i]->Update();
+		if (asteroids[i] == nullptr)
+			continue;
+		asteroids[i]->Update();
 	}
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
+	glLightfv(GL_LIGHT0, GL_EMISSION, &(_lightData->emissive.x));
 	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
 
-	//vec3(20*cos(carAngle), 10,20*sin(carAngle))
 	camera->eye = player->GetPosition();
-	camera->eye.x += (-40 * player->GetDirection().x);
-	camera->eye.y += 30;
-	camera->eye.z += (40 * -player->GetDirection().z);
+	camera->eye.x += (-80 * player->GetDirection().x);
+	camera->eye.y += 30 + (-40 * player->GetDirection().y);
+	camera->eye.z += (80 * -player->GetDirection().z);
 	camera->center = player->GetPosition();
 
 	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
@@ -160,4 +165,27 @@ void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 void SpaceShooterGame::SpecialInput(int key, int x, int y)
 {
 	//special keyboard inputs and what they do go here
+}
+
+void SpaceShooterGame::SpawnAsteroid()
+{
+	spawnDelay = 0;
+	for (int i = 0; i < currentMax; i++)
+	{
+		if (!asteroids[i])
+		{
+			asteroids[i] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+			return;
+		}
+	}
+	currentMax++;
+	if (currentMax > 40)
+	{
+		currentMax = 40;
+		return;
+	}
+	else
+	{
+		asteroids[currentMax] = new Asteroid(asteroidMesh, asteroidTexture, asteroidMaterial);
+	}
 }

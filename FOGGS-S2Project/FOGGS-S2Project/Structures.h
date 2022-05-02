@@ -3,6 +3,18 @@
 struct Vector3
 {
 	float x, y, z;
+	Vector3(float a, float b, float c)
+	{
+		x = a;
+		y = b;
+		z = c;
+	}
+	Vector3()
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+	}
 };
 
 struct Vector4
@@ -58,6 +70,7 @@ struct Lighting
 	Vector4 ambient;
 	Vector4 diffuse;
 	Vector4 specular;
+	Vector4 emissive;
 };
 
 struct Material
@@ -65,5 +78,6 @@ struct Material
 	Vector4 ambient;
 	Vector4 diffuse;
 	Vector4 specular;
+	Vector4 emissive;
 	GLfloat shininess;
 };

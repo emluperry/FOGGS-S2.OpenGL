@@ -28,7 +28,10 @@ private:
 	Texture2D* asteroidTexture;
 	Material* asteroidMaterial;
 
-	SceneObject* objects[40];
+	int softwareElapsedTime;
+
+	SceneObject* keyObjects[2];
+	Asteroid* asteroids[40];
 	int currentMax = 0;
 	int spawnDelay = 0;
 
@@ -38,6 +41,8 @@ private:
 	void InitGL(int argc, char* argv[]);
 	void InitObjects();
 	void InitLighting();
+
+	void SpawnAsteroid();
 public:
 	SpaceShooterGame(int argc, char* argv[]);
 	~SpaceShooterGame(void);
