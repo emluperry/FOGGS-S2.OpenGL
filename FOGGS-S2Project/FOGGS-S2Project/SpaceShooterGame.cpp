@@ -105,10 +105,10 @@ void SpaceShooterGame::Display()
 
 	keyObjects[0]->Draw();
 	keyObjects[1]->Draw();
-	for (int i = 0; i < 40; i++)
+	for (int i = 0; i < currentMax; i++)
 	{
 		if (asteroids[i] == nullptr)
-			break;
+			continue;
 		asteroids[i]->Draw();
 	}
 	glutWireCube(0.1);
@@ -134,10 +134,10 @@ void SpaceShooterGame::Update()
 	//update objects
 	keyObjects[0]->Update();
 	keyObjects[1]->Update();
-	for (int i = 0; i < 40; i++)
+	for (int i = 0; i < currentMax; i++)
 	{
 		if (asteroids[i] == nullptr)
-			break;
+			continue;
 		asteroids[i]->Update();
 	}
 
