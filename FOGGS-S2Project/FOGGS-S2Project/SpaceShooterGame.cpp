@@ -23,7 +23,7 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(800, 800);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("3D Space Shooter");
 
@@ -35,7 +35,7 @@ void SpaceShooterGame::InitGL(int argc, char* argv[])
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	gluPerspective(45, 1, 1, 10000);
 
 	glEnable(GL_TEXTURE_2D);
@@ -69,6 +69,8 @@ void SpaceShooterGame::InitObjects()
 	camera->center = { 0, 0, 0 };
 	camera->up = { 0, 1.0 ,0 };
 
+	scoreHandler = new ScoreHandler();
+
 	TexturedMesh* playerMesh = MeshLoader::LoadObj((char*)"Models/spaceship.obj");
 	Texture2D* playerTexture = new Texture2D();
 	playerTexture->LoadTexture("Models/spaceship.bmp");
@@ -81,7 +83,7 @@ void SpaceShooterGame::InitObjects()
 	Material* skyboxMaterial = new Material();
 	skyboxMaterial = MeshLoader::LoadMaterial((char*)"Models/cube.mtl");
 
-	player = new Player(playerMesh, playerTexture, playerMaterial, Vector3(0,0,0), &(asteroids)[0], &currentMax);
+	player = new Player(playerMesh, playerTexture, playerMaterial, Vector3(0,0,0), &(asteroids)[0], &currentMax, scoreHandler);
 	keyObjects[1] = player;
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
@@ -111,7 +113,8 @@ void SpaceShooterGame::Display()
 			continue;
 		asteroids[i]->Draw();
 	}
-	glutWireCube(0.1);
+
+	scoreHandler->Draw(camera, player->GetDirection());
 
 	glFlush();
 	glutSwapBuffers();
@@ -123,6 +126,7 @@ void SpaceShooterGame::Update()
 
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	int deltaTime = timeSinceStart - softwareElapsedTime;
+	std::cout << deltaTime << std::endl;
 	softwareElapsedTime = timeSinceStart;
 
 	spawnDelay += deltaTime;

@@ -2,6 +2,7 @@
 
 #include "SceneObject.h"
 #include "MeshLoader.h"
+#include "ScoreHandler.h"
 #include "Bullet.h"
 #include "Asteroid.h"
 #include <math.h>
@@ -9,6 +10,8 @@
 class Player : public SceneObject
 {
 private:
+	ScoreHandler* _scoreHandler;
+
 	float _flightSpeed;
 	float _turnSpeed;
 	float _rotateSpeed;
@@ -24,7 +27,7 @@ private:
 	void FireBullet();
 
 public:
-	Player(TexturedMesh* mesh, Texture2D* texture, Material* material, Vector3 position, Asteroid** arr, int* asteroidMax);
+	Player(TexturedMesh* mesh, Texture2D* texture, Material* material, Vector3 position, Asteroid** arr, int* asteroidMax, ScoreHandler* scoreHandler);
 	~Player() override;
 
 	void Update() override;

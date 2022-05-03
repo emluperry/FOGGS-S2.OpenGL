@@ -6,6 +6,8 @@ namespace GLUTCallbacks
 	namespace //anon. cannot be accessed by anything other than glutcallbacks
 	{
 		SpaceShooterGame* game = nullptr;
+		int width;
+		int height;
 	}
 
 	void Init(SpaceShooterGame* gl)
