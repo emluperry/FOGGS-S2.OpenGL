@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, Vector3 position, Asteroid** arr, int* asteroidMax) : SceneObject(mesh, texture, material)
+Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, Vector3 position, Asteroid** arr, int* asteroidMax, ScoreHandler* scoreHandler) : SceneObject(mesh, texture, material)
 {
 	_position = position;
 	_direction = { 1, 0, 0 };
@@ -10,6 +10,7 @@ Player::Player(TexturedMesh* mesh, Texture2D* texture, Material* material, Vecto
 	asteroids = arr;
 	currentAsteroidMax = asteroidMax;
 
+	_scoreHandler = scoreHandler;
 	_flightSpeed = 0.2;
 	_turnSpeed = 0.05;
 	_rotateSpeed = 4.5;
@@ -94,6 +95,7 @@ void Player::Update()
 					//if dist < radi: destroy both
 					if (squareDist < radiusSum * radiusSum)
 					{
+						_scoreHandler->AddScore(100);
 						//destroy both
 						delete bullets[i];
 						bullets[i] = nullptr;

@@ -5,7 +5,6 @@
 #include "GL/freeglut.h"
 
 #include "Structures.h"
-#include "Player.h"
 #include "constants.h"
 
 #include <string>

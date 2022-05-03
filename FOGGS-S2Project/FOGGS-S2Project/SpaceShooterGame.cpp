@@ -83,7 +83,7 @@ void SpaceShooterGame::InitObjects()
 	Material* skyboxMaterial = new Material();
 	skyboxMaterial = MeshLoader::LoadMaterial((char*)"Models/cube.mtl");
 
-	player = new Player(playerMesh, playerTexture, playerMaterial, Vector3(0,0,0), &(asteroids)[0], &currentMax);
+	player = new Player(playerMesh, playerTexture, playerMaterial, Vector3(0,0,0), &(asteroids)[0], &currentMax, scoreHandler);
 	keyObjects[1] = player;
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
@@ -113,7 +113,6 @@ void SpaceShooterGame::Display()
 			continue;
 		asteroids[i]->Draw();
 	}
-	glutWireCube(0.1);
 
 	scoreHandler->Draw(camera, player->GetDirection());
 
