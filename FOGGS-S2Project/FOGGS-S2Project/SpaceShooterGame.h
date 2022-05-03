@@ -18,6 +18,14 @@
 
 #define REFRESHRATE 16
 
+enum STATE
+{
+	MAIN_MENU,
+	PLAYING,
+	PAUSED,
+	GAME_OVER
+};
+
 class SpaceShooterGame
 {
 private:
@@ -25,6 +33,8 @@ private:
 	Skybox* skybox;
 	Player* player;
 	ScoreHandler* scoreHandler;
+
+	STATE _gameState;
 
 	TexturedMesh* asteroidMesh;
 	Texture2D* asteroidTexture;

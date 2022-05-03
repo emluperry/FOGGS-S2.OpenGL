@@ -6,8 +6,12 @@ SpaceShooterGame::SpaceShooterGame(int argc, char* argv[])
 	srand(time(NULL));
 
 	InitGL(argc, argv);
+
 	InitObjects();
 	InitLighting();
+
+	_gameState = STATE::MAIN_MENU;
+
 	glutMainLoop();
 }
 
@@ -105,16 +109,29 @@ void SpaceShooterGame::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	keyObjects[0]->Draw();
-	keyObjects[1]->Draw();
-	for (int i = 0; i < currentMax; i++)
+	switch (_gameState)
 	{
-		if (asteroids[i] == nullptr)
-			continue;
-		asteroids[i]->Draw();
-	}
+	case STATE::MAIN_MENU:
+		break;
+	case STATE::PLAYING:
+		keyObjects[0]->Draw();
+		keyObjects[1]->Draw();
+		for (int i = 0; i < currentMax; i++)
+		{
+			if (asteroids[i] == nullptr)
+				continue;
+			asteroids[i]->Draw();
+		}
 
-	scoreHandler->Draw(camera, player->GetDirection());
+		scoreHandler->Draw(camera, player->GetDirection());
+		break;
+	case STATE::PAUSED:
+		break;
+	case STATE::GAME_OVER:
+		break;
+	default:
+		break;
+	}
 
 	glFlush();
 	glutSwapBuffers();
@@ -123,47 +140,86 @@ void SpaceShooterGame::Display()
 void SpaceShooterGame::Update()
 {
 	glLoadIdentity();
-
+	std::cout << _gameState << std::endl;
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	int deltaTime = timeSinceStart - softwareElapsedTime;
-	std::cout << deltaTime << std::endl;
 	softwareElapsedTime = timeSinceStart;
 
-	spawnDelay += deltaTime;
-	if (spawnDelay >= 6000 && currentMax < 39)
+	switch (_gameState)
 	{
-		SpawnAsteroid();
+	case STATE::MAIN_MENU:
+		break;
+	case STATE::PLAYING:
+		spawnDelay += deltaTime;
+		if (spawnDelay >= 6000 && currentMax < 39)
+		{
+			SpawnAsteroid();
+		}
+
+		//update objects
+		keyObjects[0]->Update();
+		keyObjects[1]->Update();
+		for (int i = 0; i < currentMax; i++)
+		{
+			if (asteroids[i] == nullptr)
+				continue;
+			asteroids[i]->Update();
+		}
+
+		glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
+		glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
+		glLightfv(GL_LIGHT0, GL_EMISSION, &(_lightData->emissive.x));
+		glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
+
+		camera->eye = player->GetPosition();
+		camera->eye.x += (-80 * player->GetDirection().x);
+		camera->eye.y += 30 + (-40 * player->GetDirection().y);
+		camera->eye.z += (80 * -player->GetDirection().z);
+		camera->center = player->GetPosition();
+
+		gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
+		break;
+	case STATE::PAUSED:
+		break;
+	case STATE::GAME_OVER:
+		break;
+	default:
+		break;
 	}
 
-	//update objects
-	keyObjects[0]->Update();
-	keyObjects[1]->Update();
-	for (int i = 0; i < currentMax; i++)
-	{
-		if (asteroids[i] == nullptr)
-			continue;
-		asteroids[i]->Update();
-	}
-
-	glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, &(_lightData->diffuse.x));
-	glLightfv(GL_LIGHT0, GL_SPECULAR, &(_lightData->specular.x));
-	glLightfv(GL_LIGHT0, GL_EMISSION, &(_lightData->emissive.x));
-	glLightfv(GL_LIGHT0, GL_POSITION, &(_lightPosition->x));
-
-	camera->eye = player->GetPosition();
-	camera->eye.x += (-80 * player->GetDirection().x);
-	camera->eye.y += 30 + (-40 * player->GetDirection().y);
-	camera->eye.z += (80 * -player->GetDirection().z);
-	camera->center = player->GetPosition();
-
-	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
 }
 
 void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 {
-	player->Keyboard(key, x, y);
+	switch (_gameState)
+	{
+	case STATE::MAIN_MENU:
+		if (key == 13)
+		{
+			_gameState = STATE::PLAYING;
+		}
+		break;
+	case STATE::PLAYING:
+		if (key == 27)
+		{
+			_gameState = STATE::PAUSED;
+		}
+		else
+			player->Keyboard(key, x, y);
+		break;
+	case STATE::PAUSED:
+		if (key == 27)
+		{
+			_gameState = STATE::PLAYING;
+		}
+		break;
+	case STATE::GAME_OVER:
+		break;
+	default:
+		break;
+	}
 }
 
 void SpaceShooterGame::SpecialInput(int key, int x, int y)
