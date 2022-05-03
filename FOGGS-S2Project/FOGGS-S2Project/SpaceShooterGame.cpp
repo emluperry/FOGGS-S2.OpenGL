@@ -115,7 +115,7 @@ void SpaceShooterGame::Display()
 	}
 	glutWireCube(0.1);
 
-	scoreHandler->Draw(player);
+	scoreHandler->Draw(camera, player->GetDirection());
 
 	glFlush();
 	glutSwapBuffers();
@@ -127,6 +127,7 @@ void SpaceShooterGame::Update()
 
 	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
 	int deltaTime = timeSinceStart - softwareElapsedTime;
+	std::cout << deltaTime << std::endl;
 	softwareElapsedTime = timeSinceStart;
 
 	spawnDelay += deltaTime;

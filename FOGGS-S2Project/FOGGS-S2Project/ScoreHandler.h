@@ -20,6 +20,6 @@ public:
 
 	void AddScore(int score);
 
-	void Draw(Player* player);
+	void Draw(Camera* cam, Vector3 direction);
 };
 
