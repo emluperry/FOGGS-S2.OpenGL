@@ -112,6 +112,18 @@ void SpaceShooterGame::Display()
 	switch (_gameState)
 	{
 	case STATE::MAIN_MENU:
+		glPushMatrix();
+		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3f(1, 1, 1);
+		glTranslatef(0, 0, 0);
+		glRasterPos3f(0.0f, 0.0f, 0.0f);
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)("Press Enter to Start!\n\n(Pause with Escape!)"));
+
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_LIGHTING);
+		glPopMatrix();
 		break;
 	case STATE::PLAYING:
 		keyObjects[0]->Draw();
@@ -126,6 +138,19 @@ void SpaceShooterGame::Display()
 		scoreHandler->Draw(camera, player->GetDirection());
 		break;
 	case STATE::PAUSED:
+		glPushMatrix();
+		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3f(1, 1, 1);
+		glTranslatef((-60 * player->GetDirection().x), 25 + (-30 * player->GetDirection().y), (-60 * player->GetDirection().z));
+		glTranslatef(camera->center.x, camera->center.y, camera->center.z);
+		glRasterPos2f(0.0f, 0.0f);
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)("        PAUSED: \nPress Escape to Unpause!"));
+
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_LIGHTING);
+		glPopMatrix();
 		break;
 	case STATE::GAME_OVER:
 		break;
@@ -177,8 +202,6 @@ void SpaceShooterGame::Update()
 		camera->eye.y += 30 + (-40 * player->GetDirection().y);
 		camera->eye.z += (80 * -player->GetDirection().z);
 		camera->center = player->GetPosition();
-
-		gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 		break;
 	case STATE::PAUSED:
 		break;
@@ -187,7 +210,7 @@ void SpaceShooterGame::Update()
 	default:
 		break;
 	}
-
+	gluLookAt(camera->eye.x, camera->eye.y, camera->eye.z, camera->center.x, camera->center.y, camera->center.z, camera->up.x, camera->up.y, camera->up.z);
 	glutPostRedisplay();
 }
 
