@@ -153,7 +153,22 @@ void SpaceShooterGame::Display()
 		glPopMatrix();
 		break;
 	case STATE::GAME_OVER:
+	{
+		std::string scoreText = "Game over!\n\nFinal score: " + std::to_string(scoreHandler->GetScore()) + "\nEnter to return to main menu.";
+		glPushMatrix();
+		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+
+		glColor3f(1, 1, 1);
+		glTranslatef(0, 0, 0);
+		glRasterPos3f(0.0f, 0.0f, 0.0f);
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)(scoreText.c_str()));
+
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_LIGHTING);
+		glPopMatrix();
 		break;
+	}
 	default:
 		break;
 	}
@@ -176,6 +191,7 @@ void SpaceShooterGame::Update()
 		break;
 	case STATE::PLAYING:
 		spawnDelay += deltaTime;
+		_levelTime += deltaTime;
 		if (spawnDelay >= 6000 && currentMax < 39)
 		{
 			SpawnAsteroid();
@@ -202,6 +218,9 @@ void SpaceShooterGame::Update()
 		camera->eye.y += 30 + (-40 * player->GetDirection().y);
 		camera->eye.z += (80 * -player->GetDirection().z);
 		camera->center = player->GetPosition();
+
+		if (_levelTime >= 60000)
+			_gameState = STATE::GAME_OVER;
 		break;
 	case STATE::PAUSED:
 		break;
@@ -221,6 +240,7 @@ void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 	case STATE::MAIN_MENU:
 		if (key == 13)
 		{
+			_levelTime = 0;
 			_gameState = STATE::PLAYING;
 		}
 		break;
@@ -239,6 +259,10 @@ void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 		}
 		break;
 	case STATE::GAME_OVER:
+		if (key == 13)
+		{
+			_gameState = STATE::MAIN_MENU;
+		}
 		break;
 	default:
 		break;

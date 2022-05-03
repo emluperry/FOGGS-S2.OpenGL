@@ -35,6 +35,7 @@ private:
 	ScoreHandler* scoreHandler;
 
 	STATE _gameState;
+	int _levelTime;
 
 	TexturedMesh* asteroidMesh;
 	Texture2D* asteroidTexture;
