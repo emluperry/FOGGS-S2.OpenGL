@@ -53,7 +53,10 @@ private:
 
 	void InitGL(int argc, char* argv[]);
 	void InitObjects();
+	void InitTextures();
 	void InitLighting();
+
+	void DeleteObjects();
 
 	void SpawnAsteroid();
 public:

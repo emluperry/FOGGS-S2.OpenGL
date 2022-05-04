@@ -7,6 +7,7 @@ SpaceShooterGame::SpaceShooterGame(int argc, char* argv[])
 
 	InitGL(argc, argv);
 
+	InitTextures();
 	InitObjects();
 	InitLighting();
 
@@ -18,7 +19,32 @@ SpaceShooterGame::SpaceShooterGame(int argc, char* argv[])
 SpaceShooterGame::~SpaceShooterGame(void)
 {
 	delete camera;
+	DeleteObjects();
+
+	//delete saved meshes
+	delete asteroidMesh->mesh->vertices;
+	delete asteroidMesh->mesh->normals;
+	delete asteroidMesh->mesh->indices;
+	delete asteroidMesh->texCoords;
+	delete asteroidMesh;
+	delete asteroidTexture;
+	delete asteroidMaterial;
+
+	//delete lighting
+	delete _lightPosition;
+	delete _lightData;
+}
+
+void SpaceShooterGame::DeleteObjects()
+{
 	delete player;
+	delete skybox;
+	delete scoreHandler;
+
+	for (int i = 0; i < 40; i++)
+	{
+		delete asteroids[i];
+	}
 }
 
 void SpaceShooterGame::InitGL(int argc, char* argv[])
@@ -66,6 +92,15 @@ void SpaceShooterGame::InitLighting()
 	_lightData->emissive = { 0.3, 0.0, 0.0, 1.0 };
 }
 
+void SpaceShooterGame::InitTextures()
+{
+	asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
+	asteroidTexture = new Texture2D();
+	asteroidTexture->LoadTexture("Models/asteroid.bmp");
+	asteroidMaterial = new Material();
+	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
+}
+
 void SpaceShooterGame::InitObjects()
 {
 	camera = new Camera();
@@ -92,12 +127,6 @@ void SpaceShooterGame::InitObjects()
 
 	Skybox* skybox = new Skybox(skyMesh, skyboxTexture, skyboxMaterial, player);
 	keyObjects[0] = skybox;
-
-	asteroidMesh = MeshLoader::LoadObj((char*)"Models/asteroid.obj");
-	asteroidTexture = new Texture2D();
-	asteroidTexture->LoadTexture("Models/asteroid.bmp");
-	asteroidMaterial = new Material();
-	asteroidMaterial = MeshLoader::LoadMaterial((char*)"Models/asteroid.mtl");
 
 	for (currentMax = 0; currentMax < 7; currentMax++)
 	{
@@ -262,6 +291,8 @@ void SpaceShooterGame::Keyboard(unsigned char key, int x, int y)
 	case STATE::GAME_OVER:
 		if (key == 13)
 		{
+			DeleteObjects();
+			InitObjects();
 			_gameState = STATE::MAIN_MENU;
 		}
 		break;
