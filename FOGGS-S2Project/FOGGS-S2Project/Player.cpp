@@ -44,8 +44,6 @@ void Player::Update()
 	if (fabs(_direction.z) < 1e-7)
 		_direction.z = 0;
 
-	std::cout << _direction.x << " " << _direction.y << " " << _direction.z << std::endl;
-
 	float squareSumDirection = (_direction.x * _direction.x) + (_direction.y * _direction.y) + (_direction.z * _direction.z);
 	float multiplier = std::sqrt((_flightSpeed * _flightSpeed) / squareSumDirection);
 

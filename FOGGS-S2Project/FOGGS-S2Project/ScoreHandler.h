@@ -18,6 +18,7 @@ public:
 	~ScoreHandler();
 
 	void AddScore(int score);
+	int GetScore() { return _score; }
 
 	void Draw(Camera* cam, Vector3 direction);
 };
