@@ -160,8 +160,9 @@ void SpaceShooterGame::Display()
 		glDisable(GL_TEXTURE_2D);
 
 		glColor3f(1, 1, 1);
-		glTranslatef(0, 0, 0);
-		glRasterPos3f(0.0f, 0.0f, 0.0f);
+		glTranslatef((-60 * player->GetDirection().x), 25 + (-30 * player->GetDirection().y), (-60 * player->GetDirection().z));
+		glTranslatef(camera->center.x, camera->center.y, camera->center.z);
+		glRasterPos2f(0.0f, 0.0f);
 		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)(scoreText.c_str()));
 
 		glEnable(GL_TEXTURE_2D);
