@@ -146,9 +146,9 @@ void SpaceShooterGame::Display()
 		glDisable(GL_TEXTURE_2D);
 
 		glColor3f(1, 1, 1);
-		glTranslatef(0, 0, 0);
+		glTranslatef(0, 0, 20);
 		glRasterPos3f(0.0f, 0.0f, 0.0f);
-		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)("Press Enter to Start!\n\n(Pause with Escape!)"));
+		glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, (unsigned char*)("Press Enter to Start!\n\nSpace: Fire bullet\nWASD: Change direction\nEscape: Pause/unpause"));
 
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_LIGHTING);
