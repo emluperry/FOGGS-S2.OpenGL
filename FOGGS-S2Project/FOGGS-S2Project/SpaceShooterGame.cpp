@@ -232,9 +232,8 @@ void SpaceShooterGame::Update()
 		keyObjects[1]->Update();
 		for (int i = 0; i < currentMax; i++)
 		{
-			if (asteroids[i] == nullptr)
-				continue;
-			asteroids[i]->Update();
+			if (asteroids[i] != nullptr)
+				asteroids[i]->Update();
 		}
 
 		glLightfv(GL_LIGHT0, GL_AMBIENT, &(_lightData->ambient.x));
