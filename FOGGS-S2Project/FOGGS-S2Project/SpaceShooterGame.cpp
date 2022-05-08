@@ -44,6 +44,7 @@ void SpaceShooterGame::DeleteObjects()
 	for (int i = 0; i < 40; i++)
 	{
 		delete asteroids[i];
+		asteroids[i] = nullptr;
 	}
 }
 
